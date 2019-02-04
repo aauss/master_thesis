@@ -14,6 +14,8 @@ Pizza (@pizza2000identification) is an understudied yet widely utilized implemen
 
 # Motivation
 
+The course goal at the beginning was to utilize natural language processing (NLP) in a dashboard for epidemiologists. The Signale group at the Robert Koch Institute where I wrote my thesis, focused to create custom solutions for different fields of epidemiology. 
+
 # Introduction
 
 ## INIG
