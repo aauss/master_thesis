@@ -14,23 +14,29 @@ author: "Auss Abbood, University Osnabrück and Robert Koch Institut"
 Pizza (@pizza2000identification) is an understudied yet widely utilized implement for delivering in-vivo *Solanum lycopersicum* based liquid mediums in a variety of next-generation mastications studies. Here we describe a de novo approach for large scale *T. aestivum* assemblies based on protein folding that drastically reduces the generation time of the mutation rate.
 
 # Acknowledgment
-
+Thanks Bruv
 # Introduction
-
+## Infectious Diseases
+### Epidemiology
 ## Motivation
 
 The course goal at the beginning was to utilize natural language processing (NLP) in a dashboard for epidemiologists. The Signale group at the Robert Koch Institute where I wrote my thesis, focused to create custom solutions for different fields in epidemiology. Two groups at the RKI, the Epilag and the INIG needed to parse many texts for their work and thus we decided to look into their work to figure out how NLP could aid them in their everyday work. Both group's expertise is epidemiological surveillance. While the Epilag focuses on events within Germany, INIG is mainly interested in international outbreak news. The Epilag group exists for a longer time now and has clear working routines that incorporate several health departments of the Kreise and Länder of Germany. Even if I would have found a helpful use of NLP in their work-flow I would have been difficult to consider so many participants of this group that however are spread across Germany and have different access to resources of the RKI. INIG however is a young project that much more depends on a variety of text. They have much less work-power that can be spared to do tedious work opposed to Epilag where every health department needs to report to the RKI where then _only_ the bigger picture is put together. Currently one person of the INIG team is responsible to read a fixed set of articles and filter out outbreak news that are important. These are then put into a database. This costs around 30 minutes every day, that should be spent writing assessments on the outbreaks for the German Ministry of Health. Thus, the idea developed to automate this process that least required expertise. Therefore, putting key points of a outbreak article into a database was the first goal of the thesis. Second, being able to describe the text based on this condensed form lead to the second goal: Use these keywords to determine the relevance of an article and then use this knowledge to write and recommendation system.
 
-## Signale
-The Robert Koch Institute is the public health institute of Germanny- It is split into several Abteilungen. Most of them are interested in epidemiology. These Abteilungen are then split into several Fachbereiche. That is necessary so that every Fachbereich can focus on a specific topic and publish papers in this area. FG31 where I have been working is the IT FG and the only one that is working on Software solutions for the RKI. We stick out, since we are the interface between statistics and application. We create dashboards and are relatively independent from the other research and work done.
 
-## INIG
+## Epidemic Intelligence (WHAT IS THIS?)
+### INIG
 Also within the same Abteilung there are many groups that combine their expertise of certain diseases classes to form a super groups that does international surveillance. Their advantage is that they have expertise knowledge in different parts of infectious disease medicine- When they are reading news articles and they are unsure whether and article is interesting or not, they have the opportunity to consult each other which then leads to a very educated decision whether an outbreak article is interesting or not.
+
+### Signale
+The Robert Koch Institute is the public health institute of Germanny- It is split into several Abteilungen. Most of them are interested in epidemiology. These Abteilungen are then split into several Fachbereiche. That is necessary so that every Fachbereich can focus on a specific topic and publish papers in this area. FG31 where I have been working is the IT FG and the only one that is working on Software solutions for the RKI. We stick out, since we are the interface between statistics and application. We create dashboards and are relatively independent from the other research and work done.
 
 # Background
 
 ## Working At The RKI
-
+## Web Scraping
+### DOM
+### Ajax
+### REST
 ## Natural Language Processing
 
 ### Stop words
@@ -50,17 +56,58 @@ Name entity recognition (NER) is based in the middle of a NLP pipeline. After se
 
 In the medical field such ambiguities rise not because the proper names are so indistinguishable form other common words, but because there are many form how to write a disease name and equally many abbreviations. Thus, disease-NER is a very important processing step.
 
+## Epidemiological annotations
 ## Machine Learning
+
+### Random Forest
 
 ### Naive Bayes Classifier
 
-The naive Bayes classifier (NBC) is a probabilistic classifier. It describes a set of algorithms capable to learn to infer a label given a set of features. These algorithms are trained in a supervised fashion.
+The naive Bayes classifier (NBC) is a probabilistic classifier. It describes a set of algorithms capable to learn to infer a label given a set of features. These algorithms are trained in a supervised fashion. The characteristic of the NBC is that it is assuming independence of all features. That means that observing the state of one feature is uncorrelated with observing the state of another feature. This assumption is often violated, nevertheless, given good quality data and a curated selection of features, the classifier will still perform good. The NBC is utilizing Bayesian probability calculations. 
 
+Given
+$$\begin{align}
 
+\boldsymbol{x} = \{x_1, x_2, \dots, x_n\} \\
+
+\mathcal{C} = \{\mathcal{C}_k \: | \: k \in K \} \\
+
+P(\mathcal{C}_k|\boldsymbol{x}) = \frac{P(\boldsymbol{x} |\mathcal{C}_k) P(\mathcal{C}_k)} {P(\boldsymbol{x})} \\
+
+P(\mathcal{C}_k|\boldsymbol{x}) = \frac{P(x_1) |{\mathcal{C}}) 
+                                   P(x_2 |\mathcal{C}_k) \dots 
+                                   P(x_n |\mathcal{C}_k)
+                                   P(\mathcal{C}_k)}{ P(\boldsymbol{x})}
+
+\end{align}$$
+Where (1) is the feature vector, (2) the set of classes, and (3) the Bayes formula. Then (4) is equivalent to (3) if independence of all $$x_n$$ is assumed. 
+
+#### Multinomial Naive Bayes Classifier
+A multinomial NBC is able to predict the probability of a discrete set of outcomes $$ p = \{p_k \: | \: k \in K \}$$
+
+## Recommender Systeme
+### Introduction
+### How To Implement Into A Dashboard
 # Methods
 
 ## NLTK
 
+## SpaCy
+
+## Epitator
+
+## Luigi
+
+## Wikidata
+
+## Scraper
+### Promed
+### WHO
+
+
+
+
+## Naive Bayes
 
 
 
@@ -70,6 +117,8 @@ The naive Bayes classifier (NBC) is a probabilistic classifier. It describes a s
 > 1. This is a list inside a block quote.
 > 2. Second item.
 # Results
+## Information Extraction
+## Recommendation 
 ## Diagram
 
 ![It's Pizza](https://gist.github.com/maxogden/97190db73ac19fc6c1d9beee1a6e4fc8/raw/adaaa9b5c19460d3be42021ef0c1b8e11a8d38fe/pizza.png)
