@@ -1,0 +1,55 @@
+\chapter{Background}
+
+\section{Working At The RKI}
+
+\section{Natural language Processing}
+
+
+\subsection{Stop Words}
+Assuming we want to analyze text on the level of words, it can be very different
+which words are actually important for further analyzes. If a syntactical analysis
+would be done, then we would care for (almost) all words. Every word in this
+context has some information about the grammar and thus should be taking
+into consideration. But, if we should be focusing on semantics then we might
+end searching for this semantic information within only a handful of words. It
+could be that we are only interest in numbers, URLs, or company names. In this
+case it would only distract our learner, classification algorithm, or other machine
+learning tool, if the vast majority of words would not transmit the information
+of interest. Therefore, it is common practice to remove certain words that occur
+frequently in a language.
+
+
+\subsection{Tokenization}
+A token is just an abstraction of a piece of information. In NLP this can be a
+single character, word, punctuation, or sentences. The goal if tokenization is
+to split text into meaningful chunks that then can be analyzed on their own.
+Sentence tokenization already becomes important if a text is slightly longer and
+includes logical parts that need to be handled differently. Word-tokenization is
+important when you want to apply POS-tagging, followed by NER. These two
+methods depend on the being given words.
+
+
+\subsection{Bag Of Words}
+In a machine learning task we use the amount of data as a leverage to avoid
+doing explicit feature engineering, but to let the algorithm pick the feature from
+a set of potential
+
+\subsection{(Disease) Name Entity Recognition}
+Name entity recognition (NER) is based in the middle of a NLP pipeline. After
+sentences and words have been tokenized, and position-of-speak tagging (POS-
+tagging) was applied, it might be important for certain learning algorithms to
+infer the entity of the word at hand. Common examples are the distinction of
+ambiguous words as apple. In the beginning of a text it could be the fruit or a
+billion dollar company.
+In the medical field such ambiguities rise not because the proper names are so
+indistinguishable form other common words, but because there are many form
+how to write a disease name and equally many abbreviations. Thus, disease-NER
+is a very important processing step.
+
+\section{Machine Learning}
+
+\subsection{Naive Bayes Classifier}
+The naive Bayes classifier (NBC) is a probabilistic classifier. It describes a set
+of algorithms capable to learn to infer a label given a set of features. These
+algorithms are trained in a supervised fashion.
+

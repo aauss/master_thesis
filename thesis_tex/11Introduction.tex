@@ -1,0 +1,72 @@
+\chapter{Introduction}
+\section{EXAMPLES}
+A citation: \cite{example}. There are some handy options for citing publications. It is possible to print just the year of some publication:~\citeyear{example}. It is also possible to print the name of the author(s) in the form ``Author et al.'': \citeauthor{example}. Finally, there is also a command to print the full list of authors of a publication: \citet*{example}.
+
+This is an example glossary reference: \GLS{pi}. \\
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{BWUni}
+    \caption[Cambridge University BW Logo]{A black and white version of the Cambridge University logo.}
+    \label{fig:bwUniLogo}
+\end{figure}
+
+\begin{align}
+\boldsymbol{x} &= \{x_1, x_2, \dots, x_n\} \\
+\mathcal{C} &= \{\mathcal{C}_k \: | \: k \in K \} \\
+P(\mathcal{C}_k|\boldsymbol{x}) &= \frac{P(\boldsymbol{x} |\mathcal{C}_k) P(\mathcal{C}_k)} {P(\boldsymbol{x})} \\
+P(\mathcal{C}_k|\boldsymbol{x}) &= \frac{P(x_1) |\mathcal{C})
+                                   P(x_2 |\mathcal{C}_k) \dots
+                                   P(x_n |\mathcal{C}_k)
+                                   P(\mathcal{C}_k)}{ P(\boldsymbol{x})} \\
+\end{align}
+
+\section{Motivation}
+The course goal at the beginning of this project was to utilize natural language
+processing (NLP) in a dashboard for the epidemiologists working in the international
+surveillance to improve the work flow of their reading intesive work.
+The Signale group at the Robert Koch Institute where I wrote my thesis, focused to create custom solutions for different
+fields in epidemiology. Two groups at the RKI, the Epilag and the INIG needed
+to parse many texts for their work and thus we decided to look into their work
+to figure out how NLP could aid them in their everyday work. Both group’s
+expertise is epidemiological surveillance. While the Epilag focuses on events
+within Germany, INIG is mainly interested in international outbreak news. The
+Epilag group exists for a longer time now and has clear working routines that
+incorporate several health departments of the Kreise and Länder of Germany.
+Even if I would have found a helpful use of NLP in their work-flow I would have
+been difficult to consider so many participants of this group that however are
+spread across Germany and have different access to resources of the RKI. INIG
+however is a young project that much more depends on a variety of text. They
+have much less work-power that can be spared to do tedious work opposed to
+Epilag where every health department needs to report to the RKI where then
+only the bigger picture is put together. Currently one person of the INIG team
+is responsible to read a fixed set of articles and filter out outbreak news that are
+important. These are then put into a database. This costs around 30 minutes
+every day, that should be spent writing assessments on the outbreaks for the
+German Ministry of Health. Thus, the idea developed to automate this process
+that least required expertise. Therefore, putting key points of a outbreak article
+into a database was the first goal of the thesis. Second, being able to describe the
+text based on this condensed form lead to the second goal: Use these keywords
+to determine the relevance of an article and then use this knowledge to write
+and recommendation system.
+
+\subsection{Signale}
+The Robert Koch Institute is the public health institute of Germanny- It is
+split into several Abteilungen. Most of them are interested in epidemiology.
+These Abteilungen are then split into several Fachbereiche. That is necessary
+so that every Fachbereich can focus on a specific topic and publish papers in
+this area. FG31 where I have been working is the IT FG and the only one
+that is working on Software solutions for the RKI. We stick out, since we are
+the interface between statistics and application. We create dashboards and are
+relatively independent from the other research and work done.
+
+\subsection{INIG}
+Also within the same Abteilung there are many groups that combine their
+expertise of certain diseases classes to form a super groups that does international
+surveillance. Their advantage is that they have expertise knowledge in different
+parts of infectious disease medicine- When they are reading news articles and they
+are unsure whether and article is interesting or not, they have the opportunity
+to consult each other which then leads to a very educated decision whether an
+outbreak article is interesting or not.
+
