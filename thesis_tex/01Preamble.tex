@@ -49,7 +49,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Bibliography (special style etc.)
 %%
-\RequirePackage[numbers,sort&compress]{natbib}
+% \RequirePackage[numbers,sort&compress]{natbib}
+\RequirePackage[square]{natbib}
 
 
 
@@ -69,7 +70,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Captions: This makes captions of figures use a boldfaced small font. 
+%% Captions: This makes captions of figures use a boldfaced small font.
 %%
 \RequirePackage[small,bf]{caption}
 
@@ -77,7 +78,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Subfigure (note: this must be included after the `caption` package). 
+%% Subfigure (note: this must be included after the `caption` package).
 %%
 \RequirePackage{subfig}
 
@@ -108,4 +109,29 @@
     name={\ensuremath{\pi}},
     sort={pi},
     description={ratio of the circumference of a circle to the diameter}
+}
+
+\newglossaryentry{NLP}
+{
+  name={NLP},
+  description={natural language processing}
+}
+
+\newglossaryentry{RKI}
+{
+  name={RKI},
+  description={Robert Koch Institute}
+}
+
+\newglossaryentry{EpiLag}
+{
+  name={EpiLag},
+  description={Epidemiologische Bund-Länder-Lagekonferenz
+               \textit{epidemiological federal state-state conference}}
+}
+
+\newglossaryentry{INIG}
+{
+  name={INIG},
+  description={The Information Centre for International Health Protection}
 }
