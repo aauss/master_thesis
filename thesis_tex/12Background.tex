@@ -6,33 +6,38 @@
 
 
 \subsection{Stop Words}
-Assuming we want to analyze text on the level of words, it can be very different
-which words are actually important for further analyzes. If a syntactical analysis
-would be done, then we would care for (almost) all words. Every word in this
-context has some information about the grammar and thus should be taking
-into consideration. But, if we should be focusing on semantics then we might
-end searching for this semantic information within only a handful of words. It
-could be that we are only interest in numbers, URLs, or company names. In this
-case it would only distract our learner, classification algorithm, or other machine
+Assuming we want to analyze text on the level of words, we might be looking for
+words that appear more often than others. This information can tell as a lot about
+the topic or sentiment of the text. Suppose we find that a text is frequently
+mentioning \textit{brexit} more than any other word. Then we can deduct, that this text might
+be an news article and that it is talking about one of the most controversial issues
+of the European Union. However, we quickly realize that certain words
+also appear more frequently than others, without revealing much about the content
+of the text. Words like \textit{the, of, than} appear numerously in every English
+text independently of the topic or the source. This can make it very different to target
+words that are actually important for further analyzes. These words are called \textbf{stop words}. \index{stop words}
+Should we want to find, as an example, any adverb in a text, then we would care for (almost) all words.
+Every word in this context has some information about the grammatical structure of the text
+and thus must be taking into consideration. But, if we should be interested in the topic
+or source of the text, then we might end up searching for this semantic information within only a handful of words.
+In this case it would only distract our learner, classification algorithm, or other machine
 learning tool, if the vast majority of words would not transmit the information
-of interest. Therefore, it is common practice to remove certain words that occur
-frequently in a language.
+of interest. Therefore, it is common practice to remove stop words.
 
 
 \subsection{Tokenization}
-A token is just an abstraction of a piece of information. In NLP this can be a
-single character, word, punctuation, or sentences. The goal if tokenization is
-to split text into meaningful chunks that then can be analyzed on their own.
-Sentence tokenization already becomes important if a text is slightly longer and
-includes logical parts that need to be handled differently. Word-tokenization is
-important when you want to apply POS-tagging, followed by NER. These two
-methods depend on the being given words.
-
+A token is an abstraction of a piece of information. In \GLS{NLP} this can be
+single character, word, punctuation, or sentences. The goal in tokenization is
+to split text into meaningful chunks that obey the rules of the language which defined
+what a single word or sentence means.
+Sentence tokenization already becomes important if a text
+includes logical parts (like parapgraphs or chapters) that need to be handled differently.
+Word-tokenization is important when you want to apply POS-tagging, followed by NER.
+These two methods require words to work correctly.
 
 \subsection{Bag Of Words}
-In a machine learning task we use the amount of data as a leverage to avoid
-doing explicit feature engineering, but to let the algorithm pick the feature from
-a set of potential
+In a machine learning task it is preferable to use the large size of data as a leverage to avoid
+doing explicit feature engineering, but to let the algorithm pick the feature.
 
 \subsection{(Disease) Name Entity Recognition}
 Name entity recognition (NER) is based in the middle of a NLP pipeline. After
@@ -52,4 +57,3 @@ is a very important processing step.
 The naive Bayes classifier (NBC) is a probabilistic classifier. It describes a set
 of algorithms capable to learn to infer a label given a set of features. These
 algorithms are trained in a supervised fashion.
-
