@@ -116,7 +116,7 @@
 \RequirePackage{graphicx}           % Required for the UC Logo (on the title page)
 \RequirePackage{calc}               % Used for calculating margins and laying out the title page
 \RequirePackage{setspace}      	    % Used for selecting single or onehalf line spacing.
-\RequirePackage{microtype}          % Improvement of general text appearance 
+\RequirePackage{microtype}          % Improvement of general text appearance
 
 % Hyperref should be included in any case, but we make it non-obtrusive (i.e.: no hyperlink borders).
 % Why do we need a separate treatment of hyperref for the techreport? Because the guidelines say so. :)
@@ -132,7 +132,8 @@
         pdffitwindow=true,
         pdfpagelabels=true,
         colorlinks=false,
-        pdfborder={0 0 0},
+        % allcolors={cyan},
+        pdfborder={0 0 1},
         pdfusetitle=true
     ]{hyperref}
 \fi
@@ -298,7 +299,7 @@
 \ifcam@firstyr
 First year report submitted
 \else
-This dissertation is submitted
+This thesis is submitted
 \fi
 \ifcam@submissiondate
     on \@submissiondate{}
