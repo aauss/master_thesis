@@ -7,33 +7,33 @@
 
 \subsection{Stop Words}
 Assuming we want to analyze text on the level of words, we might be looking for
-words that appear more often than others. This information can tell as a lot about
+words that appear more often than others. This information can tell us a lot about
 the topic or sentiment of the text. Suppose we find that a text is frequently
 mentioning \textit{brexit} more than any other word. Then we can deduct, that this text might
-be an news article and that it is talking about one of the most controversial issues
+be a news article and that it is talking about one of the most controversial issues
 of the European Union. However, we quickly realize that certain words
 also appear more frequently than others, without revealing much about the content
 of the text. Words like \textit{the, of, than} appear numerously in every English
 text independently of the topic or the source. This can make it very different to target
 words that are actually important for further analyzes. These words are called \textbf{stop words}. \index{stop words}
-Should we want to find, as an example, any adverb in a text, then we would care for (almost) all words.
+In case we want to find, as an example, any adverb in a text, then we would care for (almost) all words.
 Every word in this context has some information about the grammatical structure of the text
-and thus must be taking into consideration. But, if we should be interested in the topic
+and thus must be taken into consideration. But, if we should be interested in the topic
 or source of the text, then we might end up searching for this semantic information within only a handful of words.
-In this case it would only distract our learner, classification algorithm, or other machine
-learning tool, if the vast majority of words would not transmit the information
+In this case, it would only distract our learner, classification algorithm, or other machine
+learning tool if the vast majority of words would not transmit the information
 of interest. Therefore, it is common practice to remove stop words.
 
 
 \subsection{Tokenization}
-A token is an abstraction of a piece of information. In \GLS{NLP} this can be
+A token is an abstraction of a piece of information. In NLP this can be
 single character, word, punctuation, or sentences. The goal in tokenization is
 to split text into meaningful chunks that obey the rules of the language which defined
-what a single word or sentence means.
-Sentence tokenization already becomes important if a text
+what a single word or sentence means. Word-tokenization is the cornerstone for the vast majority of NLP analyzes.
+
+Sentence tokenization is based on word-tokenization and becomes important for example if a text
 includes logical parts (like parapgraphs or chapters) that need to be handled differently.
-Word-tokenization is important when you want to apply POS-tagging, followed by NER.
-These two methods require words to work correctly.
+These two methods facilitate almost all important methods in written NLP.
 
 \subsection{Bag Of Words}
 In a machine learning task it is preferable to use the large size of data as a leverage to avoid
