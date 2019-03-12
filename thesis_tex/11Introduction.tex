@@ -12,15 +12,6 @@
 %     \label{fig:bwUniLogo}
 % \end{figure}
 
-% \begin{align}
-% \boldsymbol{x} &= \{x_1, x_2, \dots, x_n\} \\
-% \mathcal{C} &= \{\mathcal{C}_k \: | \: k \in K \} \\
-% P(\mathcal{C}_k|\boldsymbol{x}) &= \frac{P(\boldsymbol{x} |\mathcal{C}_k) P(\mathcal{C}_k)} {P(\boldsymbol{x})} \\
-% P(\mathcal{C}_k|\boldsymbol{x}) &= \frac{P(x_1) |\mathcal{C})
-%                                    P(x_2 |\mathcal{C}_k) \dots
-%                                    P(x_n |\mathcal{C}_k)
-%                                    P(\mathcal{C}_k)}{ P(\boldsymbol{x})} \\
-% \end{align}
 
 \section{Epidemiological Surveillance at the Robert Koch Institute}
 
@@ -37,7 +28,7 @@ epidemiologists are able to detect the emergence of outbreaks. Hints can be give
 news articles.
 
 \subsection{The Robert Koch Institute and Signale}
-The Robert Koch Institute (\GLS{RKI}) is the public health institute of Germany - It is
+The Robert Koch Institute is the public health institute of Germany - It is
 split into several departments covering responsibilities ranging from infectious diseases, infectious epidemiology, methodology research, and biological threats.
 These departments are then split into several faculties. The infectious epidemiology department has its own IT faculty,
 where I have been working for my thesis. It carries the main responsibility for providing in-house software solutions for the RKI. This faculty is then again split into several groups that are specialized in different topics.
@@ -45,7 +36,7 @@ Our group, Signale, is the interface between machine learning and application.
 We provided intuitive access to important numerical analyzes via dashboards for different use cases within the RKI.
 
 \subsubsection{EpiLag}
-To have an adequate response mechanism that cannot be satisfied by existing surveillance infrastructure, in 2009 The epidemiologische L\"ander-Bund-Konferenz (\GLS{EpiLag}) has been found \cite{EpiLag}. Since health politics is governed by the federal states of Germany, the infrastructure of the health authorities is different for each state. To still communicate efficiently, the EpiLag established a weekly conference call where the RKI and the federal states are exchanging events of high importance for the public health which require immediate attention. The EpiLag gives recommendations on how to handle threats for the public health and provides a platform to coordinate scientific or political undertakings that affect several the federal states.
+To have an adequate response mechanism that cannot be satisfied by existing surveillance infrastructure, in 2009 The epidemiologische L\"ander-Bund-Konferenz (\gls{EpiLag}) has been found \cite{EpiLag}. Since health politics is governed by the federal states of Germany, the infrastructure of the health authorities is different for each state. To still communicate efficiently, the EpiLag established a weekly conference call where the RKI and the federal states are exchanging events of high importance for the public health which require immediate attention. The EpiLag gives recommendations on how to handle threats for the public health and provides a platform to coordinate scientific or political undertakings that affect several the federal states.
 
 \subsubsection{INIG}
 The Information Centre for International Health Protection (\GLS{INIG}) is a project staffed by epidemiologists across several faculties to combine expertise from different backgrounds in medicine and public health to provide international epidemiological surveillance for the RKI. For this, they have designated epidemiologists reading trusted sources for epidemiological articles to find events that are particularly important for the public health of Germans. When INIG members are unsure whether an article describes a noteworthy outbreak, they have the opportunity to consult each other. This then often leads to a more educated decision whether an outbreak article is interesting. INIG hereby complements the work of the EpiLag which mostly does not take countries into account that exceed Germany's neighboring states.
@@ -62,12 +53,16 @@ The Information Centre for International Health Protection (\GLS{INIG}) is a pro
 The course goal at the beginning of this project was to utilize natural language
 processing (\GLS{NLP}) in a dashboard for epidemiologists who perform epidemiological
 surveillance to improve their reading intensive work.
-The Signale group at the RKI has yet integrated NLP for their dashboards, although there would be a strong benefit not only for the epidemiological surveillance but also for other groups. The RKI has two groups for epidemiological surveillance that would profit the most from NLP aided tools. The two groups,  EpiLag and INIG, analyze numerous textual sources for their work and thus I decided to look into their work to pinpoint how NLP could aid them in their work. While the EpiLag focuses on disease outbreaks within Germany, INIG is mainly interested in international disease outbreaks. The
+The Signale group at the RKI has not yet integrated NLP for their dashboards, although there would be a strong benefit not only for the epidemiological surveillance but also for other groups. The RKI has two groups for epidemiological surveillance that would profit the most from NLP aided tools. The two groups, EpiLag and INIG, analyze numerous textual sources for their work and thus I decided to look into their work to pinpoint how NLP could aid them in their work.
+
+While the EpiLag focuses on disease outbreaks within Germany, INIG is mainly interested in international disease outbreaks. The
 EpiLag has been existing for several years and already established a workflow that is heavily linked to authorities with other infrastructures. For this reason, they did not pose an ideal candidate for the development of an NLP-driven aid. Besides the lack of a promising improvement of their work through NLP, the strong differences in the infrastructure of the participants of the EpiLag made it unfavorable to find a solution that could help all them.
 INIG, however, is a young project that much more depends on self-acquired sources. Unlike EpiLag, INIG
 has no support from other institutions to collect information from these sources.
 Each week one person of the INIG team has to read articles from a fixed set of sources and filter out outbreak news that is
 important or considered interesting for German officials like the ministry of health or the military. These are then put into an Excel sheet. This process costs around 30 minutes
-every day, that could be spent writing needed assessments on the found outbreaks. Thus, the idea developed to automate this process. Putting key points of an outbreak article
+every day, that could be spent writing needed assessments on the found outbreaks. Thus, the idea developed to automate this process.
+
+Putting key points of an outbreak article
 into a database was the first goal of the thesis. Being able to describe the article based on its key points lead to the second goal: Usage of these keywords to learn the relevance of an article and then use this knowledge to write
 and recommendation system to decrease the burden of reading unimportant articles.
