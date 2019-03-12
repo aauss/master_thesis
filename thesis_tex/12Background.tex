@@ -3,7 +3,7 @@
 \section{Working At The RKI}
 
 \section{Natural language Processing}
-
+Here comes the image of a NLP pipeline
 
 \subsection{Stop Words}
 Assuming we want to analyze text on the level of words, we might be looking for
@@ -15,7 +15,8 @@ of the European Union. However, we quickly realize that certain words
 also appear more frequently than others, without revealing much about the content
 of the text. Words like \textit{the, of, than} appear numerously in every English
 text independently of the topic or the source. This can make it very different to target
-words that are actually important for further analyzes. These words are called \textbf{stop words}. \index{stop words}
+words that are actually important for further analyzes. These words are called \textbf{stop words}\index{stop words}.
+
 In case we want to find, as an example, any adverb in a text, then we would care for (almost) all words.
 Every word in this context has some information about the grammatical structure of the text
 and thus must be taken into consideration. But, if we should be interested in the topic
@@ -24,36 +25,60 @@ In this case, it would only distract our learner, classification algorithm, or o
 learning tool if the vast majority of words would not transmit the information
 of interest. Therefore, it is common practice to remove stop words.
 
+\subsection{Regular Expressions}
+Regular expressions (\gls{regex}) is a syntax using ASCII characters to describe a set of strings matching this syntax. Regex consist of meta and literal characters. For a literal character holds that it elicits the search for this exact character within a regex when the regex is interpreted. A metacharacter is interpreted and has a special role in defining regexs. While these metacharacter vary between different regex libraries, certain ones are preserved along all of them. A literal character combines with a \texttt{?} is a very common functionality with different regexs and means that the literal character may appear or may not be apparent to allow a match. Many of the following examples formulate grammatical rules with the help of regexs.
 
 \subsection{Tokenization}
 A token is an abstraction of a piece of information. In NLP this can be
-single character, word, punctuation, or sentences. The goal in tokenization is
+single character, word, punctuation, or sentences. The goal in \textbf{tokenization}\index{tokenization} is
 to split text into meaningful chunks that obey the rules of the language which defined
 what a single word or sentence means. Word-tokenization is the cornerstone for the vast majority of NLP analyzes.
+Nevertheless, token are only loosley connected to what we perceive as an atomic unit in language but in the case of computers it is just an representation of some UTF-8 code. Token not always match how we think about words. It could be that the word \textit{U.S.A.} is split into six tokens \{\textit{U}, \textbf{.}, \textit{S}, \textbf{.}, \textit{A}, \textbf{.}\} or \textit{don't} to (\textit{do}, \textit{n't}) although we know it should/could be (\textit{do}, \textit{not}).
 
-Sentence tokenization is based on word-tokenization and becomes important for example if a text
-includes logical parts (like parapgraphs or chapters) that need to be handled differently.
-These two methods facilitate almost all important methods in written NLP.
+A simple regex for word tokenization would be \texttt{
+[a-z, A-Z]+} that matches 1 to $n$ (\texttt{+}) character to the set (texttt{[]}) of lower or uppercase letter.
+
+Sentence tokenization is based on word-tokenization and is also part of most text analyzes. It becomes important for example if a text includes logical parts (like parapgraphs or chapters) that need to be handled differently.
+These two methods facilitate almost all important methods in NLP.
+
+\subsection{POS-Tagging}
+Later, I am going to mention methods that perform already well with an text that only has been tokenized. Though, mostly we require further processing of our raw text. If the grammatical correction of text is the goal of our NLP pipeline then it goes without saying that we need more information about the grammatical functionality of our extracted token. Assume an sentence like \textit{``I read a book about grammar that were very helpful"}. An lookup of all token/words would yield that every word is written correctly but the sentence is still wrong. We know that \textit{that} refers to \textit{book} and that \textit{book} is singular and a singular relative pronoun must not be follwed by a plural auxilary verb (in this case \textit{are}). A simple lookup is not \textit{that} \textit{That} is written the same when refering to plural nouns. We know it, because we search the noun \textit{that} is refering to, to lookup the noun's grammatical number. We could implement a lookup of the grammatical number of the noun before the first mentioning of \textit{that} to determin if the sentence is correct. To find the noun, we apply POS-tagging.
+
+\subsection{Lemmatization and Stemming}
+Assuming we have found a method to apply tokenization with a satisfying performance then we might want to start some simple descriptive statistics about the text. We could count the amount of word-tokens in the text, or determine the longest token found. But, to realy reason about a text in a simple way would be to find the most occuring words. They might be \textit{the}, \textit{a} or punctuations but we know already know about stop words so we remove them. If our goal was to infer the type of sport based on the most occuring words in sports news and we cannot infer this by the players' names, then we hope to find something like \textit{throw} for baseball or \textit{strike} for soccer. This, unfortunatly, will not be the case. The words in the text will occure in many forms due to grammatical conjugation. In a counting task we would handle this difficulty effortless, but \textit{thrown} and \textit{throw} are unequal for the computer. What we need is, to transform all words to their base form.
+
+There are to options: \textbf{stemming}\index{stemming} and \textbf{lemmatization}\index{lemmatization}. Stemming only prunes the end of word following some rules. These rules are specified as regular expression and will not always reliably work. One common rule among stemmers is the removal of \textit{ing} at the end of a word to transform a word to its simple present form. This works in many cases but fails for words like \textit{lying} that is transformed to \textit{ly} which makes no sense.
+
+Lemmatization uses more sophisticated approaches. First, it uses a look-up instead of rules and therefore will be able to correctly transform \textit{lying} to \textit{lie}. Second, it incooperate POS-tagging to determine whether the word to lemmatize is a verb or a noun. If i.e. \textit{meeting} is a noun, than we do not want to transform it to \textit{meet} but keep it like it is. Nowadays, where computational speed in this comparison is not of utmost concern, lemmatization is prefered over stemming since it is more accurate.
+
 
 \subsection{Bag Of Words}
 In a machine learning task it is preferable to use the large size of data as a leverage to avoid
-doing explicit feature engineering, but to let the algorithm pick the feature.
+doing explicit feature engineering. Instead of having any domain knowledge, it is prefered to let the algorithm pick the features. One apparent example for this in NLP is the \textbf{bag of words}\index{bag of words} approach. It is very difficult to model language because of its entangled grammar with all its special cases, idioms, and ambiguity (i.e. \textit{bank}). Therefore, we try to analyze a text based only on the occurences of the words in the text. The grammatical context for these words is ommitted which means
 
 \subsection{(Disease) Name Entity Recognition}
-Name entity recognition (NER) is based in the middle of a NLP pipeline. After
-sentences and words have been tokenized, and position-of-speak tagging (POS-
-tagging) was applied, it might be important for certain learning algorithms to
+Name entity recognition (\GLS{NER}) is applied later in a NLP pipeline. After
+sentences and words have been tokenized, and POS-tagging was applied, it might be important for certain learning algorithms to
 infer the entity of the word at hand. Common examples are the distinction of
-ambiguous words as apple. In the beginning of a text it could be the fruit or a
-billion dollar company.
-In the medical field such ambiguities rise not because the proper names are so
-indistinguishable form other common words, but because there are many form
-how to write a disease name and equally many abbreviations. Thus, disease-NER
-is a very important processing step.
+ambiguous words as \textit{apple}. In the beginning of a text it would be unclear whether the fruit or a billion dollar company is ment. In the medical field such ambiguities rise not because the proper names are so
+indistinguishable from other common words, but because there are many forms
+how to write a disease name and equally many abbreviations. To reason from medical text, it is important to identify those utterances that are most likely representing a disease. Thus, disease-NER is a very important processing step in this domain.
 
 \section{Machine Learning}
+Describe what machine learning is.
+
 
 \subsection{Naive Bayes Classifier}
-The naive Bayes classifier (NBC) is a probabilistic classifier. It describes a set
+The naive Bayes classifier (\GLS{NBC}) is a probabilistic classifier. It describes a set
 of algorithms capable to learn to infer a label given a set of features. These
 algorithms are trained in a supervised fashion.
+
+\begin{align}
+\boldsymbol{x} &= \{x_1, x_2, \dots, x_n\} \\
+\mathcal{C} &= \{\mathcal{C}_k \: | \: k \in K \} \\
+P(\mathcal{C}_k|\boldsymbol{x}) &= \frac{P(\boldsymbol{x} |\mathcal{C}_k) P(\mathcal{C}_k)} {P(\boldsymbol{x})} \\
+P(\mathcal{C}_k|\boldsymbol{x}) &= \frac{P(x_1) |\mathcal{C})
+                                   P(x_2 |\mathcal{C}_k) \dots
+                                   P(x_n |\mathcal{C}_k)
+                                   P(\mathcal{C}_k)}{ P(\boldsymbol{x})} \\
+\end{align}
