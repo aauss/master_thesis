@@ -1,9 +1,10 @@
 \chapter{Background}
 
-\section{Working At The RKI}
 
 \section{Natural language Processing}
-Here comes the image of a NLP pipeline
+Language requires a whole batch of preprocessing steps to account for the redundancy in language and faciliate the otherwise not accessable underlying rules (including but not limited to grammar). For this purpose, a pipeline has been established.
+
+Here comes a image of a NLP pipeline
 
 \subsection{Stop Words}
 Assuming we want to analyze text on the level of words, we might be looking for
@@ -26,17 +27,16 @@ learning tool if the vast majority of words would not transmit the information
 of interest. Therefore, it is common practice to remove stop words.
 
 \subsection{Regular Expressions}
-Regular expressions (\gls{regex}) is a syntax using ASCII characters to describe a set of strings matching this syntax. Regex consist of meta and literal characters. For a literal character holds that it elicits the search for this exact character within a regex when the regex is interpreted. A metacharacter is interpreted and has a special role in defining regexs. While these metacharacter vary between different regex libraries, certain ones are preserved along all of them. A literal character combines with a \texttt{?} is a very common functionality with different regexs and means that the literal character may appear or may not be apparent to allow a match. Many of the following examples formulate grammatical rules with the help of regexs.
+Regular expressions (\gls{regex}) is a syntax using ASCII characters to describe a set of strings matching this syntax. Regex consist of meta and literal characters. For a literal character holds that it elicits the search for this exact character within a regex when the regex is interpreted. A metacharacter is interpreted and has a special role in defining regexs. While these metacharacter vary between different regex libraries, certain ones are preserved along all of them. A literal character combined with a \texttt{?} is a very common functionality with different regexs and means that the literal character may appear or may not be apparent to allow a match. To still be able to use those metacharacter as literal characters, they can be escaped with a backslash. Many of the following examples formulate grammatical rules with the help of regexs.
 
 \subsection{Tokenization}
-A token is an abstraction of a piece of information. In NLP this can be
-single character, word, punctuation, or sentences. The goal in \textbf{tokenization}\index{tokenization} is
+A token is an abstraction of a piece of information consisting of a byte representation for some symbol. In NLP this can be
+a single character, word, punctuation, or sentences. The goal in \textbf{tokenization}\index{tokenization} is
 to split text into meaningful chunks that obey the rules of the language which defined
-what a single word or sentence means. Word-tokenization is the cornerstone for the vast majority of NLP analyzes.
-Nevertheless, token are only loosley connected to what we perceive as an atomic unit in language but in the case of computers it is just an representation of some UTF-8 code. Token not always match how we think about words. It could be that the word \textit{U.S.A.} is split into six tokens \{\textit{U}, \textbf{.}, \textit{S}, \textbf{.}, \textit{A}, \textbf{.}\} or \textit{don't} to (\textit{do}, \textit{n't}) although we know it should/could be (\textit{do}, \textit{not}).
+what a single word or sentence or character mean. Word-tokenization is the cornerstone for the vast majority of NLP analyzes.
+Nevertheless, token are rather loosley connected to what we perceive as an atomic unit in language and we need to keep in mind that in the case of computers it is just an representation of some (hopefully) UTF-8 code. Token not always match how we think about words. It could be that the word \textit{U.S.A.} is split into six tokens \{\textit{U}, \textbf{.}, \textit{S}, \textbf{.}, \textit{A}, \textbf{.}\} or \textit{don't} into (\textit{do}, \textit{n't}) although we know it should be (\textit{do}, \textit{not}) when tokens are a representation of words. But since they are not completly and rather a method to yield word level understanding then \textit{not} as represented as \textit{n't} will not hurt any text analysis, if the usage of \textit{n't} is consistend. However, splitting the acronym \textit{U.S.A.} into six token discards a large amount of information and cannot be allowed. A solution is typically a combination of a currated list of expected abbreviations and special cases that can be confused for the ending of a sentence by an algorithm. Or, one could train text with a unsupervised method that detects sentence boundary. By counting occurences of ending a sentence, this method extracts the most occuring sentence breaks, and learns to discard those, that do not to seem be a valid new sentence. The acronym \textit{U.S.A.} will occure only as a fraction compared to more frequent sentence breaks in which lower-case letters are followed by a whitespace, a perioad, and then a upper-caseletter. An very simple regex for this would be \texttt{[a-z] \textbackslash.[A-Z]}.
 
-A simple regex for word tokenization would be \texttt{
-[a-z, A-Z]+} that matches 1 to $n$ (\texttt{+}) character to the set (texttt{[]}) of lower or uppercase letter.
+A simple regex for word tokenization would be \texttt{[a-z, A-Z]+} that matches 1 to $n$ (indicated by \texttt{+}) character to the set (indicated by \texttt{[ ]}) of lower or uppercase letter.
 
 Sentence tokenization is based on word-tokenization and is also part of most text analyzes. It becomes important for example if a text includes logical parts (like parapgraphs or chapters) that need to be handled differently.
 These two methods facilitate almost all important methods in NLP.
@@ -49,12 +49,12 @@ Assuming we have found a method to apply tokenization with a satisfying performa
 
 There are to options: \textbf{stemming}\index{stemming} and \textbf{lemmatization}\index{lemmatization}. Stemming only prunes the end of word following some rules. These rules are specified as regular expression and will not always reliably work. One common rule among stemmers is the removal of \textit{ing} at the end of a word to transform a word to its simple present form. This works in many cases but fails for words like \textit{lying} that is transformed to \textit{ly} which makes no sense.
 
-Lemmatization uses more sophisticated approaches. First, it uses a look-up instead of rules and therefore will be able to correctly transform \textit{lying} to \textit{lie}. Second, it incooperate POS-tagging to determine whether the word to lemmatize is a verb or a noun. If i.e. \textit{meeting} is a noun, than we do not want to transform it to \textit{meet} but keep it like it is. Nowadays, where computational speed in this comparison is not of utmost concern, lemmatization is prefered over stemming since it is more accurate.
+Lemmatization uses more sophisticated approaches. First, it uses a look-up instead of rules and therefore will be able to correctly transform \textit{lying} to \textit{lie}. Second, it incooperate POS-tagging to determine whether the word to lemmatize is a verb or a noun. If i.e. \textit{meeting} is a noun, than we do not want to transform it to \textit{meet} but keep it like it is. Nowadays, where computational speed is often not of utmost concern, lemmatization is prefered over stemming since it is more accurate.
 
 
 \subsection{Bag Of Words}
 In a machine learning task it is preferable to use the large size of data as a leverage to avoid
-doing explicit feature engineering. Instead of having any domain knowledge, it is prefered to let the algorithm pick the features. One apparent example for this in NLP is the \textbf{bag of words}\index{bag of words} approach. It is very difficult to model language because of its entangled grammar with all its special cases, idioms, and ambiguity (i.e. \textit{bank}). Therefore, we try to analyze a text based only on the occurences of the words in the text. The grammatical context for these words is ommitted which means
+doing explicit feature engineering. Instead of having any domain knowledge, it is prefered to let the algorithm pick the features. One apparent example for this in NLP is the \textbf{bag of words}\index{bag of words} approach. It is very difficult to model language because of its entangled grammar with all its special cases, idioms, and ambiguity (i.e. \textit{bank}). Therefore, we try to analyze a text based only on the occurences of the words in the text. The grammatical context for these words is ommitted which means that we only focus on the words used. We do so by tokenizing our text, lemmatize the token and operate on the set of words left after this preprocessing. A common example for the performance of this simple model is spam detection. Given a set of emails and labels whether an email is spam or not, a machine learning model could learn which words are most often found in spam mails. The context of these mentioned words does not play a role but also does not hurt the performance of the model.
 
 \subsection{(Disease) Name Entity Recognition}
 Name entity recognition (\GLS{NER}) is applied later in a NLP pipeline. After
@@ -65,20 +65,39 @@ indistinguishable from other common words, but because there are many forms
 how to write a disease name and equally many abbreviations. To reason from medical text, it is important to identify those utterances that are most likely representing a disease. Thus, disease-NER is a very important processing step in this domain.
 
 \section{Machine Learning}
-Describe what machine learning is.
+Machine learning is basically \[f: X \rightarrow y\] where $f$ is our machine learning model that takes our data $X$ and tries to predict its label $y$.
 
 
 \subsection{Naive Bayes Classifier}
 The naive Bayes classifier (\GLS{NBC}) is a probabilistic classifier. It describes a set
 of algorithms capable to learn to infer a label given a set of features. These
-algorithms are trained in a supervised fashion.
+algorithms are trained in a supervised fashion. The NBC is defined as :
 
 \begin{align}
-\boldsymbol{x} &= \{x_1, x_2, \dots, x_n\} \\
-\mathcal{C} &= \{\mathcal{C}_k \: | \: k \in K \} \\
-P(\mathcal{C}_k|\boldsymbol{x}) &= \frac{P(\boldsymbol{x} |\mathcal{C}_k) P(\mathcal{C}_k)} {P(\boldsymbol{x})} \\
-P(\mathcal{C}_k|\boldsymbol{x}) &= \frac{P(x_1) |\mathcal{C})
-                                   P(x_2 |\mathcal{C}_k) \dots
-                                   P(x_n |\mathcal{C}_k)
-                                   P(\mathcal{C}_k)}{ P(\boldsymbol{x})} \\
+  \boldsymbol{x} &= \{x_1, x_2, \dots, x_n\} \\
+  \mathcal{C} &= \{\mathcal{C}_k \: | \: k \in K \} \\
+  P(\mathcal{C}_k|\boldsymbol{x}) &= \frac{P(\boldsymbol{x} |\mathcal{C}_k) P(\mathcal{C}_k)} {P(\boldsymbol{x})} \\
+  P(\mathcal{C}_k|\boldsymbol{x}) &\propto \frac{P(x_1 |\mathcal{C}_k)
+                                       P(x_2 |\mathcal{C}_k) \dots
+                                       P(x_n |\mathcal{C}_k)
+                                       P(\mathcal{C}_k)}{ P(\boldsymbol{x})}
 \end{align}
+
+Where $\boldsymbol{x}$ is our data point which consists of $n$ features. Note, the the classifier is named \textsl{naive} because we assume that every feature in our vector $\boldsymbol{x}$ is independet, i.e. there is not correlation between them. This most of the time is wrong but in practice the NBC still performs very well. $\mathcal{C}$ is the set of all our classes. The goal of the NBC is to predict the probabilty of our data point $\boldsymbol{x}$ belonging to a class $\mathcal{C}_k$. Hence, to predict the class $\boldsymbol{x}$ belongs to, a commong methods is to find the maximum a posteriori (MAP) probability
+\begin{gather}
+  \argmax_{k \in \mathcal{C}} P(\mathcal{C}_k|\boldsymbol{x})
+\end{gather}
+ Solving $P(\boldsymbol{x} |\mathcal{C}_k)$ in (2.3) is hard and requires a huge amount of data form all classes to predict the most likely set of features denotated as $\boldsymbol{x}$ reliably. But since we assumed independece of our features, we can rewrite (2.4) due to the chain rule. The chain rule allows to rewrite
+ $$p(x_i| \{\forall x_j \in \boldsymbol{x} : j \neq i \}, \mathcal{C}_k) \Leftrightarrow p(x_i|\mathcal{C}_k)$$
+ To evaluate (2.4), we simply need to take the product of the probabilties of the features given the label and then evaluate the classification as in (2.5).
+
+\subsubsection{Multinomial Naive Bayes}
+In the case for having a discrete features, like in a document, we can apply multinomial naive Bayes like:
+\begin{align}
+  \mathcal{C} &= \{\mathcal{C}_k \: | \: k \in K \} \\
+  \boldsymbol{t}_d &= \{t_1, t_2, \dots, t_n\} \\
+  \boldsymbol{T} &= \{\boldsymbol{t}_d | \forall d \in \mathcal{D}\} \\
+  P(\boldsymbol{t_{i}}|\mathcal{C}_k) &= \frac{\boldsymbol{T}_{\mathcal{C}_k,t_{i}}}{\sum_{\forall t_j \in \boldsymbol{T}}\boldsymbol{T}_{\mathcal{C}_k,t_j}} \\
+  P(\mathcal{C}_k|\boldsymbol{t}_d) &\propto P(\mathcal{C}_k) \prod_{i=1}^{n \in t_{d}}  p(t_{d,i}|\mathcal{C}_k)
+\end{align}
+Bla lba
