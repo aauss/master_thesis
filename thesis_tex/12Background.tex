@@ -88,16 +88,26 @@ Where $\boldsymbol{x}$ is our data point which consists of $n$ features. Note, t
   \argmax_{k \in \mathcal{C}} P(\mathcal{C}_k|\boldsymbol{x})
 \end{gather}
  Solving $P(\boldsymbol{x} |\mathcal{C}_k)$ in (2.3) is hard and requires a huge amount of data form all classes to predict the most likely set of features denotated as $\boldsymbol{x}$ reliably. But since we assumed independece of our features, we can rewrite (2.4) due to the chain rule. The chain rule allows to rewrite
- $$p(x_i| \{\forall x_j \in \boldsymbol{x} : j \neq i \}, \mathcal{C}_k) \Leftrightarrow p(x_i|\mathcal{C}_k)$$
+ \[p(x_i| \{\forall x_j \in \boldsymbol{x} : j \neq i \}, \mathcal{C}_k) \overset{x_i\perp\!\!\!\perp x_j}{\Longleftrightarrow} p(x_i|\mathcal{C}_k)\]
  To evaluate (2.4), we simply need to take the product of the probabilties of the features given the label and then evaluate the classification as in (2.5).
 
 \subsubsection{Multinomial Naive Bayes}
 In the case for having a discrete features, like in a document, we can apply multinomial naive Bayes like:
 \begin{align}
   \mathcal{C} &= \{\mathcal{C}_k \: | \: k \in K \} \\
-  \boldsymbol{t}_d &= \{t_1, t_2, \dots, t_n\} \\
+  \boldsymbol{t} &= \{c_1, c_2, \dots, c_n\} \\
   \boldsymbol{T} &= \{\boldsymbol{t}_d | \forall d \in \mathcal{D}\} \\
-  P(\boldsymbol{t_{i}}|\mathcal{C}_k) &= \frac{\boldsymbol{T}_{\mathcal{C}_k,t_{i}}}{\sum_{\forall t_j \in \boldsymbol{T}}\boldsymbol{T}_{\mathcal{C}_k,t_j}} \\
-  P(\mathcal{C}_k|\boldsymbol{t}_d) &\propto P(\mathcal{C}_k) \prod_{i=1}^{n \in t_{d}}  p(t_{d,i}|\mathcal{C}_k)
+  p({t_{i}}|\mathcal{C}_k) &= \frac{\boldsymbol{T}_{\mathcal{C}_k,t_{i}}}{\sum_{\forall t_j \in \boldsymbol{T}}\boldsymbol{T}_{\mathcal{C}_k,t_j}} \\
+  P(\mathcal{C}_k|\boldsymbol{t}_d) &\propto P(\mathcal{C}_k) \prod_{i=1}^{|t_{d}|}  p(t_{d,i}|\mathcal{C}_k)
 \end{align}
-Bla lba
+Where $\mathcal{C}$ is again our set of classes, and $\boldsymbol{t}$ the set of token counts where $c_n$ is the occurence count of term $n$. $\boldsymbol{T}$ is a matrix where the token counts $c$ are the columns, and the documents $d$ the rows. To calculate the likelihood $P({t_{i}}|\mathcal{C}_k)$ we simply divide the occurence of token $t_i$ given class $\mathcal{C_k}$ by the sum of all tokens in the same class. Following the independece assumption as in (2.4) we know can calculate $P(\mathcal{C}_k\boldsymbol{t}_d)$ as the product of the prior $P(\mathcal{C}_k)$, the probability of class $\mathcal{C}_k$
+as learned form the training set, and the probabilties of all the terms $t_{1 \dots n}$ given the prior class. For classificaiton, the $\argmax$ as in (2.5) is taken.
+
+Two problems can occure in text classification that need to be handled. First, the high probabilty of numerical underflow due to the product of several values $<1$, and second, we need to account for some token $t_i \in \boldsymbol{t_d}$ having a count of $0$ that would nulify the whole product. The solution is to transform (2.10) in to log-space which equals to:
+
+$$log(P(\mathcal{C}_k|\boldsymbol{t}_d)) \propto \log(P(\mathcal{C}_k)) \sum_{i=1}^{|t_{d}|} \log({p(t_{d,i}|\mathcal{C}_k)})$$
+This avoids multiplying with $0$ and numbers becoming too small for the computer to work with.
+
+\subsubsection{Bernoulli Naive Bayes}
+Especially for shorter texts, there is no gain to count tokens, but rather treat them as binary values (present, not present). This explicitly model the absence and presence of words we can model the probabilty of token $t_i$ given a some class like
+\[p(t_{i}|\mathcal{C}_k) = p(t_{i})(1-p(t_{i}))^{(1-b_{i})}\]
