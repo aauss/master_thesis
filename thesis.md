@@ -11,11 +11,12 @@ author: "Auss Abbood, University Osnabrück and Robert Koch Institut"
 
 # Abstract
 
-Pizza (@pizza2000identification) is an understudied yet widely utilized implement for delivering in-vivo *Solanum lycopersicum* based liquid mediums in a variety of next-generation mastications studies. Here we describe a de novo approach for large scale *T. aestivum* assemblies based on protein folding that drastically reduces the generation time of the mutation rate.
+
 
 # Acknowledgment
 Thanks Bruv
 # Introduction
+## Event based, indicater based
 ## Infectious Diseases
 ### Epidemiology
 ## Motivation
@@ -49,7 +50,7 @@ A token is just an abstraction of a piece of information. In NLP this can be a s
 
 ### Bag Of Words
 
-In a machine learning task we use the amount of data as a leverage to avoid doing explicit feature engineering, but to let the algorithm pick the feature from a set of potential 
+In a machine learning task we use the amount of data as a leverage to avoid doing explicit feature engineering, but to let the algorithm pick the feature from a set of potential
 
 ### (Disease) Name Entity Recognition
 Name entity recognition (NER) is based in the middle of a NLP pipeline. After sentences and words have been tokenized, and position-of-speak tagging (POS-tagging) was applied, it might be important for certain learning algorithms to infer the entity of the word at hand. Common examples are the distinction of ambiguous words as apple. In the beginning of a text it could be the fruit or a billion dollar company.
@@ -63,7 +64,7 @@ In the medical field such ambiguities rise not because the proper names are so i
 
 ### Naive Bayes Classifier
 
-The naive Bayes classifier (NBC) is a probabilistic classifier. It describes a set of algorithms capable to learn to infer a label given a set of features. These algorithms are trained in a supervised fashion. The characteristic of the NBC is that it is assuming independence of all features. That means that observing the state of one feature is uncorrelated with observing the state of another feature. This assumption is often violated, nevertheless, given good quality data and a curated selection of features, the classifier will still perform good. The NBC is utilizing Bayesian probability calculations. 
+The naive Bayes classifier (NBC) is a probabilistic classifier. It describes a set of algorithms capable to learn to infer a label given a set of features. These algorithms are trained in a supervised fashion. The characteristic of the NBC is that it is assuming independence of all features. That means that observing the state of one feature is uncorrelated with observing the state of another feature. This assumption is often violated, nevertheless, given good quality data and a curated selection of features, the classifier will still perform good. The NBC is utilizing Bayesian probability calculations.
 
 Given
 $$\begin{align}
@@ -74,13 +75,13 @@ $$\begin{align}
 
 P(\mathcal{C}_k|\boldsymbol{x}) = \frac{P(\boldsymbol{x} |\mathcal{C}_k) P(\mathcal{C}_k)} {P(\boldsymbol{x})} \\
 
-P(\mathcal{C}_k|\boldsymbol{x}) = \frac{P(x_1) |{\mathcal{C}}) 
-                                   P(x_2 |\mathcal{C}_k) \dots 
+P(\mathcal{C}_k|\boldsymbol{x}) = \frac{P(x_1) |{\mathcal{C}})
+                                   P(x_2 |\mathcal{C}_k) \dots
                                    P(x_n |\mathcal{C}_k)
                                    P(\mathcal{C}_k)}{ P(\boldsymbol{x})}
 
 \end{align}$$
-Where (1) is the feature vector, (2) the set of classes, and (3) the Bayes formula. Then (4) is equivalent to (3) if independence of all $$x_n$$ is assumed. 
+Where (1) is the feature vector, (2) the set of classes, and (3) the Bayes formula. Then (4) is equivalent to (3) if independence of all $$x_n$$ is assumed.
 
 #### Multinomial Naive Bayes Classifier
 A multinomial NBC is able to predict the probability of a discrete set of outcomes $$ p = \{p_k \: | \: k \in K \}$$
@@ -118,7 +119,7 @@ A multinomial NBC is able to predict the probability of a discrete set of outcom
 > 2. Second item.
 # Results
 ## Information Extraction
-## Recommendation 
+## Recommendation
 ## Diagram
 
 ![It's Pizza](https://gist.github.com/maxogden/97190db73ac19fc6c1d9beee1a6e4fc8/raw/adaaa9b5c19460d3be42021ef0c1b8e11a8d38fe/pizza.png)
@@ -132,3 +133,8 @@ lol = [rofl + 1 for rofl in roflcopter]
 ```
 # Discussion
 # References
+
+
+
+
+# Remarks
