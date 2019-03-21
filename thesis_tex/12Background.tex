@@ -37,7 +37,7 @@ Assuming we have found a method to apply tokenization with a satisfying performa
 
 There are to options: \textbf{stemming}\index{stemming} and \textbf{lemmatization}\index{lemmatization}. Stemming only prunes the end of words following rules. These rules are specified as regular expression and try to exploit regularities in language to infer the infinitive form. However, they will not always reliably work due to special cases and ambiguities. One common rule among stemmers is the removal of \textit{ing} at the end of a word to transform a word to its infinitive form. This works in many cases but fails for words like \textit{lying} that is transformed to \textit{ly} which is programmatically wrong.
 
-Lemmatization uses more sophisticated approaches. First, it uses a look-up instead of rules and therefore will be able to correctly transform \textit{lying} to \textit{lie}. Second, it in-cooperates POS-tagging to determine whether the word to lemmatize is a verb or a noun \citep{Muller2015}. If i.e. \textit{meeting} is a noun, than we do not want to transform it to \textit{meet} but keep it like it is. Nowadays, where computational speed is often not of utmost concern, lemmatization is preferred over stemming since it is more accurate\cite{Balakrishnan2014}.
+Lemmatization uses more sophisticated approaches. First, it uses a look-up instead of rules and therefore will be able to correctly transform \textit{lying} to \textit{lie}. Second, it in-cooperates POS-tagging to determine whether the word to lemmatize is a verb or a noun \citep{Muller2015}. If i.e. \textit{meeting} is a noun, than we do not want to transform it to \textit{meet} but keep it like it is. Nowadays, where computational speed is often not of utmost concern, lemmatization is preferred over stemming since it is more accurate\citep{Balakrishnan2014}.
 
 
 \subsection{Bag Of Words}
@@ -45,20 +45,24 @@ In a machine learning task it is preferable to use the large size of data as a l
 
 \subsection{(Disease) Name Entity Recognition}
 Name entity recognition (\GLS{NER}) is a step placed towards the end of a NLP pipeline. After sentences and words have been tokenized, and POS-tagging was applied, it might be important for certain learning algorithms to
-know the entity of the word at hand. Common examples are the recognition of names for persons or companies and for numerical entities, like time, dates and money \citep{Nadeau2009}.
+know the entity of the word at hand. Common examples are the recognition of names for persons or companies and for numerical entities, like time, dates and money \citep{Nadeau2009}. This recognition might be part of some NLP pipeline but it also can be part of a pipeline for information retrieval (\GLS{IR}). The work steps of IR is the extraction of specific information and their subsequent storage in a database with the objective to structure large amount of data that is difficult to access \citep{Manning2008, Wei2011}.
 
-The importance for NER is explained by the necessity to deal with ambiguous words as \textit{apple}. When the word \textit{Apple} is at the beginning of a text, it is unclear whether it stands for the fruit or a billion dollar company. While in the beginning NER consisted of handcrafted rules and heuristics \citep{Rau1991}, NER is now a classification problem that is solved through supervised learning using capable of learning relationships as Hidden Markov Models, Decision Trees and Conditional Random Fields \citep{Nadeau2009} Though, there is a shift towards non/semi-supervised methods that infer features (as neural networks) and outperform feature-engineered systems (as decision trees) \citep{Yadav2018}.
+The reason NER is not simply covered by a lookup but a separate module in a pipeline, is the difficulty to deal with ambiguous words as \textit{apple}. When the word \textit{Apple} is at the beginning of a text, it is unclear whether it stands for the fruit or a billion dollar company. While in the beginning NER consisted of handcrafted rules and heuristics \citep{Rau1991}, NER is now a classification problem that is solved through supervised learning, capable of learning relationships with Hidden Markov Models, Decision Trees, or Conditional Random Fields \citep{Nadeau2009} Though, there is a shift towards non/semi-supervised methods that infer features (as neural networks) and outperform feature-engineered systems (as decision trees) \citep{Yadav2018}.
 
-In the medical field such ambiguities rise not because the proper names are so indistinguishable from other common words, but because there are many forms how to write a disease name and equally many abbreviations. To reason from medical text, it is important to identify those utterances that are most likely representing a disease. Thus, disease-NER is a very important processing step in this domain.
+In the medical field such ambiguities rise not because the proper names are so indistinguishable from other common words, but because there are many forms how to write a disease name and equally many abbreviations (i.e. \textit{cancer}, \textit{carcinoma}, \textit{malignant tumor}, \textit{CA}). To reason from medical text, it is important to identify those utterances that are most likely representing a disease. Thus, disease-NER is a important processing step in this domain. However, benchmarks also showed that in highly standardized text lookups perform equally well \citep{Jimeno2007}. Therefore, the exact procedure to perform DNER depends on the sources that need to be processed.
 
 \section{Machine Learning}
-Machine learning is basically \[f: X \rightarrow y\] where $f$ is our machine learning model that takes our data $X$ and tries to predict its label $y$.
+Machine learning (\GLS{ML}) is the attempt to make computer learn. \citeauthor{Mitchell1997} described learning broadly as,
+%
+\begin{quote}
+``A computer program is said to \textbf{learn} from experience $\mathcal{E}$ with respect to some class of task $\mathcal{T}$ and performance measure $\mathcal{P}$, if its performance at tasks in $\mathcal{T}$, as measured by $\mathcal{P}$, improves with experience $\mathcal{E}$''
+\end{quote}
+%
+There are, however, ML algorithms that not necessarily have $\mathcal{E}$ defined (unsupervised methods). Therefore, one could also consider the following definition  \[f: X \rightarrow y\] where $f$ is our machine learning model that takes our data $X$ and tries to predict the most likely label $\hat{y}$ where $\hat{y} \approx y$ and $y$ being the true label.
 
 
 \subsection{Naive Bayes Classifier}
-The naive Bayes classifier (\GLS{NBC}) is a probabilistic classifier. It describes a set
-of algorithms capable to learn to infer a label given a set of features. These
-algorithms are trained in a supervised fashion. The NBC is defined as :
+The naive Bayes classifier\index{naive Bayes classifier} (\GLS{NBC}) is a probabilistic classifier. It describes a set of algorithms capable to learn inferring a label given a set of features. These algorithms are trained in a supervised fashion. The NBC is defined as :
 
 \begin{align}
   \boldsymbol{x} &= \{x_1, x_2, \dots, x_n\} \\
@@ -70,13 +74,14 @@ algorithms are trained in a supervised fashion. The NBC is defined as :
                                        P(\mathcal{C}_k)}{ P(\boldsymbol{x})}
 \end{align}
 
-Where $\boldsymbol{x}$ is our data point which consists of $n$ features. Note, the the classifier is named \textsl{naive} because we assume that every feature in our vector $\boldsymbol{x}$ is independet, i.e. there is not correlation between them. This most of the time is wrong but in practice the NBC still performs very well. $\mathcal{C}$ is the set of all our classes. The goal of the NBC is to predict the probabilty of our data point $\boldsymbol{x}$ belonging to a class $\mathcal{C}_k$. Hence, to predict the class $\boldsymbol{x}$ belongs to, a commong methods is to find the maximum a posteriori (MAP) probability
+Where $\boldsymbol{x}$ is our data point which consists of $n$ features. Note, the the classifier is named \textsl{naive} because we assume that every feature in our vector $\boldsymbol{x}$ is independent, i.e. there is no correlation between them. This most of the time is wrong but in practice the NBC still performs very well \citep{Rish2001}. $\mathcal{C}$ is the set of all our classes. The goal of the NBC is to predict the probability of our data point $\boldsymbol{x}$ belonging to a class $\mathcal{C}_k$. Hence, to predict the class $\boldsymbol{x}$ belongs to. A common procedure is to find the maximum a posteriori (MAP) probability
 \begin{gather}
   \argmax_{k \in \mathcal{C}} P(\mathcal{C}_k|\boldsymbol{x})
 \end{gather}
- Solving $P(\boldsymbol{x} |\mathcal{C}_k)$ in (2.3) is hard and requires a huge amount of data form all classes to predict the most likely set of features denotated as $\boldsymbol{x}$ reliably. But since we assumed independece of our features, we can rewrite (2.4) due to the chain rule. The chain rule allows to rewrite
- \[p(x_i| \{\forall x_j \in \boldsymbol{x} : j \neq i \}, \mathcal{C}_k) \overset{x_i\perp\!\!\!\perp x_j}{\Longleftrightarrow} p(x_i|\mathcal{C}_k)\]
- To evaluate (2.4), we simply need to take the product of the probabilties of the features given the label and then evaluate the classification as in (2.5).
+to build a classifier.
+ Solving $P(\boldsymbol{x} |\mathcal{C}_k)$ in (2.3) is hard and requires a huge amount of data form all classes to predict the most likely set of features denoted as $\boldsymbol{x}$ reliably. But since we assumed independence of our features, we can rewrite (2.4) due to the chain rule as
+ \[p(x_i| \{\forall x_j \in \boldsymbol{x} : j \neq i \}, \mathcal{C}_k) \overset{x_i\perp\!\!\!\perp \forall x_j}{\Longleftrightarrow} p(x_i|\mathcal{C}_k)\]
+ To evaluate (2.4), we simply need to take the product of the probabilities of the features given the label and then evaluate the classification as in (2.5).
 
 \subsubsection{Multinomial Naive Bayes}
 In the case for having a discrete features, like in a document, we can apply multinomial naive Bayes like:
@@ -87,16 +92,17 @@ In the case for having a discrete features, like in a document, we can apply mul
   p({t_{i}}|\mathcal{C}_k) &= \frac{\boldsymbol{T}_{\mathcal{C}_k,t_{i}}}{\sum_{\forall t_j \in \boldsymbol{T}}\boldsymbol{T}_{\mathcal{C}_k,t_j}} \\
   P(\mathcal{C}_k|\boldsymbol{t}_d) &\propto P(\mathcal{C}_k) \prod_{i=1}^{|t_{d}|}  p(t_{d,i}|\mathcal{C}_k)
 \end{align}
-Where $\mathcal{C}$ is again our set of classes, and $\boldsymbol{t}$ the set of token counts where $c_n$ is the occurence count of term $n$. $\boldsymbol{T}$ is a matrix where the token counts $c$ are the columns, and the documents $d$ the rows. To calculate the likelihood $P({t_{i}}|\mathcal{C}_k)$ we simply divide the occurence of token $t_i$ given class $\mathcal{C_k}$ by the sum of all tokens in the same class. Following the independece assumption as in (2.4) we know can calculate $P(\mathcal{C}_k\boldsymbol{t}_d)$ as the product of the prior $P(\mathcal{C}_k)$, the probability of class $\mathcal{C}_k$
-as learned form the training set, and the probabilties of all the terms $t_{1 \dots n}$ given the prior class. For classificaiton, the $\argmax$ as in (2.5) is taken.
+Where $\mathcal{C}$ is again our set of classes, and $\boldsymbol{t}$ the set of token counts where $c_n$ is the occurrence count of term $n$. $\boldsymbol{T}$ is a matrix where the token counts $c$ are the columns, and the documents $d$ the rows. To calculate the likelihood $P({t_{i}}|\mathcal{C}_k)$ we simply divide the occurrence of token $t_i$ given class $\mathcal{C_k}$ by the sum of all tokens in the same class. Following the independence assumption as in (2.4) we now can calculate $P(\mathcal{C}_k\boldsymbol{t}_d)$ as the product of the prior $P(\mathcal{C}_k)$ - the probability of class $\mathcal{C}_k$
+as learned form the training set - and the probabilities of all the terms $t_{1 \dots n}$ given the prior class. For classification, the $\argmax$ as in (2.5) is taken.
 
-Two problems can occure in text classification that need to be handled. First, the high probabilty of numerical underflow due to the product of several values $<1$, and second, we need to account for some token $t_i \in \boldsymbol{t_d}$ having a count of $0$ that would nulify the whole product. The solution is to transform (2.10) in to log-space which equals to:
-
-$$log(P(\mathcal{C}_k|\boldsymbol{t}_d)) \propto \log(P(\mathcal{C}_k)) \sum_{i=1}^{|t_{d}|} \log({p(t_{d,i}|\mathcal{C}_k)})$$
-This avoids multiplying with $0$ and numbers becoming too small for the computer to work with.
-
+Two problems can occur in text classification that need to be handled. First, the high probability of numerical underflow due to the large product of several values $<1$, and second, we need to account for some token $t_i \in \boldsymbol{t_d}$ having a count of $0$ that would nullify the whole product. The solution to the underflow problem is to transform (2.10) in to log-space which equals to:
+%
+\[log(P(\mathcal{C}_k|\boldsymbol{t}_d)) \propto \log(P(\mathcal{C}_k)) + \sum_{i=1}^{|t_{d}|} \log({p(t_{d,i}|\mathcal{C}_k)}) \]
+%
+To avoid $p({t_{i}}|\mathcal{C}_k)$ becoming $0$ we apply Laplace smoothing\index{Laplace smoothing} to (2.9) which yields
+\[p({t_{i}}|\mathcal{C}_k) = \frac{\boldsymbol{T}_{\mathcal{C}_k,t_{i}} + 1}{\sum_{\forall t_j \in \boldsymbol{T}}(\boldsymbol{T}_{\mathcal{C}_k,t_j} + 1)}\]
 \subsubsection{Bernoulli Naive Bayes}
-Especially for shorter texts, there is no gain to count tokens, but rather treat them as binary values (present, not present). This explicitly model the absence and presence of words where we can model the probabilty of token $t_i$ given a some class like
+Especially for shorter texts, there is no gain to count tokens, but rather treat them as binary values (present, not present). This explicitly model the absence and presence of words where we can model the probability of token $t_i$ given a some class like
 \[p(t_{i}|\mathcal{C}_k) = p(t_{i})(1-p(t_{i}))^{(1-b_{i})}\]
 
 \subsubsection{Complement Naive Bayes}
