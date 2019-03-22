@@ -40,7 +40,7 @@ There are to options: \textbf{stemming}\index{stemming} and \textbf{lemmatizatio
 Lemmatization uses more sophisticated approaches. First, it uses a look-up instead of rules and therefore will be able to correctly transform \textit{lying} to \textit{lie}. Second, it in-cooperates POS-tagging to determine whether the word to lemmatize is a verb or a noun \citep{Muller2015}. If i.e. \textit{meeting} is a noun, than we do not want to transform it to \textit{meet} but keep it like it is. Nowadays, where computational speed is often not of utmost concern, lemmatization is preferred over stemming since it is more accurate\citep{Balakrishnan2014}.
 
 
-\subsection{Bag Of Words}
+\subsection{Bag Of Words}\label{section:bow}
 In a machine learning task it is preferable to use the large size of data as a leverage to avoid doing explicit feature engineering. Instead of having any domain knowledge, it is preferred to let the algorithm pick the features. One apparent example for this in NLP is the \textbf{bag of words}\index{bag of words} approach. It is very difficult to model language because of its entangled grammar, all its special cases, idioms, and ambiguity (i.e. \textit{bank}). Therefore, we try to analyze a text based only on the occurrences of the words in the text. The grammatical context for these words is omitted which means that we only focus on the words used. We do so by tokenizing our text, lemmatize the token and operate on the set of words left after this preprocessing. A common example for the performance of this simple model is spam detection. Given a set of emails and labels \emph{spam} and \emph{not spam}, a machine learning model could learn these labels based on the presence of words based on the learned word distributions of the labels.
 
 \subsection{(Disease) Name Entity Recognition}
@@ -60,9 +60,8 @@ Machine learning (\GLS{ML}) is the attempt to make computer learn. \citeauthor{M
 %
 There are, however, ML algorithms that not necessarily have $\mathcal{E}$ defined (unsupervised methods). Therefore, one could also consider the following definition  \[f: X \rightarrow y\] where $f$ is our machine learning model that takes our data $X$ and tries to predict the most likely label $\hat{y}$ where $\hat{y} \approx y$ and $y$ being the true label.
 
-
-\subsection{Naive Bayes Classifier}
-The naive Bayes classifier\index{naive Bayes classifier} (\GLS{NBC}) is a probabilistic classifier. It describes a set of algorithms capable to learn inferring a label given a set of features. These algorithms are trained in a supervised fashion. The NBC is defined as :
+\subsection{Naive Bayes Classifier}\label{section:nbc}
+The \textbf{naive Bayes classifier}\index{naive Bayes classifier} (\GLS{NBC}) is a probabilistic classifier. It describes a set of algorithms capable to learn inferring a label given a set of features. These algorithms are trained in a supervised fashion. The NBC is defined as :
 
 \begin{align}
   \boldsymbol{x} &= \{x_1, x_2, \dots, x_n\} \\
@@ -84,6 +83,7 @@ to build a classifier.
  To evaluate (2.4), we simply need to take the product of the probabilities of the features given the label and then evaluate the classification as in (2.5).
 
 \subsubsection{Multinomial Naive Bayes}
+%TODO: Add tf-idf
 In the case for having a discrete features, like in a document, we can apply multinomial naive Bayes like:
 \begin{align}
   \mathcal{C} &= \{\mathcal{C}_k \: | \: k \in K \} \\
@@ -106,25 +106,118 @@ Especially for shorter texts, there is no gain to count tokens, but rather treat
 \[p(t_{i}|\mathcal{C}_k) = p(t_{i})(1-p(t_{i}))^{(1-b_{i})}\]
 
 \subsubsection{Complement Naive Bayes}
+There are cases where the \textsl{naive} assumption is ill made. In a unbalanced class problem, the data is skewed towards the larger class which the following table illustrates,
 
+\begin{table}[h!]
+  \centering
+  \caption{An coin flip example with a imbalanced class. $\theta$ is the probability of a class to yield head ($H$). Per experiment we flip one coin in $Class 1$ and two coins ins $Class 2.$ Then the label $H$ is assigned to one of both classes. Adopted from \cite{Rennie2003}}
+  \setlength{\tabcolsep}{1.5em}
+  \begin{tabular}{@{}cccc@{}}
+    % $\theta_{Class 1} = 0.25$ &  $\theta_{Class 2} = 0.25$ & $p(data)$ & Label for H \\
+    % \hline
+    % T & TT & $0.48$ & $none$ \\
+    % T & \{HT, TH\} & $0.24$ & $Class 2$ \\
+    % T & HH & $0.03$ & $Class 2$ \\
+    % H & TT & $0.16$ & $Class 1$ \\
+    % H & \{HT, TH\} & $0.08$ & $Class 1$ \\
+    % H & HH & $0.01$ & $none$
+    \toprule
+    \textbf{Class 1} & \textbf{Class 2} & $\mathbf{p(data)}$ & \textbf{Label for H} \\
+    $\theta = 0.25$ & $\theta=0.2$ & & \\
+    \midrule
+    T & TT & $0.48$ & $none$ \\
+    T & \{HT, TH\} & $0.24$ & $Class 2$ \\
+    T & HH & $0.03$ & $Class 2$ \\
+    H & TT & $0.16$ & $Class 1$ \\
+    H & \{HT, TH\} & $0.08$ & $Class 1$ \\
+    H & HH & $0.01$ & $none$ \\
+    \bottomrule
+  \end{tabular}
+  \label{table:coinflip}
+\end{table}
+The experiment shown in table \ref{table:coinflip} , that considers each possible outcome of coin flips, suggests a 24\% probability for $Class 1$ to yield $H$ and 27\% for $Class 2$, although the probability for $Class 1$ to yield $H$ is actually higher.
+The proposed solution by \cite{Rennie2003} is to minimize the probability of a vector of word counts not belonging to a class,
+\[\argmin P(\neg\, \mathcal{C}_k) \prod_{i=1}^{|t_{d}|} \frac{1}{p(t_{d,i}|\neg\, \mathcal{C}_k)} \]
 
 \subsection{Deep Learning}
 \subsubsection{Perceptron}
-The start
+A \textbf{perceptron}\index{perceptron} is an algorithm inspired by biological neurons. It is a binary classifier that is learns by adjusting its threshold to \textsl{fire} an \textsl{action potential} when the correct class is detected. Formally it is
+\begin{gather}
+  Perceptron(\mathbf{x}) = \begin{cases}1 & \text{if }\ \mathbf{w} \cdot \mathbf{x} + \mathbf{b} > 0,\\
+  0 & \text{otherwise}\end{cases}
+\end{gather}
+where $\mathbf{x}$ is our data vector, $w$ the weight vector and $b$ the bias where $w$, $b$, and $x$ are of same length. It is trained in a supervised fashion. The learning step with which $w$ is adjusted is defined as,
+\[\mathbf{w}(t+1) = \mathbf{w}(t) + \eta (\mathbf{d}(t) - \mathbf{y}(t))\mathbf{x}(t)\]
+with $\mathbf{d}$ being the training data vector and $\mathbf{y}$ the corresponding label vector at training step $t$ with a learning rate $\eta \in (0,1]$.
 \subsubsection{Multi Layer Perceptron}
+A \textbf{multi layer perceptron} (\GLS{MLP}\index{multi layer perceptron}) (Fig. )\ref{fig:MLP}) consists of three layers, an input and output layer, and $1 \dots n$ hidden layers. Each layer consists of a perceptron. The activation function is not a Boolean function but as sigmoid function $\sigma(y) = \frac{1}{1+e^{-y}}$. Its output also ranges from $0$ to $1$ but is derivable. Derivablity is crucial since the MLP uses backpropagation to be trained. Described by,
+\begin{align}
+  E(\mathbf{w})_t &\equiv \frac{1}{2} \sum (\mathbf{d}_t - \mathbf{y}_t)^2 \\
+  \Delta \mathbf{w} &= - \eta \frac{\delta E_t}{\delta \mathbf{w}}
+\end{align}
+where $E$ is the sum over of the errors over all output neurons at step $t$ and $\Delta \mathbf{w}$ is the weight adjustment according to the backproagated error $\frac{\delta E_t}{\delta \mathbf{w}}$ that is the partial derivative of the error given all the weights with a learning rate $\eta$. The minus sign indicates that the weight is adjusted downwards the estimated gradient (minimization).
 
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=\layersep]
+      \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+      \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
+      \tikzstyle{input neuron}=[neuron, fill=green!50];
+      \tikzstyle{output neuron}=[neuron, fill=red!50];
+      \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+      \tikzstyle{annot} = [text width=4em, text centered]
+
+      % Draw the input layer nodes
+      \foreach \name / \y in {1,...,4}
+      % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+          \node[input neuron, pin=left:Input \y] (I-\name) at (0,-\y) {};
+
+      % Draw the hidden layer nodes
+      \foreach \name / \y in {1,...,5}
+          \path[yshift=0.5cm]
+              node[hidden neuron] (H-\name) at (\layersep,-\y cm) {};
+
+      % Draw the output layer node
+      \node[output neuron,pin={[pin edge={->}]right:Output}, right of=H-3] (O) {};
+
+      % Connect every node in the input layer with every node in the
+      % hidden layer.
+      \foreach \source in {1,...,4}
+          \foreach \dest in {1,...,5}
+              \path (I-\source) edge (H-\dest);
+
+      % Connect every node in the hidden layer with the output layer
+      \foreach \source in {1,...,5}
+          \path (H-\source) edge (O);
+
+      % Annotate the layers
+      \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
+      \node[annot,left of=hl] {Input layer};
+      \node[annot,right of=hl] {Output layer};
+  \end{tikzpicture}
+  \caption{A illustration of a multi layer perceptron. The input (green), hidden (purple), and output (red) layer are each perceptrons. The arrow indicate the direction of the computation of the input which is a scalar.}
+  \label{fig:MLP}
+\end{figure}
 \subsubsection{Convolutional Neural Network}
-\subsubsection{Long-Term Short-Term Memory}
+While the MLP is only capable to receive a single vector as an input, the \textbf{convolutional neural network}(\GLS{CNN})\index{convolutional neural network} is able to process a matrix. The additional dimension can then represent time or spatial dependencies. The extracted features are not represented by single neurons throughout hidden layers, but are adopted to so called feature maps. Feature maps are small (smaller than the input) matrices where their entries are weights that are adjusted during the training process. These feature maps are striding over the input and apply a convolution,
+\[C(i,j) = (I \ast F)(i,j) = \sum_m \sum_n I(m, n) F(i-m, j-n)\] where $\ast$ is the convolutional operator, $I$ is our input matrix, $F$ the feature map, and $C(i,j)$ the output for the convolution at position $(i,j)$ of our feature map. The output matrix $C$ of the convolution step is then pooled which is i.e., the max or average value of $C$. This process can be repeated when several pooling steps commit to a new matrix. At the end, a fully connected layer (a MLP where every neuron is connected with each neuron) incorporates all information and yields a classification (Fig. \ref{fig:cnn}).
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.5]{CNN.png}
+    \caption{An illustration of a n-gram convolutional neural network. The input is a numerical representation (\ref{section:embeddings}) of a tokenized text. The convolution over the input matrix is represented as a red and yellow box (called feature map) that is then pooled (i.e. max of the kernel). The classification is then enforced by a fully connected layer that incorporates the input of all feature maps.}
+    \label{fig:cnn}
+\end{figure}
 
 
-\subsection{Embeddings}
+\subsection{Embeddings}\label{section:embeddings}
+In \ref{section:bow} I have been pointing out that using the bag-of-words approach is explained by the difficulty to explicitly model language and in \ref{section:nbc} I showed that this approach does not hurt our model. However, bag of words models language incorrectly and having a better representation of language improve our ML algorithms. Word embeddings are a method to represent words as n-dimensional vectors and this way, language is much more thoroughly modeled.
 \subsubsection{Word2Vec}
 \subsubsection{GloVe}
 \subsubsection{BERT}
 \subsubsection{Document Embedding}
 
 \subsection{Web Scraping}
-\subsubsection{Web Scraping}
 \subsubsection{DOM}
 \subsubsection{Ajax}
 \subsubsection{REST}
