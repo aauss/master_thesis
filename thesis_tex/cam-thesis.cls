@@ -302,10 +302,10 @@ First year report submitted
 This thesis is submitted
 \fi
 \ifcam@submissiondate
-    on \@submissiondate{}
+    in \@submissiondate{}
 \fi
 \ifcam@firstyr
-in partial fulfilment of the requirements
+in partial fulfillment of the requirements
 \fi
 for the degree of Master of Science%
 }
@@ -480,15 +480,14 @@ for the degree of Master of Science%
 \else
 \chapter*{Declaration}
 \thispagestyle{empty}
-This dissertation is the result of my own work and includes nothing which is the outcome
-of work done in collaboration except as declared in the Preface and specified in the text.
+This thesis is the result of my own work and includes nothing which is the outcome
+of work done in collaboration except as specified in the text.
 It is not substantially the same as any that I have submitted, or am concurrently
 submitting, for a degree or diploma or other qualification at the University of Osnabr\"uck
-or any other University or similar institution except as declared in the Preface and
-specified in the text. I further state that no substantial part of my thesis has
+or any other University or similar institution except as specified in the text. I further state that no substantial part of my thesis has
 already been submitted, or is being concurrently submitted, for any such degree, diploma
 or other qualification at the University of Osnabr\"uck or any other University or similar
-institution except as declared in the Preface and specified in the text.
+institution except as specified in the text.
 
 
 % Leaving some space for the signature:
