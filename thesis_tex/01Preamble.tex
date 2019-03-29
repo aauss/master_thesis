@@ -8,10 +8,18 @@
 \RequirePackage{booktabs}
 \RequirePackage{textcomp}
 \RequirePackage{fancyvrb}
+\RequirePackage{minted}
+
+\usemintedstyle{friendly}
+
+\LetLtxMacro{\cminted}{\minted}
+\let\endcminted\endminted
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
-\def\layersep{2.5cm} % Forgot for what TODO: Check meaning
+\def\layersep{2.5cm} % Defines distance for ANN figure
 
 
 

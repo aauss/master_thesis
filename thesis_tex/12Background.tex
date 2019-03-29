@@ -309,7 +309,6 @@ While the MLP is only capable to receive a single vector as an input, the \textb
     \label{fig:cnn}
 \end{figure}
 
-
 \subsection{Embeddings}\label{section:embeddings}
 
 In \ref{section:bow} I have been pointing out that using the bag-of-words approach is explained by the difficulty to explicitly model language and in \ref{section:nbc} I showed that this approach does not hurt the performance of the classifier. However, bag of words models language incorrectly and having a better representation of language is more desirable to improve ML algorithms. Word embeddings are such methods to represent words as n-dimensional vectors to much better capture syntactic and semantic characteristics of language.
@@ -342,19 +341,27 @@ The process of automatically extract contents available on the world wide web i.
 
 \subsubsection{HTML and CSS}
 
-\textbf{Hyptertext Markup Language}(\GLS{HTML})\index{HTML} is a markup language which means that it consists of a set of \textsl{tags} that define how content of a document needs to be interpreted. In HTML for example, \texttt{<h1> I am a Header </h1} defines the opening of a header tag followed by some content and the closing of this tag. When this HTML code is interpreted, the text is then displayed bold and larger than non-header text if not specified otherwise.
+\textbf{Hyptertext Markup Language}(\GLS{HTML})\index{HTML} is a markup language which means that it consists of a set of \textsl{tags} that define how content of a document needs to be interpreted. In HTML for example, \mintinline{HTML}{<h1> I am a Header </h1>} defines the opening of a header tag followed by some content and the closing of this tag. When this HTML code is interpreted, the text is then displayed bold and larger than non-header text if not specified otherwise.
 
-\textbf{Cascading Style Sheets}(\GLS{CSS})\index{CSS} is a style sheet language that is used to allow styling HTML code. Given the example above, we could modify the header to have another color, \texttt{<h1> style="color: red"; I am a Header </h1}. It is also possible to define a class and use this class to automatically apply several styles such as,
-\begin{Verbatim}[samepage=true]
-  .header {
-    color: red;
-    font-family: verdana;
-  }
-\end{Verbatim}
-This way, we can apply the style like so \texttt{<h1> class="header: red"; I am a Header </h1}. While a class can be accessed from several HTML tags, there is also a CSS \textsl{id} that can only be accessed once but otherwise has the same function to define a style.
+\textbf{Cascading Style Sheets}(\GLS{CSS})\index{CSS} is a style sheet language that is used to allow styling HTML code. Given the example above, we could modify the header to have another color, \mintinline{HTML}{<h1> style="color: red"; I am a Header </h1>}. It is also possible to define a \emph{class} and use this class to automatically apply several styles such as in \ref{lst:css},\renewcommand{\figurename}{Listing}
+
+\begin{figure}[h]
+  \centering
+  \begin{cminted}{CSS}
+    .header {
+      color: red;
+      font-family: verdana;
+    }
+  \end{cminted}
+  \caption{CSS class named \emph{header} that sets the font to verdana and colors it red.}
+  \label{lst:css}
+
+\end{figure}
+
+This way, we can apply the style like so \mintinline{HTML}{<h1 class="header"> I am a Header </h1>}. While a class can be accessed from several HTML tags, there is also a \textsl{id} that can only be accessed once but otherwise has the same function to define a style.
 Both languages thereby reveal a way of filtering the content of a webpage. Web scraping is exploiting HTML tags or CSS selectors like classes or ids to filter the content of a webpage.
 
-Important tags for scraping are the paragraph tag \texttt{<p>} that normally contains text intended for the reader of a webpage and hyperlinks in the \texttt{<a>} tag. By investigating certain webpages thoroughly, one might also find a schema in the assignment of CSS selectors that can be exploited during web scraping.
+Important tags for scraping are the paragraph tag \mintinline{HTML}{<p>} that normally contains text intended for the reader of a webpage and hyperlinks in the \mintinline{HTML}{<a>} tag. By investigating certain webpages thoroughly, one might also find a schema in the assignment of CSS selectors that can be exploited during web scraping.
 
 \subsubsection{REST}
 Most webpages offer a web service which is a broad term for some user interface that allows the communication to a data base and optionally performs some operation on this data. There are two ways to communi
