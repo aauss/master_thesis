@@ -4,7 +4,8 @@
 \section{Natural language Processing}
 Language requires a whole batch of preprocessing steps to account for the redundancy in language and facilitate the otherwise not accessible underlying rules (including but not limited to grammar). For this purpose, a pipeline has been established.
 
-Here comes a image of a NLP pipeline
+\textcolor{red}{Here comes a image of a NLP pipeline}
+
 
 \subsection{Corpus}
 
@@ -211,8 +212,11 @@ While the MLP is only capable to receive a single vector as an input, the \textb
 
 
 \subsection{Embeddings}\label{section:embeddings}
-In \ref{section:bow} I have been pointing out that using the bag-of-words approach is explained by the difficulty to explicitly model language and in \ref{section:nbc} I showed that this approach does not hurt our model. However, bag of words models language incorrectly and having a better representation of language improve our ML algorithms. Word embeddings are a method to represent words as n-dimensional vectors and this way, language is much more thoroughly modeled.
+In \ref{section:bow} I have been pointing out that using the bag-of-words approach is explained by the difficulty to explicitly model language and in \ref{section:nbc} I showed that this approach does not hurt the performance of the classifier. However, bag of words models language incorrectly and having a better representation of language improves our ML algorithms. Word embeddings are a method to represent words as n-dimensional vectors to much better capture syntactic and semantic characteristics of language.
 \subsubsection{Word2Vec}
+In 2013 two algorithms to efficiently compute high quality distributed representations of words and phrases were published. A synonym for this approach is \textbf{word2vec}\index{word2vec}. The general approach is both algorithms to maximize the similarity measures of words that appear in a similar context. The \textbf{continues bag-of-words model}\index{continues bag-of-words model} is trained to predict the vector representation of a word or phrase given  $n$ words before and after the word in a sentence. A slower implementation with the benefit to model infrequent words better is the \textbf{continuous skip-gram-model}\index{continuous skip-gram-model} \citep{word2vec}. The skip-gram-model tries to predict the context given a word and is thus the opposite approach of the bag-of-words model. In practice we generate labeled data of the form of tuples, where one entry is the target word $\mathbf{w}_t$ and the other entries are context words $\mathbf{w}_c$ such that the tuple is $(\mathbf{w}_t, \mathbf{w}_{c_{1}}, \dots, \mathbf{w}_{c_{n}})$. The tuple can either contain actual context words found in the text, or random words from the vocabulary (negative sampling). The embedding layer learns the weights of the input and context words, by yielding a n-dimensional vector for all of these words, calculate a dot-product of both vectors in the merge-layer and then pass it to a sigmoid layer that predicts whether the words are actual context words or have been negatively sampled. In short, the objective of the algorithm is to maximize
+\[\sum_{t \in T} \sum_{c \in \mathcal{C}_t} log( p(\mathbf{W}_c|\mathbf{w}_t))\]
+where $\mathbf{w}$ is the vector representation of a word. $t$ is the target word and $\mathbf{W}_c$ the context matrix, where each row is a vector representation of a context word.
 \subsubsection{GloVe}
 \subsubsection{BERT}
 \subsubsection{Document Embedding}
