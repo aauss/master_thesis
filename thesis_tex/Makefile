@@ -15,8 +15,8 @@ SHELL=/bin/bash
 	dvips -Ppdf -G0 $*.dvi
 
 %.pdf: %.tex
-	(pdflatex $<; makeindex $*; makeglossaries $*; bibtex $*; pdflatex $<)
-	while grep 'Rerun to get ' $*.log ; do (makeindex $*; makeglossaries $*; bibtex $*; pdflatex $<); done
+	(pdflatex -shell-escape $<; makeindex $*; makeglossaries $*; bibtex $*; pdflatex -shell-escape $<)
+	while grep 'Rerun to get ' $*.log ; do (makeindex $*; makeglossaries $*; bibtex $*; pdflatex -shell-escape $<); done
 
 # Examples of rules for converting various graphics formats into EPS or PDF
 # (so we can always clean intermediate EPS or PDF versions of figures)
