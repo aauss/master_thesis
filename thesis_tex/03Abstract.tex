@@ -11,6 +11,6 @@ Additionally, I scraped all articles from the most used sources of the epidemiol
 
 To summarize articles, I applied name entity recognition to epidemiological texts and then trained a naive Bayes classifier with the RKI data to find the most important entities to describe the article.
 The learner used all sentences of one article as an input to find the most salient sentence-entity combination to extract the key points of the article.
-This recommendation system was trained based on the whole text in conjunction with those key entities.
-For this, I compared a naive Bayes classifier using the bag-of-words approach and a multilayer perceptron trained on document embeddings.
+The recommendation system was trained based on the whole text in conjunction with those key entities.
+For this, I compared a naive Bayes classifier using the bag-of-words approach which I compared with a multilayer perceptron trained on document embeddings.
 Finally, I built a web app to demonstrate the accessibility and usability of this tool. With this, I showed how epidemiologists in the future could shift their focus to more relevant tasks.}
