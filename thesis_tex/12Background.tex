@@ -1,13 +1,13 @@
-\chapter{Background}
+We needed less money than usual and at the same, still had more fun.\chapter{Background}
 
 
 \section{Natural language Processing}
-NLP requires a whole batch of preprocessing steps to account for the redundancy in language and facilitate the otherwise not accessible underlying rules (including but not limited to grammar). For this purpose, a preprocessing pipeline established itself (Fig. \ref{fig:pipeline}).
+NLP requires a whole batch of preprocessing steps to account for the redundancy in language and facilitate the otherwise not accessible underlying rules (including but not limited to grammar). Fig. \ref{fig:pipeline} shows a pipeline that illustrates the language wrangling common in NLP for information extraction.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.5]{pipeline.png}
-    \caption{An illustration of a typical pipeline in information extraction. The pipeline starts with the raw text and undergoes several preprocessing steps (indicated by the square) yielding intermediate output (placed next to the arrows). The output can be a list of tuples of the entity and the correspond word like \texttt{[(ORG, \textquotesingle Bayer\textquotesingle), (LOC, \textquotesingle Baveria\textquotesingle)]} (adopted from \citep{Bird2009}).}
+    \caption{An illustration of a typical pipeline in information extraction in NLP. The pipeline starts with the raw text and undergoes several preprocessing steps (indicated by the square) yielding intermediate output (placed next to the arrows). The output can be a list of tuples of the entity and the correspond word like \texttt{[(ORG, \textquotesingle Bayer\textquotesingle), (LOC, \textquotesingle Baveria\textquotesingle)]} (adopted from \citep{Bird2009}).}
     \label{fig:pipeline}
 \end{figure}
 
@@ -19,15 +19,14 @@ Suppose we find that a text is frequently mentioning \textit{brexit} more than a
 Then we can deduct that this text might be a (news) article and that it is writing about the exit of Great Britain from the European Union (as of March 2019).
 However, we quickly realize that certain words also appear more frequently than others, without revealing much about the content of the text.
 Words like \textit{the, of, than} appear numerously in every English text independently of the topic or the source.
-Such words already received particular attention in \citeyear{Luhn1960} where their property to obscure target words for further analyzes was identified.
-These words are called \textbf{stop words}\index{stop words} and there are many lists for different languages and tasks \citep{RANKS2019}.
+Such words first received particular attention when \cite{Luhn1960}  identified their property to obscure target words for further analyzes.
+These words are called \textbf{stop words}\index{stop words} and there are many curated lists of stop words for different languages and tasks \citep{RANKS2019}.
 
-In case we want to find, as an example,  adjectives and adverbs in a text for a sentiment analysis then we would not want to discard words that help to localize them.
-Every word in this context has some information about the grammatical structure of the text and thus must be taken into consideration.
-But, if we should be interested in the topic or source of the text, then we might end up searching for this information within only a handful of words.
-In this case, stop words would only distract our machine learning tool from words that do convey information about the topic of the text.
+In case we want to find, as an example,  adjectives and adverbs in a text for a sentiment analysis then we would not want to discard words that help to localize them since they contain information about the grammatical structure of the text.
+But, if we should be interested in the topic or source of the text, then it might be sufficient to search for this information within only a handful of words.
+Stop words would only distract the machine learning algorithm from words that do convey information about the topic of the text.
 Therefore, it is common practice to remove stop words for classification algorithms \citep{McCallum1998, Lodhi2002, Tong2001}.
-In state-of-the-art neural classifier as in \citep{Howard2018} it is not always necessary.
+In state-of-the-art neural classifier as described by \cite{Howard2018}, it is not always necessary.
 
 \subsection{Regular Expressions}
 Regular expressions (\gls{regex}) is an expression using ASCII characters to define a set of strings that this expression matches.
@@ -42,22 +41,21 @@ Tokenization (\ref{tokenization}) or stemming (\ref{stemming}) are preprocessing
 \subsection{Tokenization}\label{tokenization}
 A token is an abstraction of a piece of information consisting of a byte representation for some symbol.
 In NLP this can be a single character, word, punctuation, or sentences.
-The goal in \textbf{tokenization}\index{tokenization} is to split a text into meaningful chunks that obey the rules of the language which defines what a single word or sentence or character mean.
-Word-tokenization is the cornerstone for the vast majority of NLP analyzes.
-Nevertheless, token are rather loosely connected to what we perceive as an atomic unit in language, and we need to keep in mind that in the case of computers it is just a representation of some (hopefully) UTF-8 code.
+The goal in \textbf{tokenization}\index{tokenization} is to split a text into meaningful chunks that obey the rules of the natural language the text is written in.
+Word-tokenization is the cornerstone for the vast majority of NLP analyzes \citep{Webster1992}.
+Nevertheless, tokens are not equal to what we perceive as an atomic unit in language, and we need to keep in mind that in the case of computers it is just a representation of some (hopefully) UTF-8 code.
 
-Token not always match how we think about words or sentences.
+Token not always match how we think about words or sentences which can be shown by the following example.
 If we would formulate simple rules for tokenization, then a definition for a word would be a string enclosed by single white space characters.
 A simple regex for word tokenization would be \texttt{[a-z,A-Z]+} that matches 1 to $n$ (indicated by \texttt{+}) lower or uppercase letter (indicated by \texttt{[ ]}) in succession.
 Words delimited by periods would then be a sentence.
-An very simple regex for sentence-tokenization would be \texttt{[a-z] \textbackslash.[A-Z]}.
-This regex, however, does not work in many cases.
+These regexs, however, do not work in all cases.
 \textit{The United States of America} is such an example were our rules would fail. They lead to splitting this string into two tokens \mbox{\{\textquotesingle \textit{United}\textquotesingle, \textquotesingle \textit{States}\textquotesingle, \textquotesingle \textit{of}\textquotesingle, \textquotesingle \textit{America}\textquotesingle\}} although it is a single name.
-Longer names like this one are often used as acronyms such as \textit{U.S.A}.
+Longer names like this one often have acronyms such as \textit{U.S.A}.
 Following our simple rules, the word \textit{U.S.A} would be split into six tokens \mbox{\{\textquotesingle \textit{U}\textquotesingle, \textquotesingle \textbf{.}\textquotesingle, \textquotesingle \textit{S}\textquotesingle, \textquotesingle \textbf{.}\textquotesingle, \textquotesingle \textit{A}\textquotesingle, \textquotesingle \textbf{.}\textquotesingle\}} since it is mistaken by a sentence.
 
-On the other hand, using an established tokenizer is also wondering e.g, \textit{don't} is split into \{\textit{do}, \textit{n't}\} but we know it should be \{\textit{do}, \textit{not}\} assuming tokens are a representation of words.
-But since tokens are not meant to be a representation of words but rather a method to yield word level understanding then \textit{not} represented as \textit{n't} will not worsen any text analysis, if the usage of \textit{n't} is consistent.
+On the other hand, using an established tokenizer is also wondering e.g, \textit{don't} is split into \{\textquotesingle \textit{do}\textquotesingle, \textquotesingle \textit{n't}\textquotesingle\} but we know it should be \{\textquotesingle \textit{do}\textquotesingle, \textquotesingle \textit{not}\textquotesingle\} assuming tokens are a representation of words.
+But since tokens are not meant to be a precise image of natural language words but rather a method to yield word level understanding then \textit{not} represented as \textit{n't} will not worsen any text analysis, if the usage of \textit{n't} is consistent.
 And without a doubt, the \textit{United States of America} or the acronym \textit{U.S.A.} needs to be treated as a single unit for sufficient word-level understanding.
 It is common to use a curated list of expected abbreviations, names, and phrases to avoid bad tokenization.
 To improve sentence tokenization further, one could train an unsupervised sentence boundary detector as described in \cite{Kiss2006}.
@@ -66,98 +64,96 @@ The acronym \textit{U.S.A.} will occur only as a fraction compared to more frequ
 The most common one will be lower-case letters followed by a whitespace, a period, and then an upper-case letter in standard literature or new lines in online chats.
 
 Sentence tokenization is based on word-tokenization and is also part of most text analyzes. It becomes essential for example if a text includes logical elements (like paragraphs or chapters) that need to be handled differently as in news summarization where the core content is more likely to be found in the first paragraph.
-These two methods facilitate almost all important methods in NLP \citep{Webster1992}.
+
 
 \subsection{POS-Tagging}
 Although tasks like text classification perform already well with a text that only has been tokenized, mostly we require further processing to do more language-aware tasks.
-If the grammatical correction of texts is the goal of some NLP pipeline, then it goes without saying that we need more information about the grammatical function of our extracted token.
+If the grammatical correction of texts is the goal of some NLP pipeline, then it goes without saying that we need more information about the grammatical function of the extracted token.
 
 As an example, we assume a sentence like \textit{``I read a book about grammar that were very helpful"}.
-A lookup in an English dictionary would yield that every word in this sentence is written correctly, but the sentence is still wrong.
+A lookup in an English dictionary would yield that every word in this sentence is written correctly, but we know that the sentence is still wrong.
 We know that \textit{that} refers to \textit{book} and that \textit{book} is singular and hence \textit{that} aswell. But \textit{that} is followed by a plural auxiliary verb (in this case \textit{were}) which makes this sentence wrong.
-A simple lookup is not able to detect \textit{that} should be followed by \textit{was} since \textit{that} is written the same when referring to single and plural nouns.
+A hypothetical grammar dictionary lookup is not able to detect \textit{that} should be followed by \textit{was} since \textit{that} is written the same when referring to single and plural nouns.
 To solve this programmatically, we need to find the grammatical number of the noun before the first mentioning of \textit{that} to determine if the grammatical count of the auxiliary verb after \textit{that} is correct.
 
-To find the noun, we apply \textbf{position-of-speech tagging} (\gls{POS-tagging}). A POS-tagger is typically a machine learning model like a decision tree \citep{Marquez98} trained on annotated corpus like \citep{PennTreebank}, that already has the right grammatical entities assigned to each word in unstructured texts.
-When the correct grammatical function of all tokens is found, it is simple to detect the noun occurring before  \textit{that}  and its grammatical number and hence correct the sentence grammatically.
+To find the noun, we apply \textbf{position-of-speech tagging} (\gls{POS-tagging}). A POS-tagger is typically a machine learning model like a decision tree \citep{Marquez98} trained on annotated corpus like Penn Treebank \citep{PennTreebank}, that already has the right grammatical entities assigned to each word in unstructured texts.
+When the correct grammatical function of all tokens is determined, it is simple to detect the grammatical number of the noun occurring before \textit{that} and hence correct the sentence grammatically.
 
 \subsection{Lemmatization and Stemming}\label{stemming}
-Assuming we have found a method to apply tokenization without tapping into the pitfalls as mentioned earlier then we met a precondition to start some simple descriptive statistics about texts.
-We could count the number of word tokens in the text, or detect tokens that only occur once, a so-called \textbf{hapax legomenon}.
-The simplest way to sensibly reason about a text would be to find the most occurring words given we removed all stop words. Without them, the word count could help us infer the subject of a text.
-If the goal was to infer the type of sport based on the most occurring words in sports news we would hope to find a large term frequency for something like \textit{throw} for baseball or \textit{strike} for soccer.
-The approach to only count tokens in a text will not be sufficient.
-The words in the text will occur in many forms due to grammatical conjugation.
-For example, \textit{thrown} and \textit{throw} will be treated as an unequal tokens by the computer although they mean the same.
+Assuming we have a well-tokenized text, then we met a precondition to start some simple descriptive statistics about texts.
+We could count the total number of word tokens in the text, or detect tokens that only occur once, so-called \textbf{hapax legomenon}.
+The simplest way to sensibly reason about a text would be to find the most occurring words given we removed all stop words to infer the subject of a text.
+If the goal were to infer the type of sport based on the most occurring words in sports news we would hope to find a large term frequency for something like \textit{throw} for baseball or \textit{strike} for soccer.
+Merely counting tokens to display the most occurring ones in a text will not be sufficient.
+The words in the text will be used in many forms due to grammatical conjugation.
+For example, \textit{thrown} and \textit{throw} will be treated as unequal tokens by the computer although they mean the same.
 What we need is, to transform all words to their infinitive form.
 
 There are to options: \textbf{stemming}\index{stemming} and \textbf{lemmatization}\index{lemmatization}.
 Stemming only prunes the end of words following rules.
 These rules are specified as a regular expression and try to exploit regularities in language to infer the infinitive form.
-However, they will not always reliably work due to special cases and ambiguities.
-One common rule among stemmers is the removal of \textit{ing} at the end of a lower case word to transform a word into its infinitive form. Stemmers work correctly in most cases but fail for words like \textit{lying} which is converted to \textit{ly} which is grammatically wrong.
+However, they will not always reliably work due to special cases and ambiguities of natural language.
+One common rule among stemmers is the removal of \textit{ing} at the end of a lower case word to transform a word into its infinitive form. This rule works correctly in most cases but fails for words like \textit{lying} that the stemmer transforms to \textit{ly} which is a not desired behavior.
 
 Lemmatization is a more sophisticated method.
 First, it uses a semantic database lookup instead of rules and therefore will be able to transform \textit{lying} correctly to \textit{lie}.
 Second, it incorporates POS-tagging to determine whether the word to lemmatize is a verb or a noun \citep{Muller2015}.
-In case the word \textit{meeting} is used as a noun than we do not want to transform it to \textit{meet} but keep it like it is. When computational cost is of no concern, lemmatization should be preferred over stemming since it is more accurate\citep{Balakrishnan2014}.
+In case the word \textit{meeting} is used as a noun than we do not want to transform it to \textit{meet} but keep it like it is. Lemmatization produces better results than stemming \citep{Balakrishnan2014}  for a higher cost of computation.
 
 
 \subsection{(Disease) Name Entity Recognition}
 Name entity recognition (\GLS{NER}) is a step placed towards the end of a NLP pipeline (Fig. \ref{fig:pipeline}).
 After sentences and words have been tokenized, and POS-tagging was applied, it might be important for some learning algorithms to know the entity of the word at hand.
-Typical examples are the recognition of names for persons or companies and for numerical entities, like time, dates and money \citep{Nadeau2009}.
+Typical examples are the recognition of names of persons or companies and numerical entities, like time, dates and money \citep{Nadeau2009}.
 This recognition might be part of some NLP pipeline, but it also can be part of a pipeline for information retrieval (\GLS{IR}).
-The work steps of IR is the extraction of specific information and their subsequent storage in a database to structure a large amount of data that is difficult to access \citep{Manning2008, Wei2011}.
+The goal of IR is the extraction of specific information and their subsequent storage in a database to structure a large amount of data that is difficult to access \citep{Manning2008, Wei2011}.
 
-The reason NER is not covered merely by a dictionary lookup but a separate module in a pipeline is the difficulty to deal with ambiguous words as \textit{apple}.
-When the word \textit{Apple} is at the beginning of a text, it is unclear whether it stands for the fruit or a billion dollar company.
-While in the beginning, NER consisted of handcrafted rules and heuristics \citep{Rau1991}, NER is now a classification problem that can be solved through supervised learning, capable of learning relationships with Hidden Markov Models, Decision Trees, or Conditional Random Fields \citep{Nadeau2009}.
+The reason NER is not covered merely by a dictionary lookup but a separate module in a pipeline is the difficulty to deal with ambiguous words like \textit{Apple}.
+When the word \textit{Apple} is at the beginning of a text, it is unclear whether it stands for the fruit or a tech company.
+While in the beginning, NER consisted of handcrafted rules and heuristics \citep{Rau1991}, NER is now a classification problem that can be solved through supervised learning, capable of learning named entities with Hidden Markov Models, Decision Trees, or Conditional Random Fields \citep{Nadeau2009}.
 Though, there is a shift towards un/semi-supervised methods that infer features (as neural networks) and outperform feature-engineered systems (as decision trees) \citep{Yadav2018}.
 
 In the medical field, such ambiguities rise not because the proper names are so indistinguishable from other common words, but because there are many forms how to write a disease name and equally many abbreviations (e.g., \textit{cancer}, \textit{carcinoma}, \textit{malignant tumor}, \textit{CA}).
 To reason from medical texts, it is necessary to identify those utterances that are most likely representing a disease.
 Thus, disease-NER is a crucial processing step in this domain.
 However, benchmarks also showed that in highly standardized text dictionary lookups perform equally well \citep{Jimeno2007}.
-Therefore, the exact procedure to perform disease NER depends on the sources that need to be processed.
+Therefore, the exact procedure to perform disease NER depends on the source of interest.
 
 \subsection{Corpus}
-A \textbf{corpus}\index{corpus} is a collection of (related) text document that contain natural language. It can be annotated (as required in POS-tagging) or simply preprocessed (like tokenization) \citep{Bengfort2018}.
-Preprocessing can be time-intensive especially if a large amount of data needs to be handled. This process irreversibly changes the raw text. Thus, each intermediate step should be saved also as a corpus.
-Optimally, a corpus is stored safely since it contains valuable information and easily accessible. NoSQL databases are preferred due to their minimal overhead.
+A \textbf{corpus}\index{corpus} is a collection of (related) text document that. They can be annotated (as required in POS-tagging) or simply preprocessed (like tokenization) \citep{Bengfort2018}.
+Preprocessing can be time-intensive especially for large amounts of data. This process irreversibly changes the raw text. Thus, each intermediate step needs to be stored in the corpus as well.
+Optimally, a corpus is easily accessible and safely stored since it contains laboriously created data. NoSQL databases have an advantage for corpus saving due to their minimal overhead.
 This way corpora can easily be shared by providing access to the database or extract its content as a folder system containing \texttt{.txt}, \texttt{.XML}, or \texttt{.JSON} files.
-The advantages of corpora can be summarized like this,
+In summary, the advantages of corpora  are,
 \begin{itemize}
-  \item Database-like access facilitates use of extensive data that is too large for a normal machine
+  \item Database-like access facilitates the use of extensive data that is too large for a normal machine
   \item Quality control due to convenient tracking of processing steps
   \item Prevents repetition of processing steps that require long computation or even human labor
   \item Uncomplicated replacement or comparison of processing steps
 \end{itemize}
 
-
 \section{Machine Learning}
 Machine learning (\GLS{ML}) is an attempt to make the computer learn. \citeauthor{Mitchell1997} described learning broadly as,
 %
 \begin{quote}
-``A computer program is said to \textbf{learn} from experience $\mathcal{E}$ with respect to some class of task $\mathcal{T}$ and performance measure $\mathcal{P}$, if its performance at tasks in $\mathcal{T}$, as measured by $\mathcal{P}$, improves with experience $\mathcal{E}$''
+``A computer program is said to \textbf{learn} from experience $\mathcal{E}$ with respect to some class of task $\mathcal{T}$ and performance measure $\mathcal{P}$, if its performance at tasks in $\mathcal{T}$, as measured by $\mathcal{P}$, improves with experience $\mathcal{E}$.''
 \end{quote}
 %
-There are, however, ML algorithms that not necessarily have $\mathcal{E}$ defined. Assuming that experience is made from seeing labeled examples, called \textbf{supervised learning}\index{supervised learning}, then learning a model without labels is called \textbf{unsupervised learning}\index{unsupervised learning}. Therefore, one could also consider the following definition  \[f: X \rightarrow \hat{y}\] where $f$ is our machine learning model that takes our data $X$ and tries to predict the most likely label $\hat{y}$ where $\hat{y} \approx y$ and $y$ being the true label.
+There are, however, ML algorithms that not necessarily defined $\mathcal{E}$. Making experience from seeing labeled examples is called \textbf{supervised learning}\index{supervised learning} and learning a model without labels is called \textbf{unsupervised learning}\index{unsupervised learning}. Therefore, one could also consider the following definition  \[f: X \rightarrow \hat{y}\] where $f$ is a machine learning model that takes some data $X$ and tries to predict the most likely label $\hat{y}$ where $\hat{y} \approx y$ and $y$ being the true label.
 
-\subsection{Bag Of Words}\label{section:bow}
+\subsection{Bag-Of-Words}\label{section:bow}
 In a machine learning task, it is preferable to use the large size of data as leverage to avoid doing explicit feature engineering.
 Instead of requiring too much domain knowledge, it is preferred to let the algorithm pick the features.
-One apparent example for this in NLP is the \textbf{bag of words}\index{bag of words} approach.
+One apparent example for this in NLP is the \textbf{bag-of-words}\index{bag-of-words} approach.
 
-It is challenging to model language because of its entangled grammar, all its special cases, idioms, and ambiguity.
-Therefore, we can try to analyze a text based only on the occurrences of the words in the text.
-The grammatical context for these words is omitted which means that we only focus on the words used. We do so by tokenizing our text, lemmatize the token and operate on the set of words left after this preprocessing.
+It is particularly challenging to model language because of its entangled grammar, all its special cases, idioms, and ambiguity.
+Therefore, we can try to analyze a text based only on the occurrences of the words in the text without their grammatical context. We do so by tokenizing a text, lemmatize the token and operate on the set of words left after this preprocessing.
 
-A typical example of the performance of this simple model is spam detection.
-Given a set of emails and labels \emph{spam} and \emph{not spam}, a machine learning model could learn these labels based on the presence of words based on the learned word distributions of the labels.
+A typical example of the performance of this simple approach is spam detection.
+Given a set of emails and labels \emph{spam} and \emph{not spam}, a machine learning model could learn these labels based on the learned word distributions of the labels.
 
 \subsection{Naive Bayes Classifier}\label{section:nbc}
-The \textbf{naive Bayes classifier}\index{naive Bayes classifier} (\GLS{NBC}) is a probabilistic classifier. It describes a set of algorithms capable to learn inferring a class given a set of features. These algorithms are trained in a supervised fashion. The NBC is defined as,
+The \textbf{naive Bayes classifier}\index{naive Bayes classifier} (\GLS{NBC}) is a probabilistic classifier. It describes a set of algorithms capable of learning to infer a class given a set of features and labels. The NBC is defined as,
 
 \begin{align}
   \boldsymbol{x} &= \{x_1, x_2, \dots, x_n\} \\
@@ -171,18 +167,18 @@ The \textbf{naive Bayes classifier}\index{naive Bayes classifier} (\GLS{NBC}) is
 where $\boldsymbol{x}$ is a data point which consists of $n$ features. $\mathcal{C}$ is the set of all classes and $p(\mathcal{C}_k|\boldsymbol{x})$ is the probability $\boldsymbol{x}$ belonging to class $\mathcal{C}_k$. We are allowed to write (2.3) as (2.4) due the independency assumption of the features of $\boldsymbol{x}$,
  \[p(x_i| \{\forall x_j \in \boldsymbol{x} : j \neq i \}, \mathcal{C}_k) \overset{\, \,\,\,x_i\perp\!\!\!\perp \forall x_j}{=} p(x_i|\mathcal{C}_k)\]
 
-To predict the class $\boldsymbol{x}$ belongs to, a common procedure is to find the maximum a posteriori probability
+A standard procedure to predict the most likely class that $\boldsymbol{x}$ belongs to, is to find the maximum a posteriori probability
 \begin{gather}
   \argmax_{k \in \mathcal{C}} p(\mathcal{C}_k|\boldsymbol{x})
 \end{gather}
-To evaluate (2.4), we simply need to take the product of the probabilities of the features given the class and then consider the class with the highest probability for the classification as in (2.5).
+To evaluate (2.4), we need to take the product of the probabilities of the features given the class and then consider the class with the highest probability for the classification as in (2.5).
 
-Note, the the classifier is named \textsl{naive} because we assume that every feature in our vector $\boldsymbol{x}$ is independent, i.e. there is no correlation between them. This is most of the time  wrong but in practice the NBC still performs very well \citep{Rish2001}.
+Note,  the classifier is named \textsl{naive} because we assume that every feature in the vector $\boldsymbol{x}$ is independent, i.e., there is no correlation between them. This assumption is most of the time wrong, but in practice, NBC still performs very well \citep{Rish2001}.
 
 
 \subsubsection{Multinomial Naive Bayes for Text Classification}
 %TODO: Add tf-idf
-For classifying texts based on the words they contain, we can apply Multinomial Naive Bayes as follows,
+For classifying texts based on the words they contain as in the bag-of-words approach, we can apply Multinomial Naive Bayes as follows,
 \begin{align}
   \mathcal{C} &= \{\mathcal{C}_k \: | \: k \in K \} \\
   \boldsymbol{t} &= \{c_1, c_2, \dots, c_n\} \\
@@ -201,7 +197,7 @@ To avoid $p({t_{i}}|\mathcal{C}_k)$ becoming $0$ we apply Laplace smoothing\inde
 \[p({t_{i}}|\mathcal{C}_k) = \frac{\boldsymbol{T}_{\mathcal{C}_k,t_{i}} + 1}{\sum_{\forall t_j \in \boldsymbol{T}}(\boldsymbol{T}_{\mathcal{C}_k,t_j} + 1)}\]
 
 \subsubsection{Bernoulli Naive Bayes}
-Especially for shorter texts, there is no gain to count tokens, but rather treat them as binary values (\emph{spam}, \emph{not spam}). This variant of the NBC explicitly models the absence and presence of words. The probability of token $t_i$ given a some class like is calculated like,
+Especially for shorter texts and binary decision (\emph{spam}, \emph{not spam}), there is only little gain to use token counts. This variant of the NBC explicitly models the absence and presence of words. The probability of token $t_i$ given a some class like is calculated like,
 \[p(t_{i}|\mathcal{C}_b) = p(t_{i})(1-p(t_{i}))^{(1-b)}\]
 
 where $b$ is a binary value
@@ -211,11 +207,11 @@ where $b$ is a binary value
   \]
 
 \subsubsection{Complement Naive Bayes}
-There are cases where the \textsl{naive} assumption is particularly ill made. In a unbalanced class problem, the data is skewed towards the larger class which the following table illustrates,
+There are cases where the \textsl{naive} assumption is particularly ill made. In an unbalanced class problem, the data is skewed towards the larger class which the following table illustrates,
 
 \begin{table}[h!]
   \centering
-  \caption{An coin flip example with a imbalanced class. $\theta$ is the probability of a class to yield head ($H$). Per experiment we flip one coin in $Class 1$ and two coins ins $Class 2.$ Then the label $H$ is assigned to one of both classes (adopted from \cite{Rennie2003}).}
+  \caption{A statistical evaluation of a coin flip experiment with an imbalanced class. $\theta$ is the probability of a class to yield head ($H$). We flip one coin in $Class 1$ and two coins ins $Class 2$ per row. $p(data)$ is the probability for the seen coin flip. $Label for H$ contains the class assignment after the coin flip (adopted from \cite{Rennie2003}).}
   \setlength{\tabcolsep}{1.5em}
   \begin{tabular}{@{}cccc@{}}
     \toprule
@@ -244,12 +240,12 @@ A \textbf{perceptron}\index{perceptron} is an algorithm inspired by biological n
   Perceptron(\mathbf{x}) = \begin{cases}1 & \text{if }\ \mathbf{w} \cdot \mathbf{x} + \mathbf{b} > 0,\\
   0 & \text{otherwise}\end{cases}
 \end{gather}
-where $\mathbf{x}$ is our data vector, $w$ the weight vector and $b$ the bias where $w$, $b$, and $x$ are of same length. It is trained in a supervised fashion. The learning step with which $w$ is adjusted is defined as,
+where $\mathbf{x}$ is a data vector, $\mathbf{w}$ the weight vector and $\mathbf{b}$ the bias. It is trained in a supervised fashion. The learning step with which $w$ is adjusted is defined as,
 \[\mathbf{w}(t+1) = \mathbf{w}(t) + \eta (\mathbf{d}(t) - \mathbf{y}(t))\mathbf{x}(t)\]
 with $\mathbf{d}$ being the training data vector and $\mathbf{y}$ the corresponding label vector at training step $t$ with a learning rate $\eta \in (0,1]$.
 
 \subsubsection{Multi Layer Perceptron}
-A \textbf{multi layer perceptron} (\GLS{MLP}\index{multi layer perceptron}) (Fig. )\ref{fig:MLP}) consists of three layers, an input and output layer, and $1 \dots n$ hidden layers. Each layer consists of a perceptron. The activation function is not a Boolean function but as sigmoid function $\sigma(y) = \frac{1}{1+e^{-y}}$. Its output also ranges from $0$ to $1$ but is derivable. Derivablity is crucial since the MLP uses backpropagation to be trained. Described by,
+A \textbf{multi layer perceptron} (\GLS{MLP}\index{multi layer perceptron}) (Fig. )\ref{fig:MLP}) consists of three layers, an input and output layer, and $1 \dots n$ hidden layers. Each layer consists of $n$ perceptrons. The activation function is not a Boolean function but $\sigma(y) = \frac{1}{1+e^{-y}}$ called the sigmoid function. Its output also ranges from $0$ to $1$ but it is derivable. Derivability is crucial since the MLP uses backpropagation to be trained. Described by,
 \begin{align}
   E(\mathbf{w})_t &\equiv \frac{1}{2} \sum (\mathbf{d}_t - \mathbf{y}_t)^2 \\
   \Delta \mathbf{w} &= - \eta \frac{\delta E_t}{\delta \mathbf{w}}
@@ -300,50 +296,50 @@ where $E$ is the sum over of the errors over all output neurons at step $t$ and 
 \end{figure}
 
 \subsubsection{Convolutional Neural Network}
-While the MLP is only capable to receive a single vector as an input, the \textbf{convolutional neural network}(\GLS{CNN})\index{convolutional neural network} is able to process a matrix. The additional dimension can then represent time or spatial dependencies. The extracted features are not represented by single neurons throughout hidden layers, but are adopted to so called feature maps. Feature maps are small (smaller than the input) matrices where their entries are weights that are adjusted during the training process. These feature maps are striding over the input and apply a convolution,
-\[C(i,j) = (I \ast F)(i,j) = \sum_m \sum_n I(m, n) F(i-m, j-n)\] where $\ast$ is the convolutional operator, $I$ is our input matrix, $F$ the feature map, and $C(i,j)$ the output for the convolution at position $(i,j)$ of our feature map. The output matrix $C$ of the convolution step is then pooled which is i.e., the max or average value of $C$. This process can be repeated when several pooling steps commit to a new matrix. At the end, a fully connected layer (a MLP where every neuron is connected with each neuron) incorporates all information and yields a classification (Fig. \ref{fig:cnn}).
+While the MLP is only capable of receiving a single vector as an input at a time, the \textbf{convolutional neural network}(\GLS{CNN})\index{convolutional neural network} can process an input matrix. The additional dimension can then represent time or spatial dependencies. So-called feature maps extracted these two-dimensional features in the hidden layers. Feature maps are smaller than the input matrices and they consist of real-valued weights that are adjusted during the training process. These feature maps are striding over the input and apply a convolution,
+\[C(i,j) = (I \ast F)(i,j) = \sum_m \sum_n I(m, n) F(i-m, j-n)\] where $\ast$ is the convolutional operator, $I$ is the input matrix, $F$ the feature map, and $C(i,j)$ the output for the convolution at position $(i,j)$ of the feature map. The output matrix $C$ of the convolution step is then pooled which is, i.e., the max or average value of $C$. In the end, a fully connected layer (an MLP where every neuron is connected with each neuron) incorporates all information and yields a classification (Fig. \ref{fig:cnn}).
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.5]{CNN.png}
-    \caption{An illustration of a n-gram convolutional neural network. The input is a numerical representation (\ref{section:embeddings}) of a tokenized text. The convolution over the input matrix is represented as a red and yellow box (called feature map) that is then pooled (i.e. max of the kernel). The classification is then enforced by a fully connected layer that incorporates the input of all feature maps.}
+    \caption{An illustration of an n-gram convolutional neural network. The input is a numerical representation (\ref{section:embeddings}) of a tokenized text. The convolution over the input matrix is represented as a red and yellow box (called feature map) that is then pooled (i.e., max of the kernel). The classification is then enforced by a fully connected layer that incorporates the input of all feature maps.}
     \label{fig:cnn}
 \end{figure}
 
 \subsection{Embeddings}\label{section:embeddings}
 
-In \ref{section:bow} I have been pointing out that using the bag-of-words approach is explained by the difficulty to explicitly model language and in \ref{section:nbc} I showed that this approach does not hurt the performance of the classifier. However, bag of words models language incorrectly and having a better representation of language is more desirable to improve ML algorithms. Word embeddings are such methods to represent words as n-dimensional vectors to much better capture syntactic and semantic characteristics of language.
+In \ref{section:bow} I introduced the bag-of-words approach to cope with the difficulty to explicitly model language and in \ref{section:nbc} I showed that this approach does not hurt the performance of the classifier. However, the bag-of-words approach models language incorrectly and having a better representation of language is more desirable for the improvement of ML algorithms. Word embeddings are such methods that model language more accurately by representing words as n-dimensional vectors that much better capture syntactic and semantic characteristics of language.
 
 \subsubsection{Word2Vec}
 
-In 2013 two algorithms to efficiently compute high quality distributed representations of words and phrases were published. The synonym for this approach is called \textbf{word2vec}\index{word2vec}. The general approach in both algorithms is to maximize the similarity measures of words that appear in a similar context. The \textbf{continues bag-of-words model}\index{continues bag-of-words model} is trained to predict the vector representation of a word or phrase given $n$ words before and after the word in a sentence. A slower implementation with the benefit to model infrequent words better is the \textbf{continuous skip-gram-model}\index{continuous skip-gram-model} \citep{word2vec}. The skip-gram-model tries to predict the context given a word and is thus the opposite approach of the bag-of-words model.
+In 2013 \citeauthor{Mikolov2013} published two algorithms to efficiently compute high quality distributed representations of words and phrases. The synonym for this approach is called \textbf{word2vec}\index{word2vec}. The general approach in both algorithms is to maximize the similarity measures of vectorized words that appear in a similar context. The \textbf{continues bag-of-words model}\index{continues bag-of-words model} is trained to predict the vector representation of a word or phrase given $n$ words before and after the target word in its sentence. A slower implementation with the benefit to model infrequent words better is the \textbf{continuous skip-gram-model}\index{continuous skip-gram-model} \citep{word2vec}. The skip-gram-model tries to predict the context given a target word and is thus the opposite approach of the continuous bag-of-words model.
 
-In practice we generate labeled data of the form of tuples, where one entry is the target word $\mathbf{w}_t$ and the other entries are context words $\mathbf{w}_c$ such that the tuple is $(\mathbf{w}_t, \mathbf{w}_{c_{1}}, \dots, \mathbf{w}_{c_{n}})$. The tuple can either contain actual context words found in the text, or random words from the vocabulary (\textbf{negative sampling}\index{negative sampling}). The embedding layer learns the weights of the input and context words, by yielding a n-dimensional vector for all of these words, calculate a dot-product of both vectors in the merge-layer and then pass it to a sigmoid layer that predicts whether the words are actual context words or have been negatively sampled. In short, the objective of the algorithm is to maximize
-	\[\sum_{t \in T} \sum_{c \in \mathcal{C}_t} log( p(\mathbf{W}_c|\mathbf{w}_t))\]
-	where $\mathbf{w}$ is the vector representation of a word, $t$ is the target word and $\mathbf{W}_c$ the context matrix, where each row is a vector representation of a context word.
+In practice we generate labeled data in the form of tuples $(\mathbf{w}_t, \mathbf{w}_{c_{1}}, \dots, \mathbf{w}_{c_{n}})$, where one entry is the target word $\mathbf{w}_t$ and the other entries are context words $\mathbf{w}_c$. The tuple can either contain actual context words found in the text, or random words from the vocabulary (\textbf{negative sampling}\index{negative sampling}). The embedding layer learns the weights of the input and context words, by yielding an n-dimensional vector for all of these words, calculate the dot-product of both vectors in the merge-layer and then pass it to a sigmoid layer that predicts whether the words are actual context words or were negatively sampled. The objective of the algorithm is to maximize
+    \[\sum_{t \in T} \sum_{c \in \mathcal{C}_t} log( p(\mathbf{W}_c|\mathbf{w}_t))\]
+    where $\mathbf{w}$ is the vector representation of a word, $t$ is the target word and $\mathbf{W}_c$ the context matrix, where each row is a vector representation of a context word.
 
 \subsubsection{GloVe}
 
-Word2vec performs its embeddings locally by only taking $n$ surrounding words to calculate the embedding. \textbf{GloVe}\index{GloVe}, on the other hand, tries to also incorporate global information about word occurrences.
+Word2vec embeddings are local since only $n$ surrounding words to calculate the embedding are considered. \textbf{GloVe}\index{GloVe}, on the other hand, also tries to incorporate global information about word occurrences.
 
-As the first step, a co-occurrence matrix of all documents is calculated. The underlying assumption for this is that the co-occurrence ratio is strongly connected to meaning.
-Let $X_{ij}$ be the co-occurrence count token $j$ in context of $i$. $X_i = \sum_{t \in T} X_{it}$ the occurrence of token i given any other token then $p(j|i) = \frac{X_{ij}}{X_i}$ is the probability of token $j$ appearing in the context of token $i$.
-To be able to model the semantic information of words, their relationship needs to be modeled. GloVe defines a function $F((w_i-w_j)^T \widetilde{w_t}) = \frac{p(i|k)}{p(j|k)}$ where $w$ is a real-valued word vector. The context words are subtracted and the dot product with the weights of the whole vocabulary is taken to model the relationship that is desired to be displayed in embedding arithmetic. Further steps are required for computability, such as weighting of the word vectors or handling zero entries which are described by \cite{Pennington2014}.
+As the first step, a co-occurrence matrix of all documents is calculated. The underlying assumption of GloVe is that the co-occurrence ratio is connected to meaning.
+Let $X_{ij}$ be the co-occurrence count of token $j$ in context of $i$. Let $X_i = \sum_{t \in T} X_{it}$ be the occurrence of token i given any other token then $p(j|i) = \frac{X_{ij}}{X_i}$ is the probability of token $j$ appearing in the context of token $i$.
+To be able to model the semantic information of words, their relationship needs to be modeled. GloVe defines a function $F((w_i-w_j)^T \widetilde{w_t}) = \frac{p(i|k)}{p(j|k)}$ where $w$ is a real-valued word vector. The context words are subtracted, and the dot product with the weights of the whole vocabulary is taken to model the relationship that is desired to be displayed in embedding arithmetic. Further steps are required for computability, such as weighting of the word vectors or handling zero entries which are described by \cite{Pennington2014}.
 
 
 %\subsubsection{BERT}
 \subsubsection{Document Embedding}
 
-If desired, a whole document can be embedded. A simple approach is to take the mean or the maximum of all word embeddings in the document. Of course there are also more elaborated methods \citep{Wu2018, Liu2018, Andrew2015} that have a learning objective, similar to word embeddings. However, their downside is the demand for a large corpus to actually learn a meaningful document embedding that is not apparent in the scope of this thesis.
+If an algorithm only needs to operate on the document level then the whole document can be embedded. A simple approach is to take the mean or the maximum of all word embeddings of a document. There are also more elaborated methods \citep{Wu2018, Liu2018, Andrew2015} that have a learning objective, similar to word embeddings. However, their downside is the demand for a large corpus to learn a meaningful document embedding that is not apparent in the scope of this thesis.
 
 \subsection{Web Scraping}
 
-The process of automatically extract contents available on the world wide web i.e. parts of webpages is called \textbf{web scraping}\index{web scraping}. It is different to web crawling, where the main purpose is the following of hyperlinks on webpages and index the linkage between content on the web. However, both techniques can be combined to systematically search for some type of content with a network of webpages e.g., crawling as many online flight provider and monitor their prices.
+The process of automatically extracting content available on the world wide web, i.e., parts of webpages is called \textbf{web scraping}\index{web scraping}. It is different from web crawling, where the primary purpose is the following of hyperlinks on webpages to index the linkage between pages. However, both techniques can be combined to systematically search for some specific content within a network of webpages, e.g., crawling an online flight provider and monitor their prices.
 
 \subsubsection{HTML and CSS}
 
 \textbf{Hyptertext Markup Language}(\GLS{HTML})\index{HTML} is a markup language which means that it consists of a set of \textsl{tags} that define how content of a document needs to be interpreted. In HTML for example, \mintinline{HTML}{<h1> I am a Header </h1>} defines the opening of a header tag followed by some content and the closing of this tag. When this HTML code is interpreted, the text is then displayed bold and larger than non-header text if not specified otherwise.
 
-\textbf{Cascading Style Sheets}(\GLS{CSS})\index{CSS} is a style sheet language that is used to allow styling HTML code. Given the example above, we could modify the header to have another color, \mintinline{HTML}{<h1> style="color: red"; I am a Header </h1>}. It is also possible to define a \emph{class} and use this class to automatically apply several styles such as in \ref{lst:css},\renewcommand{\figurename}{Listing}
+\textbf{Cascading Style Sheets}(\GLS{CSS})\index{CSS} is a style sheet language that is used for styling HTML code. Given the example above, we could modify the header to have another color, \mintinline{HTML}{<h1 style="color:red";>  I am a Header </h1>}. It is also possible to define a CSS \emph{class} and use this class to automatically apply several styles such as in Lis. \ref{lst:css},\renewcommand{\figurename}{Listing}
 
 \begin{figure}[h]
   \centering
@@ -353,18 +349,21 @@ The process of automatically extract contents available on the world wide web i.
       font-family: verdana;
     }
   \end{cminted}
-  \caption{CSS class named \emph{header} that sets the font to verdana and colors it red.}
+  \caption{CSS class named \emph{header} that sets the font to verdana and color to red when used.}
   \label{lst:css}
-
 \end{figure}
 
-This way, we can apply the style like so \mintinline{HTML}{<h1 class="header"> I am a Header </h1>}. While a class can be accessed from several HTML tags, there is also a \textsl{id} that can only be accessed once but otherwise has the same function to define a style.
-Both languages thereby reveal a way of filtering the content of a webpage. Web scraping is exploiting HTML tags or CSS selectors like classes or ids to filter the content of a webpage.
+This way, we can apply the style like so \mintinline{HTML}{<h1 class="header"> I am a Header </h1>}. While a class can be accessed from several HTML tags, there is also a CSS \emph{id} that can only be accessed once in one HTML file but otherwise has the same functionality as a CSS class.
+Both languages thereby reveal a way of filtering the content of a webpage. Web scraping is exploiting HTML tags and CSS selectors like classes or ids to filter the content of a webpage.
 
-Important tags for scraping are the paragraph tag \mintinline{HTML}{<p>} that normally contains text intended for the reader of a webpage and hyperlinks in the \mintinline{HTML}{<a>} tag. By investigating certain webpages thoroughly, one might also find a schema in the assignment of CSS selectors that can be exploited during web scraping.
+Important tags for scraping are the paragraph tag \mintinline{HTML}{<p>} that normally contains text intended for the reader of a webpage and the \mintinline{HTML}{<a>} tag that contains hyperlinks. By investigating certain webpages thoroughly, one might also find a schema in the assignment of CSS selectors that can be exploited during web scraping.
 
 \subsubsection{REST}
-Most webpages offer a web service which is a broad term for some user interface that allows the communication to a data base and optionally performs some operation on this data. There are two ways to communi
+
+Most webpages offer a web service which is a broad term for some user interface that allows the communication to a database and optionally performs some operation on this data. The standard application program interface for this form of communication is the \textbf{Representational State Transfer} (\GLS{REST}), and its methods are GET, POST, PUT, PATCH, and DELETE which are often executed via HTTP in webpages. The most important method in web scraping is the GET method since it retrieves data. It is sometimes necessary to understand how GET requests are made in a webpage to copy them and use them for automated content extraction.
+
 \subsubsection{Ajax}
 
-To avoid waiting for the whole page to load, asynchronous data retrieval is used to get the content of the webpage peu \`{a} peu. A common usecase would e to make GET request asynchronous. Via some URL data are then requested from the server and the client does not need to wait until all answeres of the server have finished. A popular abstraction of Ajax is jQuery and mostly used in combination with JavaScript.
+Should the client (user) request data from a database via a webpage and a reload of the webpage is undesired, \textbf{Ajax}\index{Ajax} allows an asynchronous data retrieval. This asynchronous GET request starts on an event (e.g., clicking on a button on the webpage). Ajax is frequently used to reduce loading time and traffic to only refresh the necessary part of a webpage. A popular abstraction of Ajax is \textbf{jQuery} and mostly used in combination with JavaScript that is required to integrate the retrieved data into the webpage.
+
+A problem of scraping and crawling programs is that content which is only visible after Ajax has requested it is not visible to the program. Therefore, it might be necessary to monitor the webpage's behavior via the developer mode of an internet browser and see which GET requests would get you the right data or trigger the Ajax calls programmatically.
