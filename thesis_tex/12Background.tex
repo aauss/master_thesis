@@ -177,34 +177,35 @@ Note,  the classifier is named \textsl{naive} because we assume that every featu
 
 
 \subsubsection{Multinomial Naive Bayes for Text Classification}
-%TODO: Add tf-idf
 For classifying texts based on the words they contain as in the bag-of-words approach, we can apply Multinomial Naive Bayes as follows,
 \begin{align}
   \mathcal{C} &= \{\mathcal{C}_k \: | \: k \in K \} \\
   \boldsymbol{t} &= \{c_1, c_2, \dots, c_n\} \\
-  \boldsymbol{T}_{\mathcal{C}_k} &= \{\boldsymbol{t}_d | \forall d \in \mathcal{D}_{\mathcal{C}_{k}}\} \\
-  p({t_{i}}|\mathcal{C}_k) &= \frac{\boldsymbol{T}_{\mathcal{C}_k,t_{i}}}{\sum_{\forall t_j \in \boldsymbol{T}}\boldsymbol{T}_{\mathcal{C}_k,t_j}} \\
-  p(\mathcal{C}_k|\boldsymbol{t}_d) &\propto p(\mathcal{C}_k) \prod_{i=1}^{|t_{d}|}  p(t_{d,i}|\mathcal{C}_k)
+  \boldsymbol{T}_{k} &= \{\boldsymbol{t}_d | \forall d \in \mathcal{D}_{\mathcal{C}_{k}}\} \\
+  p({t_{k,i}}|\mathcal{C}_k) &= \frac{t_{k, i}}{\sum_{\forall t_j \in \boldsymbol{T}_k} t_{k, j}} \\
+  p(\mathcal{C}_k|\boldsymbol{t}_d) &\propto p(\mathcal{C}_k) \prod_{i=1}^{|\boldsymbol{t}_d|}  p(t_{d,i}|\mathcal{C}_k)
 \end{align}
-Where $\mathcal{C}$ is the set of text classes, and $\boldsymbol{t}$ the set of token counts where $c_i$ is the occurrence count of term $i$. $\boldsymbol{T}$ is a matrix where the token counts $c$ are the columns, and the documents $d$ the rows given class $\mathcal{C}_k$. To calculate the likelihood $P({t_{i}}|\mathcal{C}_k)$ we simply divide the occurrence of token $t_i$ given class $\mathcal{C}_k$ by the sum of all tokens in the same class. Following the independence assumption as in (2.4) we now can calculate $P(\mathcal{C}_k\boldsymbol{t}_d)$ as the product of the prior $P(\mathcal{C}_k)$ - the probability of class $\mathcal{C}_k$
+Where $\mathcal{C}$ is the set of text classes, and $\boldsymbol{t}$ contains the token counts of the whole vocabulary, $c_i$ being the occurrence count of term $i$. $\boldsymbol{T}_k$ is a matrix where the token counts $c$ are the columns, and the documents $d$ the rows all member of class $\mathcal{C}_k$. To calculate the likelihood of $p({t_{k,i}}|\mathcal{C}_k)$ we simply divide the occurrence of token $t_{k,i}$ by the sum of all tokens in the same class $\mathcal{C}_k$. Following the independency assumption as in (2.4) we now can calculate $P(\mathcal{C}_k | \boldsymbol{t}_d)$ as the product of the prior $P(\mathcal{C}_k)$ - the probability of class $\mathcal{C}_k$
 as learned form the training set - and the probabilities of all the terms $t_{1 \dots n}$ given the prior class. For classification, the $\argmax$ as in (2.5) is taken.
 
-Two problems can occur in text classification that need to be handled. First, the high probability of numerical underflow due to the large product of several values $<1$, and second, we need to account for some token $t_i \in \boldsymbol{t_d}$ having a count of $0$ that would nullify the whole product. The solution to the underflow problem is to transform (2.10) in to log-space which equals to:
+Three problems can occur in text classification that need to be handled. First, the high probability of numerical underflow due to the large product of several values $<1$, second, some token $t_i \in \boldsymbol{t_d}$ having a count of $0$ that would nullify the whole product, and third, large disparities of token counts that bias the classification. The solution to the underflow problem is to transform (2.10) in to log-space which equals to:
 %
 \[log(P(\mathcal{C}_k|\boldsymbol{t}_d)) \propto \log(P(\mathcal{C}_k)) + \sum_{i=1}^{|t_{d}|} \log({p(t_{d,i}|\mathcal{C}_k)}) \]
 %
 To avoid $p({t_{i}}|\mathcal{C}_k)$ becoming $0$ we apply Laplace smoothing\index{Laplace smoothing} to (2.9) which yields
-\[p({t_{i}}|\mathcal{C}_k) = \frac{\boldsymbol{T}_{\mathcal{C}_k,t_{i}} + 1}{\sum_{\forall t_j \in \boldsymbol{T}}(\boldsymbol{T}_{\mathcal{C}_k,t_j} + 1)}\]
+\[ p({t_{k,i}}|\mathcal{C}_k) = \frac{t_{k, i} + 1}{\sum_{\forall t_j \in \boldsymbol{T}_k} t_{k, j} + 1} \]
+and to avoid a bias towards some exceptionally frequent words, \textbf{term frequency-inverse document frequency}(\gls{tf-idf})\index{tf-idf} corrects this discrepancy by weighting the term frequency as follows,
+\begin{align}
+  tf(t,d) &= \frac{f_{t,d}}{\sum_{t' \in d} f_{t',d}}\\
+  idf(t,d, \mathcal{D}) &= log\left( \frac{|\mathcal{D}|}{|d \in \mathcal{D}: t \in d|}\right)\\
+  tfidf(t,d, \mathcal{D}) &= tf(t,d) \cdot idf(t,d, |\mathcal{D}|)
+\end{align}
+where $f_{t,d}$ is the term frequency of term $t$ in document $d$ and $t'$ is any term in $d$. $|\mathcal{D}|$ is the amount of documents in the corpus and $|d \in \mathcal{D}|: t \in d|$ is the amount of documents containing term $t$. (2.13) is the final formula that weights the term frequencies.
 
 \subsubsection{Bernoulli Naive Bayes}
 Especially for shorter texts and binary decision (\emph{spam}, \emph{not spam}), there is only little gain to use token counts. This variant of the NBC explicitly models the absence and presence of words. The probability of token $t_i$ given a some class like is calculated like,
 \[p(t_{i}|\mathcal{C}_b) = p(t_{i})(1-p(t_{i}))^{(1-b)}\]
-
-where $b$ is a binary value
-\[
-  b = \begin{cases}1 & \text{if }\ \mathcal{C}_b = True\\
-  0 & \text{otherwise}\end{cases}
-  \]
+where $b \in \{0,1\}$ and $\mathcal{C}_b$ is the corresponding class.
 
 \subsubsection{Complement Naive Bayes}
 There are cases where the \textsl{naive} assumption is particularly ill made. In an unbalanced class problem, the data is skewed towards the larger class which the following table illustrates,
