@@ -340,9 +340,9 @@ The process of automatically extracting content available on the world wide web,
 
 \textbf{Hyptertext Markup Language}(\GLS{HTML})\index{HTML} is a markup language which means that it consists of a set of \textsl{tags} that define how content of a document needs to be interpreted. In HTML for example, \mintinline{HTML}{<h1> I am a Header </h1>} defines the opening of a header tag followed by some content and the closing of this tag. When this HTML code is interpreted, the text is then displayed bold and larger than non-header text if not specified otherwise.
 
-\textbf{Cascading Style Sheets}(\GLS{CSS})\index{CSS} is a style sheet language that is used for styling HTML code. Given the example above, we could modify the header to have another color, \mintinline{HTML}{<h1 style="color:red";>  I am a Header </h1>}. It is also possible to define a CSS \emph{class} and use this class to automatically apply several styles such as in Lis. \ref{lst:css},\renewcommand{\figurename}{Listing}
+\textbf{Cascading Style Sheets}(\GLS{CSS})\index{CSS} is a style sheet language that is used for styling HTML code. Given the example above, we could modify the header to have another color, \mintinline{HTML}{<h1 style="color:red">  I am a Header </h1>}. It is also possible to define a CSS \emph{class} and use this class to automatically apply several styles such as in Lis. \ref{lst:css},\renewcommand{\figurename}{Listing}
 
-\begin{figure}[h]
+\begin{listing}[h!]
   \centering
   \begin{cminted}{CSS}
     .header {
@@ -352,7 +352,7 @@ The process of automatically extracting content available on the world wide web,
   \end{cminted}
   \caption{CSS class named \emph{header} that sets the font to verdana and color to red when used.}
   \label{lst:css}
-\end{figure}
+\end{listing}
 
 This way, we can apply the style like so \mintinline{HTML}{<h1 class="header"> I am a Header </h1>}. While a class can be accessed from several HTML tags, there is also a CSS \emph{id} that can only be accessed once in one HTML file but otherwise has the same functionality as a CSS class.
 Both languages thereby reveal a way of filtering the content of a webpage. Web scraping is exploiting HTML tags and CSS selectors like classes or ids to filter the content of a webpage.
