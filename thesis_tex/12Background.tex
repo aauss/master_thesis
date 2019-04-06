@@ -196,9 +196,9 @@ To avoid $p({t_{i}}|\mathcal{C}_k)$ becoming $0$ we apply Laplace smoothing\inde
 \[ p({t_{k,i}}|\mathcal{C}_k) = \frac{t_{k, i} + 1}{\sum_{\forall t_j \in \boldsymbol{T}_k} t_{k, j} + 1} \]
 and to avoid a bias towards some exceptionally frequent words, \textbf{term frequency-inverse document frequency}(\gls{tf-idf})\index{tf-idf} corrects this discrepancy by weighting the term frequency as follows,
 \begin{align}
-  tf(t,d) &= \frac{f_{t,d}}{\sum_{t' \in d} f_{t',d}}\\
-  idf(t,d, \mathcal{D}) &= log\left( \frac{|\mathcal{D}|}{|d \in \mathcal{D}: t \in d|}\right)\\
-  tfidf(t,d, \mathcal{D}) &= tf(t,d) \cdot idf(t,d, |\mathcal{D}|)
+  \operatorname{tf}(t,d) &= \frac{f_{t,d}}{\sum_{t' \in d} f_{t',d}}\\
+  \operatorname{idf}(t,d, \mathcal{D}) &= log\left( \frac{|\mathcal{D}|}{|d \in \mathcal{D}: t \in d|}\right)\\
+  \operatorname{tf-idf}(t,d, \mathcal{D}) &= \operatorname{tf}(t,d) \cdot \operatorname{idf}(t,d, |\mathcal{D}|)
 \end{align}
 where $f_{t,d}$ is the term frequency of term $t$ in document $d$ and $t'$ is any term in $d$. $|\mathcal{D}|$ is the amount of documents in the corpus and $|d \in \mathcal{D}|: t \in d|$ is the amount of documents containing term $t$. (2.13) is the final formula that weights the term frequencies.
 
@@ -238,7 +238,7 @@ The proposed solution by \cite{Rennie2003} is to minimize the probability of a v
 \subsubsection{Perceptron}
 A \textbf{perceptron}\index{perceptron} is an algorithm inspired by biological neurons. It is a binary classifier that learns by adjusting its threshold to \textsl{fire} an \textsl{action potential} when the correct class is detected. Formally it is
 \begin{gather}
-  Perceptron(\mathbf{x}) = \begin{cases}1 & \text{if }\ \mathbf{w} \cdot \mathbf{x} + \mathbf{b} > 0,\\
+  \operatorname{Perceptron}(\mathbf{x}) = \begin{cases}1 & \text{if }\ \mathbf{w} \cdot \mathbf{x} + \mathbf{b} > 0,\\
   0 & \text{otherwise}\end{cases}
 \end{gather}
 where $\mathbf{x}$ is a data vector, $\mathbf{w}$ the weight vector and $\mathbf{b}$ the bias. It is trained in a supervised fashion. The learning step with which $w$ is adjusted is defined as,
@@ -368,3 +368,4 @@ Most webpages offer a web service which is a broad term for some user interface 
 Should the client (user) request data from a database via a webpage and a reload of the webpage is undesired, \textbf{Ajax}\index{Ajax} allows an asynchronous data retrieval. This asynchronous GET request starts on an event (e.g., clicking on a button on the webpage). Ajax is frequently used to reduce loading time and traffic to only refresh the necessary part of a webpage. A popular abstraction of Ajax is \textbf{jQuery} and mostly used in combination with JavaScript that is required to integrate the retrieved data into the webpage.
 
 A problem of scraping and crawling programs is that content which is only visible after Ajax has requested it is not visible to the program. Therefore, it might be necessary to monitor the webpage's behavior via the developer mode of an internet browser and see which GET requests would get you the right data or trigger the Ajax calls programmatically.
+% TODO: Add unbalanced learn
