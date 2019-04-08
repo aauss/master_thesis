@@ -334,7 +334,7 @@ If an algorithm only needs to operate on the document level then the whole docum
 
 \subsection{Web Scraping}
 
-The process of automatically extracting content available on the world wide web, i.e., parts of webpages is called \textbf{web scraping}\index{web scraping}. It is different from web crawling, where the primary purpose is the following of hyperlinks on webpages to index the linkage between pages. However, both techniques can be combined to systematically search for some specific content within a network of webpages, e.g., crawling an online flight provider and monitor their prices.
+The process of automatically extracting content available on the world wide web, i.e., parts of websites is called \textbf{web scraping}\index{web scraping}. It is different from web crawling, where the primary purpose is the following of hyperlinks on websites to index the linkage between pages. However, both techniques can be combined to systematically search for some specific content within a network of websites, e.g., crawling an online flight provider and monitor their prices.
 
 \subsubsection{HTML and CSS}
 
@@ -355,17 +355,17 @@ The process of automatically extracting content available on the world wide web,
 \end{listing}
 
 This way, we can apply the style like so \mintinline{HTML}{<h1 class="header"> I am a Header </h1>}. While a class can be accessed from several HTML tags, there is also a CSS \emph{id} that can only be accessed once in one HTML file but otherwise has the same functionality as a CSS class.
-Both languages thereby reveal a way of filtering the content of a webpage. Web scraping is exploiting HTML tags and CSS selectors like classes or ids to filter the content of a webpage.
+Both languages thereby reveal a way of filtering the content of a website. Web scraping is exploiting HTML tags and CSS selectors like classes or ids to filter the content of a website.
 
-Important tags for scraping are the paragraph tag \mintinline{HTML}{<p>} that normally contains text intended for the reader of a webpage and the \mintinline{HTML}{<a>} tag that contains hyperlinks. By investigating certain webpages thoroughly, one might also find a schema in the assignment of CSS selectors that can be exploited during web scraping.
+Important tags for scraping are the paragraph tag \mintinline{HTML}{<p>} that normally contains text intended for the reader of a website and the \mintinline{HTML}{<a>} tag that contains hyperlinks. By investigating certain websites thoroughly, one might also find a schema in the assignment of CSS selectors that can be exploited during web scraping.
 
 \subsubsection{REST}
 
-Most webpages offer a web service which is a broad term for some user interface that allows the communication to a database and optionally performs some operation on this data. The standard application program interface for this form of communication is the \textbf{Representational State Transfer} (\GLS{REST}), and its methods are GET, POST, PUT, PATCH, and DELETE which are often executed via HTTP in webpages. The most important method in web scraping is the GET method since it retrieves data. It is sometimes necessary to understand how GET requests are made in a webpage to copy them and use them for automated content extraction.
+Most websites offer a web service which is a broad term for some user interface that allows the communication to a database and optionally performs some operation on this data. The standard application program interface for this form of communication is the \textbf{Representational State Transfer} (\GLS{REST}), and its methods are GET, POST, PUT, PATCH, and DELETE which are often executed via HTTP in websites. The most important method in web scraping is the GET method since it retrieves data. It is sometimes necessary to understand how GET requests are made in a website to copy them and use them for automated content extraction.
 
 \subsubsection{Ajax}
 
-Should the client (user) request data from a database via a webpage and a reload of the webpage is undesired, \textbf{Ajax}\index{Ajax} allows an asynchronous data retrieval. This asynchronous GET request starts on an event (e.g., clicking on a button on the webpage). Ajax is frequently used to reduce loading time and traffic to only refresh the necessary part of a webpage. A popular abstraction of Ajax is \textbf{jQuery} and mostly used in combination with JavaScript that is required to integrate the retrieved data into the webpage.
+Should the client (user) request data from a database via a website and a reload of the website is undesired, \textbf{Ajax}\index{Ajax} allows an asynchronous data retrieval. This asynchronous GET request starts on an event (e.g., clicking on a button on the website). Ajax is frequently used to reduce loading time and traffic to only refresh the necessary part of a website. A popular abstraction of Ajax is \textbf{jQuery} and mostly used in combination with JavaScript that is required to integrate the retrieved data into the website.
 
-A problem of scraping and crawling programs is that content which is only visible after Ajax has requested it is not visible to the program. Therefore, it might be necessary to monitor the webpage's behavior via the developer mode of an internet browser and see which GET requests would get you the right data or trigger the Ajax calls programmatically.
+A problem of scraping and crawling programs is that content which is only visible after Ajax has requested it is not visible to the program. Therefore, it might be necessary to monitor the website's behavior via the developer mode of an internet browser and see which GET requests would get you the right data or trigger the Ajax calls programmatically.
 % TODO: Add unbalanced learn
