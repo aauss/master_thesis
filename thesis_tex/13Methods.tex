@@ -1,6 +1,9 @@
 \chapter{Methods}
 
 \section{Requirement Analysis}
+At the beginning of my work, I needed to assess the applicability of several possible topics for their suitability of NLP methods.
+Therefore, if applicable, I monitored the functionings of the target groups, and their used textual sources.
+The direction of the thesis was determined based on the exploitability of the sources and the gain for the functionings.
 \subsection{RASFF}
 PDF analysis hard
 \subsection{EpiLag}
@@ -8,53 +11,238 @@ No Real need
 \subsection{EPIS}
 ?
 \subsection{INIG}\label{INIGsources}
-Need
-
+The INIG has a curated list of sources that they visit every day and check for new alerting events.
+All of them are webpages of which most are simple to scrape.
+The easy access to data and the clearly defined in and output in INIG's working procedure made them a good fit for my topic.
+% write a table that shows those lists and how easy they can be accessed.
 
 \section{Libraries}
+In the following sections I am introducing the most crucial libraries I used for my work.
+I omitted libraries in this listing that are common for data driven work with Python or are part of the standard library.
 \subsection{NLTK}
-Can do everything except new stuff
-\subsection{SpaCy}
-Performs only new stuff
+The \textbf{Natural Language Tool Kit} (\GLS{NLTK}) is the an established and large package for NLP.
+It has 50 corpora and lexical resources as well as all important algorithms to build a NLP-pipeline as in Fig. \ref{fig:pipeline}.
+NLTK was originally built to teach NLP and thus contains also outdated algorithms in the field of NLP.
+
+I used the stop word list, word and sentence tokenizer provided by NLTK.
+Furthermore, I used the multinomial NBC in NLTK to investigate the most important features for a classification i.e., words that influence the classification decision by the NBC the most.
+
 \subsection{EpiTator}
-Backbone of my thesis
+EpiTator is a library used in \href{https://grits.eha.io}{GRITS} which is an webpage maintained by the \href{https://www.ecohealthalliance.org}{EcoHealth Alliance}.
+GRITS is a dashboard for the automatic annotation and analysis of epidemiological text.
+It classifies an epidemiological article and tries to classify the most likely disease the article is written about.
+Additionally, it displays the source text and highlights important words like dates, counts, diseases, symptoms, and geological entities.
+GRITS uses EpiTator for the entity recognition.
+
+I used the following features of EpiTator in my thesis: EpiTator has a count annotator that extracts the glyph and word representation for numbers and associated attributes e.g., \textit{``5 cases of smallpox''} will detect \textit{5} as a count and \textit{cases} as its attribute.
+It has a date annotator that extracts dates and date ranges from text.
+Also, EpiTator has a geoname annotator that extracts all geographical entities from a text. Finally, Epitator has a resolved keyword annotator, that uses an sqlite database of entities to resolve multiple synonyms of infectious disease entities.
+
+\subsection{SpaCy}
+SpaCy is an industrial NLP library that contains every necessary algorithm as illustrated in \ref{fig:pipeline}, but also newer methods from the field of deep learning such as CNNs and word embeddings. Additionally, SpaCy is written in the much fast CPython language. Altogether, speed and state of the art algorithms give SpaCy the industrial strength.
+
+In this thesis SpaCy is mainly used by EpiTator for preprocessing. I got in touch with SpaCy when I wanted to serialize EpiTator output which is not trivial in SpaCy. Therefore, I needed to transform the output of EpiTator such that it did not contain SpaCy dependencies anymore.
+
 \subsection{Flair}
-Embeddings
+Flair is small library that only contains state of the art algorithms in NLP. It does not directly provide preprocessing such as stop word removal, tokenization, or stemming but does the preprocessing automatically depending on the final task.
+
+Flair has a powerful word embedding module with state of the art resuslts that I used for the text classification.
+
 \subsection{Beautiful Soup}
-Scraping
+Beautiful Soup is a package to parse HTML and XML as a tree structure that can be traversed. Given the structured access to HTML content via tags, classes or ids, web scraping is much simpler with Beautiful Soup.
+I performed web scraping solely with Beautiful Soup.
+
 \subsection{Boilerpipe}
-HTML text extraction
+Boilerpipe is a Java package that uses shallow text features (word count, hyperlink density, and position of text block) to remove \textsl{boilerplate} (advertisement, navigation bars,\dots) from webpages \citep{Kohlschutter2010}. There exists a Python package that calls the Boilerpipe Java code from a Python environment.
+
+Although, I could have written the web scrapers in a way that they would have only extracted the main content, I wanted to have a solution that allows me to expand the work of my thesis to more webpages. Thus, I wrote scraper that extract the whole HTML content of a webpage that contains some outbreak article and then used Boilerpipe to extract the main content.
+
 \subsection{Apache Tika}
-PDF text extraction
+Apache Tika is a large content analysis framework for text and metadata extraction from over a thousand data types. I used it for the text extraction from PDFs.
+
 \subsection{Luigi}
-Pipeline builder. Make-like
+Luigi is a pipeline builder built by Spotify. It manages different jobs, coordinates dependencies, and visualizes them. It is similar to GNU Make, but offers more the flexibility on what is executed.
+
+With Luigi, I modularize my work in case there is a requirement to modify or replace certain parts of my pipeline and automatically serialize the outcome of longer computations.
+
 \subsection{Sacred}
-Experiment saver
+Sacred helps to track experiments by saving the hyper-parameters, model name, and performance of computational experiments (e.g, a machine learning model).
+I used Sacred for tracking my experiments.
+
+\subsection{Flask}
+Flask is a web development miniframework for Python.
+To demonstrate the final product which is capable of extracting the main content from some URL, annotate the most important entities from an epidemiological perspective and then puts this information into a database, I built a web app using Flask.
+
 \section{Data Acquisition}
 \subsection{Event Data Base - \textit{Ereignisdatenbank}}
-Excel sheet with a lot of information
+The Ereignisdatenbank (\GLS{EDB}) is an Excel sheet and the main recording method of the work of INIG. They track various parts of their work in this sheet but most importantly they enter every detected outbreak article into the EDB. Every entry consist of several columns, of which only some are mandatory such as the reported disease, the country of origin, the amount of confirmed cases, and the case number's reporting date.
+
 \subsection{WHO DONs}
-Trustes source
-\subsection{Promed Mail}
-Trusted source
-\subsection{Wikipedia - List of Sovereign States}
-For controlled vocabulary
-\subsection{Wikidata and RKI-Internal Data}
-For controlled vocabulary
+The WHO publishes the latest disease outbreak news (DONs).
+It is a low output source with only a handful reports every week.
+All WHO DONs are archived and can therefore be conveniently accessed.
+They are sorted by year and month.
+
+I wrote a scraper that accesses the archive URL and then, based on the function parameter, visits the URL with the requested time range and scrape the content \ref{lst:who}.
+
+\begin{listing}[h]
+  \begin{minted}[autogobble]{python}
+    page = requests.get('http://www.who.int/csr/don/archive/year/en/')
+    soup = BeautifulSoup(page.content, 'html.parser')
+    archive_years = soup.find('ul', attrs={'class': 'list'})
+    all_years_links = archive_years.find_all('a')
+    years_as_links = ['http://www.who.int' + link.get('href')
+                      for link in all_years_links]
+
+    for year_link in years_as_links:
+      page_year = requests.get(year_link, proxies=proxy, headers=headers)
+      soup_year = BeautifulSoup(page_year.content, 'html.parser')
+      archive_year = soup_year.find('ul', attrs={'class': 'auto_archive'})
+      daily_links = ['http://www.who.int' + link.get('href')
+                     for link in  archive_year.find_all('a')]
+  \end{minted}
+  \caption{An extract from the scraping script of the WHO DONs. The extract starts with extracting the content of \textquotesingle http://www.who.int/csr/don/archive/year/en/\textquotesingle, followed by filtering the URL link for all years with the help of the \texttt{ul} tag and \texttt{list} class. To extract all DONs per year the \texttt{auto\_archive} class is used. All links are found in the \texttt{a} tag and \texttt{href} selector.}
+  \label{lst:who}
+\end{listing}
+
+\subsection{ProMED Mail}
+Opposed to WHO DONs, much more authors are contributing to ProMED Mail and therefore it has a much higher output. Usually, ProMED publishes around a handful of articles a day. ProMED mail content JavaScript is dynamically loaded and therefore not directly accessible. Through the analysis of the webpage, I detected the GET requests and reverse engineered them \ref{lst:promed}.
+
+\begin{listing}[h!]
+  \begin{minted}[autogobble]{python}
+  def get_content_of_search_page(from_date, to_date, page_num, proxy):
+    return (requests
+            .get(f'https://www.promedmail.org/ajax/runSearch.php?'
+                 f'pagenum={page_num}&'
+                 f'search=&date1={from_date}&'
+                 f'date2={to_date}',
+                 proxies=proxy)
+            .content
+            .decode('utf-8')
+            )
+  \end{minted}
+  \caption{ProMED scraping core function. It executes a formatted Ajax GET request for a certain date range and page number which returns a list of ProMED article URLs in the form of \textquotesingle \texttt{https://www.promedmail.org/direct.php?id=6400233}\textquotesingle. Everything in curly brackets is replaced by the function parameters.}
+  \label{lst:promed}
+\end{listing}
+
+\subsection{Wikipedia - Liste der Staaten der Erde}\label{wikipedia}
+I scraped the \href{https://de.wikipedia.org/wiki/Liste_der_Staaten_der_Erde}{Wikipedia Liste der Staaten der Erde} (\textit{List of Sovereign States}) and transformed it into a dictionary to translate the German country names of the EDB into English. This is an important step to match the countries in the EDB with the output of EpiTator. The List of Sovereign States contains, besides others, the state's common, formal, English name, ISO-2 and ISO-3 abbreviation.
+The code for reading in the table from the Wikipedia page is shown in Lis. \ref{lst:wikipedia}
+
+\begin{listing}[h]
+  \begin{minted}[autogobble]{python}
+    # Request the HTML content from Wikipedia and parse it with BeautifulSoup
+    req = requests.get("https://de.wikipedia.org/wiki/Liste_der_Staaten_der_Erde")
+    soup = BeautifulSoup(req.content, "html.parser")
+
+    # Find table with of all countries with HTML "table" tag
+    # the CSS class "wikitable sortable zebra" and "tbody" tag
+    table_soup = soup.find("table", class_="wikitable sortable zebra")
+    body_soup = table_soup.find("tbody")
+
+    # Get entries of all countries form table
+    country_soup = body_soup.find_all("tr")
+    }
+  \end{minted}
+  \caption{Python code extract on how to scrape the Liste der Staaten der Erde table from Wikipedia using BeautifulSoup. The table is extracted using the \texttt{table, tbody} and \texttt{tr} tag and the \texttt{wikitable sortable zebra} class.}
+  \label{lst:wikipedia}
+\end{listing}
+
+\subsection{Wikidata and RKI-Internal Data}\label{wikidata}
+I queried all disease names in German and English from \href{https://www.wikidata.org/wiki/Wikidata:Main_Page}{Wikidata} and used them as a dictionary to transform all German disease names of the EDB into English \ref{lst:wikidata}. Additionally, I used a list of RKI-internal abbreviation to translate them to their full English name.
+
+\begin{listing}[h]
+  \begin{minted}[autogobble]{python}
+    endpoint_url = "https://query.wikidata.org/sparql"
+    query = """SELECT Distinct ?itemLabel_DE   ?itemLabel_EN WHERE {
+                ?item wdt:P31 wd:Q12136.
+                OPTIONAL{
+                ?item rdfs:label ?itemLabel_DE.
+                FILTER (lang(?itemLabel_DE) = "de"). }
+                ?item rdfs:label ?itemLabel_EN.
+                FILTER (lang(?itemLabel_EN) = "en").
+                }"""
+    disease_translation_dictonary = get_results_of_sparql(endpoint_url, query)
+  \end{minted}
+  \caption{The SPARQL request made to retrieve a list of tuples with the German and English disease name from Wikidata.}
+  \label{lst:wikidata}
+\end{listing}
+
 
 \section{Preprocessing}
+The EDB is an unstructured Excel sheet which means that the data types were not restricted, no uniform vocabulary was used, and formatting errors occur several times.
+The EDB needed to fulfill the condition to be machine parsable and be comparable with the output of EpiTator.
+In the following I show the necessary steps to clean the EDB, make it machine readable and transform it to an controlled English vocabulary to be comparable with the output of EpiTator.
+
 \subsection{Variables}
+The EDB has many entries where only a handful are mandatory. During the preprocessing, only the mandatory entries are kept.
+The \emph{URL} of the article, the \emph{disease}, the \emph{country} of outbreak as mentioned in the article, and the \emph{confirmed case count} with the \emph{date} as of the date count are used for further processing.
+
+The preprocessing steps were the removal of empty rows, trailing white spaces, and the split-up of several entries in one cell to several rows to be in accordance with the tidy data concept \citep{Wickham2014}.
+The crucial part of the preprocessing was, however, the transformation of the variables into a controlled vocabulary.
 
 \subsection{Controlled Vocabulary}
-\subsubsection{Countries}
-\subsubsection{Diseases}
+\paragraph{Dates}
+The dates needed to be transformed into a machine parsable format which I did with the pandas \texttt{totimestamp} method. If the method is provided with the information whether date or month is mentioned first, \texttt{totimestamp} automatically recognizes several forms of dates and transforms them to a pandas datetime object on which arithmetic operations and comparison are possible.
+
+\paragraph{Counts}
+Every entry that was indicated as case counts was cleaned from any non-digit entry. In case of several numerical values, the first one was taken.
+
+\paragraph{URLs}
+I removed invalid URLs, and transformed ProMED URLs into a uniform style. The ProMED URLs in the EDB use both, \texttt{http} and \texttt{https} as a protocol. Furthermore, ProMED URLs in the EDB be written like \textquotesingle \texttt{https://www.promedmail.org/post/6400233} \textquotesingle as an example or without the \texttt{www.} preceding the URL. However, to be consistent with the scraped URL format returned by \ref{lst:promed}, I transformed all URLs into the form \textquotesingle \texttt{https://\allowbreak www.promedmail.org/\allowbreak direct.php?id=6400233} \textquotesingle.
+
+\paragraph{Countries and diseases}
+Country and disease names needed to be translated to make them comparable to the output of EpiTator. Therefore, I used the scraped dictionaries as in \ref{wikidata}, \ref{wikipedia} through which I eradicated spelling mistakes and translated these words to English. The procedure is shown in Lis. \ref{lst:translate}.
+
+\begin{algorithm}[h]
+  \SetAlgoLined
+    \KwIn{$t_{\neg controlled}$}
+    \KwResult{$t_{controlled}$}
+    $dictionary: K_{\neg controlled} \to V_{controlled}$\;
+    \uIf{$t_{\neg controlled} \in K$}{
+      \Return $dictionary(t_{\neg controlled})$\;
+      }
+      \Else{
+      \[ \operatorname{lev}_{a,b}(i,j) = \begin{cases}
+      \max(i,j) \hfill \text{ if } \min(i,j)=0, \\
+      \min \begin{cases}
+        \operatorname{lev}_{a,b}(i-1,j) + 1 \\
+        \operatorname{lev}_{a,b}(i,j-1) + 1 \\
+        \operatorname{lev}_{a,b}(i-1,j-1) + 1_{(a_i \neq b_j)}
+     \end{cases} \hfill \text{ otherwise.}
+     \end{cases}\]
+     \tcc{Where lev is the Levenshtein distance of word $a$ and $b$ at string $i$ of $a$ and $j$ ob $b$.}
+     $t_{corrected} \leftarrow \argmin_{k \in K} \operatorname{lev}_{\neg controlled}, k$\;
+       \uIf{$t_{corrected} \in K$}{
+          \Return $dictionary(t_{corrected})$\;
+          }
+      \Else{$t_{corrected} \leftarrow endsOrStartsWith(t_{\neg controlled}, dictionary)$\;
+      \Return $dictionary(t_{corrected})$}
+      }
+\caption{Translation algorithm to transform input to controlled vocabulary. If no translation is not initially available, the most similar written form is chosen via the word with the shortest Levenshtein distance to the input word. If the word is still not translated, we assume an shortened form and search for an overlap in the first or last strings.}
+\label{lst:translate}
+\end{algorithm}
 
 \subsection{NLP-Pipeline}
+All the scraped data needed to be transformed in a machine readable format to perform machine learning. In the following I describe the steps each text underwent before being fed into classification algorithms.
+
 \subsubsection{Literal Processing}
+In the case of PDFs, I replaced unrecognized characters, indicated by the Unicode code \texttt{U+FFFD}, by one single white space. In the case of the scraped HTML, I replaced all UTF-8 control characters with a single whitespace characters like so: \mintinline{python}{string = \allowbreak "".join\allowbreak(char\allowbreak if unicodedata\allowbreak.category(char)[0]\allowbreak !=\allowbreak "C" else\allowbreak ' '\allowbreak for char in string)}.
+
 \subsubsection{Embedding}
+I used pretrained GloVe embeddings with 50 dimensions provided by Flair for the word embeddings.
 
 \subsection{Classification}
+I trained an classifier to be able to distinguish between \emph{relevant} and \emph{irrelevant} outbreak news based on the whole text, and also based on the embeddings of the text.
+
+Furthermore, I tested two methods for the key word extraction: First, taking the most frequent entity occurring in a text as the key word and second, train a classifier based on sentences that contain such entities. The classifier is trained on the EDB key word entries and the text these entries are based on.
+Sentences containing the key words found in the EDB are the positive training labels.
+All other sentences containing key word entities of the same category (e.g., disease) recognized by EpiTator, but are not found in the EDB entry, are counter examples for the classifier.
+
 \subsubsection{Naive Bayes Classifier}
+I used the multinomial and complement naive Bayes for the text classification and the multinomial and Bernoulli naive Bayes classifier for the key word extraction.
+
 \subsubsection{Deep Learning}
 
 \subsection{Web App}
+I used Flask and \href{https://www.datatables.net}{DataTables} to create a web app that allows the entry of an URL where then the text is extracted, summarized, and put into a data table.
