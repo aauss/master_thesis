@@ -1,32 +1,34 @@
 \chapter{Methods}
 
 \section{Requirement Analysis}
-At the beginning of my work, I needed to assess the applicability of several possible topics for their suitability of NLP methods.
-Therefore, if applicable, I monitored the work methods of the target groups and their used textual sources.
+At the beginning of my work, I needed to assess the applicability of several possible targets at the RKI for their suitability of NLP methods.
+Therefore, if applicable, I monitored the functioning of the target groups and evaluated their used textual sources.
 The direction of the thesis was determined based on the exploitability of the sources and the gain for the work practices through NLP.
 
-\subsection{RASFF}
-The Rapid Alert System for Food and Feed (\GLS{RASFF}) has been established by the European Union (\GLS{EU}) to share information for an effective food safety. As a member of the RASFF, the RKI receives PDFs about recent events of contaminated food. Such a PDF contains several prototypical information about the incidence.
+Below, I introduce available targets, and why they were or were not suitable for the proceedings of this thesis.
 
-However, the document is strongly formatted, and my attempts to extract the text from the PDF without altering the structure of the report failed. I used Tika (\ref{Tika}) for the text extraction, but the result contained misplaced line breaks and other formatting errors. Due to these complications and difficulties to extract text from a PDF without optical character recognition, I decided not to consider the RASFF reports for my thesis.
+\subsection{RASFF}
+The Rapid Alert System for Food and Feed (\GLS{RASFF}) has been established by the European Union (\GLS{EU}) to share information for an effective food safety. As a member of the RASFF, the RKI receives PDFs about recent incidences of contaminated food. Such a PDF contains several prototypical information about the contamination.
+
+However, the document is strongly formatted, and my attempts to extract the text from the PDF without altering the structure of the report failed. I used Tika (\ref{Tika}) for the text extraction, but the return contained misplaced line breaks and other formatting errors. Due to these complications and difficulties to extract text from a PDF without optical character recognition, I decided not to consider the RASFF reports for my thesis.
 
 \subsection{EpiLag}
 Due to the majority of communication in the EpiLag happening orally and the sources mainly being reports from medical practices and hospitals, EpiLag poses a difficult target for NLP methodology.
 Without a clear in and output, there is no obvious approach to process the data of EpiLag.
 
 \subsection{EPIS}
-As the RASFF, the Epidemic Intelligence Information System (\GLS{EPIS}) is also an EU project. It is a web tool that allows several EU members to report unusual disease outbreaks. EPIS allows filtering a search for disease group and country. To stay up-to-date, EPIS has an email notification system, and every outbreak report is downloadable as a formatted Excel sheet.
+As the RASFF, the Epidemic Intelligence Information System (\GLS{EPIS}) is also an EU project. It is a web tool that allows several EU members to report alarming disease outbreaks. To stay up-to-date, EPIS has an email notification system, and every outbreak report is downloadable as a formatted Excel sheet.
 
-The downside of EPIS is a missing source for reported outbreaks. Mostly,  local health departments recognize these events and then share them through EPIS without explaining how they detected them. This procedure makes the comparison of events difficult since different countries might not share the definition for a disease outbreak.
+The downside of EPIS is a missing source for reported outbreaks. Mostly, local health departments detect these events and then share them through EPIS leaving out how they discovered them. This procedure makes the comparison of events difficult especially since different countries might not share the definition for a disease outbreak.
 Though the formatted data output of EPIS would have been ideal for my further work, the regulations on how to process EPIS data were unclear and partially restrictive which excluded to further work with EPIS data.
 
 \subsection{INIG}\label{INIGsources}
 The INIG has a curated list of sources that they visit every day and check for new alerting events (Tab. \ref{table:INIGsources}).
-They consist of a heterogeneous set of sources where some are regularly reporting and some weekly but in more extent. Also, the data format is different and can be a simple HTML website, PD, or email.
+The list consists of a heterogeneous set of sources where some are frequently reporting and some less but in more extent. Also, the data format is different and can be a simple HTML website, PD, or email.
 The easy access to data and the clearly defined in- and output in INIG's working procedure made them a good fit for my topic.
 \begin{table}[h!]
   \centering
-  \caption{A list of the obligated sources for the daily screening of INIG and the data type of the source. Furthermore, I assessed the sources for their quality, i.e., whether they only contain information relevant for epidemiological surveillance or also research findings and ongoing projects (mixed findings). After exemplary testing, I rated the difficulty to extract analyzable text from these sources where easy posed no difficulty, intermediate would have required additional work but is promising to function and hard was unsure whether it could work satisfactorily.}
+  \caption{A list of the obligated sources for the daily screening of INIG and the data type of the source. Furthermore, I assessed the sources for their quality, i.e., whether they only contain information relevant for epidemiological surveillance or also research findings and ongoing projects (mixed content). After exemplary testing, I rated the difficulty to extract analyzable text from these sources where \textsl{easy} posed no difficulty, \textsl{intermediate} would have required additional work but is promising to function and \textsl{hard} was unsure whether it could work satisfactorily.}
   % \setlength{\tabcolsep}{1.5em}
   \begin{tabular}{@{}cccc@{}}
     \toprule
@@ -36,8 +38,8 @@ The easy access to data and the clearly defined in- and output in INIG's working
     \href{http://www.promedmail.org/}{ProMED Mail} & HTML & Only relevant & Easy\\
     \href{http://www.who.int/csr/don/en/}{WHO DONs} & HTML & Only relevant & Easy \\
     EIOS daily digest & Email & Only relevant & Hard \\
-    \href{http://outbreaknewstoday.com/}{OutbreakNewsToday} & HTML & Mixed Content & Intermediate\\
-    ECDC Report & Mail & Only relevant & Hards \\
+    \href{http://outbreaknewstoday.com/}{OutbreakNewsToday} & HTML & Mixed content & Intermediate\\
+    ECDC Report & Email & Only relevant & Hard \\
     \href{http://www.afro.who.int/fr/health-topics/disease-outbreaks/outbreaks-and-other-emergencies-updates}{WHO Afro Bulletin} & PDF & Only relevant & Hard \\
     \href{http://www.eurosurveillance.org/content/eurosurveillance/browse}{EuroSurveillance} & PDF and HTML & Mixed content & Intermediate \\
     \href{http://www.who.int/wer/en/}{WHO WER} & PDF & Mixed content & Hard\\
@@ -51,9 +53,9 @@ The easy access to data and the clearly defined in- and output in INIG's working
 
 \section{Libraries}
 In the following sections, I am introducing the most important libraries I used for my work.
-I omitted libraries in this listing that are common for data-driven work with Python or are part of the standard library.
+The list lacks libraries that are common for data-driven work with Python or are part of the standard library.
 \subsection{NLTK}
-The \textbf{Natural Language Tool Kit} (\GLS{NLTK}) is an established and large package for NLP.
+The Natural Language Tool Kit (\GLS{NLTK}) is an established and large package for NLP.
 It has 50 corpora and lexical resources as well as all important algorithms to build an NLP-pipeline as in Fig. \ref{fig:pipeline}.
 NLTK was built initially to teach NLP and thus contains also outdated algorithms in the field of NLP.
 
@@ -63,13 +65,19 @@ Furthermore, I used the multinomial NBC in NLTK to investigate the features with
 \subsection{EpiTator}
 EpiTator is a library used in \href{https://grits.eha.io}{GRITS} which is a website maintained by the \href{https://www.ecohealthalliance.org}{EcoHealth Alliance}.
 GRITS is a dashboard for the automatic annotation and analysis of epidemiological texts.
-It classifies an epidemiological article and tries to rank the most likely disease outlined this text.
+It classifies an epidemiological article and tries to rank the most likely disease outlined in this text.
 Additionally, it displays the source text and highlights important words like dates, counts, diseases, symptoms, and geological entities.
 GRITS uses EpiTator for entity recognition.
+I used the following features of EpiTator in my thesis:
+\begin{itemize}
+  \item EpiTator's count annotator that extracts the glyph and word representation for numbers and associated attributes, e.g., \textit{``5 cases of smallpox''} will detect \textit{5} as a count and \textit{cases} as its attribute
+  \item The date annotator that extracts dates and date ranges from a text
+  \item EpiTator's geoname annotator that extracts all geographical entities from a text.
+  \item  Finally, I also used Epitator's resolved keyword annotator, that uses an SQLite database of entities to decide from multiple synonyms of infectious disease entities.
+\end{itemize}
 
-I used the following features of EpiTator in my thesis: EpiTator's count annotator that extracts the glyph and word representation for numbers and associated attributes, e.g., \textit{``5 cases of smallpox''} will detect \textit{5} as a count and \textit{cases} as its attribute.
-Its date annotator that extracts dates and date ranges from a text.
-Also, EpiTator's geoname annotator that extracts all geographical entities from a text. Finally, I also used Epitator's resolved keyword annotator, that uses an SQLite database of entities to decide from multiple synonyms of infectious disease entities.
+
+
 
 \subsection{SpaCy}
 SpaCy is an industrial NLP library that contains every basic algorithm as illustrated in \ref{fig:pipeline}, but also newer methods from the field of deep learning such as CNNs and word embeddings. Additionally, SpaCy is written in the much fast CPython language. Altogether, speed and state of the art algorithms give SpaCy the industrial strength.
@@ -94,7 +102,7 @@ Although I could have written the web scrapers such that they would have only ex
 Apache Tika is a large content analysis framework for text and metadata extraction from over a thousand data types. I used it for text extraction from PDFs.
 
 \subsection{Luigi}
-Luigi is a pipeline builder made by Spotify. It manages different jobs, coordinates dependencies, and visualizes them. It is similar to GNU Make but offers more flexibility for data-heavy tasks or scheduling and a pythonic syntax.
+Luigi is a pipeline builder made by Spotify. It manages different jobs, coordinates dependencies, and visualizes them. It is similar to GNU Make but offers more flexibility for data-heavy tasks or scheduling all accessible from Python.
 
 With Luigi, I modularize my work in case there is a requirement to modify or replace certain parts of my pipeline and automatically serialize the outcome of long and tedious computations such as scraping.
 
@@ -110,47 +118,48 @@ To demonstrate the final product which is capable of extracting the main content
 After the decision was made to focus on data associated with INIG, I pinpointed the most crucial sources (\ref{edb analysis}) for further work. In the following, I show the necessary preprocessing and scraping methods applied for the acquisition of the data used in this thesis.
 
 \subsection{Event Data Base - \textit{Ereignisdatenbank}}
-The Ereignisdatenbank (\GLS{EDB}) is an Excel sheet and the main recording method of the work of INIG. They track various parts of their work in this sheet but most importantly they enter every detected outbreak article into the EDB. Every entry consists of several columns, of which only some are mandatory such as the reported disease, the country of origin, the number of confirmed cases, and the case number's reporting date.
+The \textbf{Ereignisdatenbank} (\GLS{EDB}) is an Excel sheet and the main recording method of the work of INIG. They track various parts of their work in this sheet but most importantly they enter every detected outbreak article into the EDB. Every entry consists of several columns, of which only some are mandatory such as the reported \textbf{disease}, the \textbf{country} of origin, the number of \textbf{confirmed cases}, and the case number's reporting \textbf{date}.
 
 \subsection{WHO DONs}
-The WHO publishes the latest disease outbreak news (DONs).
+The WHO has a channel where they publish the latest disease outbreak news (DONs).
 It is a low output source with only a handful of reports every week.
 All WHO DONs are archived, sorted by year and month, and therefore can be conveniently accessed.
 
-I wrote a scraper that accesses the archive URL and then, based on the function parameter, visits the URL with the requested time range and scrape the content \ref{lst:who}.
+I wrote a scraper that accesses the archive URL and then, based on the function parameter, visits the URL with the requested time range and scrapes the content \ref{lst:who}.
 
 \begin{listing}[h]
   \begin{minted}[autogobble]{python}
+    # Obtain annual report archive links
     page = requests.get('http://www.who.int/csr/don/archive/year/en/')
     soup = BeautifulSoup(page.content, 'html.parser')
     archive_years = soup.find('ul', attrs={'class': 'list'})
     all_years_links = archive_years.find_all('a')
     years_as_links = ['http://www.who.int' + link.get('href')
                       for link in all_years_links]
-
+    # Obtain all report URLs per year
     for year_link in years_as_links:
-      page_year = requests.get(year_link, proxies=proxy, headers=headers)
+      page_year = requests.get(year_link)
       soup_year = BeautifulSoup(page_year.content, 'html.parser')
       archive_year = soup_year.find('ul', attrs={'class': 'auto_archive'})
       daily_links = ['http://www.who.int' + link.get('href')
                      for link in  archive_year.find_all('a')]
   \end{minted}
-  \caption{An extract from the scraping script of the WHO DONs. The extract starts with extracting the content of \textquotesingle http://www.who.int/csr/don/archive/year/en/\textquotesingle, followed by filtering the URL link for all years with the help of the \texttt{ul} tag and \texttt{list} class. To extract all DONs per year the \texttt{auto\_archive} class is used. All links are found in the \texttt{a} tag and \texttt{href} selector.}
+  \caption{An extract from the scraping script of the WHO DONs. The extract starts with extracting the content of \textquotesingle \texttt{http://www.who.int/csr/don/archive/year/en}\textquotesingle, then filtering the URL links for the archived reports of all years with the help of the \texttt{ul} tag and \texttt{list} class. To extract all DONs per year the \texttt{auto\char`_archive} class is used. All links are found in the \texttt{a} tag and \texttt{href} selector.}
   \label{lst:who}
 \end{listing}
 
 \subsection{ProMED Mail}
-Opposed to WHO DONs, much more authors are contributing to ProMED Mail and therefore generate higher output. Usually, ProMED publishes around a handful of articles a day. ProMED mail content is dynamically loaded via Ajax and therefore not directly accessible. Through the analysis of the website, I detected the GET requests for the article retrieval and reverse engineered the search to write a function with which I can scrape ProMED article given a time range shown in Lis. \ref{lst:promed}.
+Opposed to WHO DONs, much more authors are contributing to ProMED Mail and therefore generate higher output. Usually, ProMED publishes around a handful of articles a day. ProMED mail content is dynamically loaded via Ajax and therefore not directly accessible. Through the analysis of the website, I detected the GET requests for the article retrieval and reverse engineered the search to write a function with which I can scrape ProMED article given a time range shown in Lis. \ref{lst:promed}. The access to page number shown in Lis. \ref{lst:promed} is important since after 200 pages, the GET request returns an error although there would be more pages. The full algorithm iterates over 200 pages given a time range, remembers the date of the oldest ProMED article from this search and reruns the search with the initial temporal lower bound and the date of the last retrieved article as the newer upperbound.
 
 \begin{listing}[h!]
   \begin{minted}[autogobble]{python}
-  def get_content_of_search_page(from_date, to_date, page_num, proxy):
+  def get_content_of_search_page(from_date, to_date, page_num):
     return (requests
             .get(f'https://www.promedmail.org/ajax/runSearch.php?'
                  f'pagenum={page_num}&'
                  f'search=&date1={from_date}&'
-                 f'date2={to_date}',
-                 proxies=proxy)
+                 f'date2={to_date}'
+                 )
             .content
             .decode('utf-8')
             )
@@ -169,21 +178,20 @@ The code for scraping in the table from the Wikipedia page is shown in Lis. \ref
     req = requests.get("https://de.wikipedia.org/wiki/Liste_der_Staaten_der_Erde")
     soup = BeautifulSoup(req.content, "html.parser")
 
-    # Find table with of all countries with HTML "table" tag
-    # the CSS class "wikitable sortable zebra" and "tbody" tag
+    # Find table with all countries with HTML tag "table",
+    # the CSS class "wikitable sortable zebra", and the "tbody" tag
     table_soup = soup.find("table", class_="wikitable sortable zebra")
     body_soup = table_soup.find("tbody")
 
     # Get entries of all countries form table
     country_soup = body_soup.find_all("tr")
-    }
   \end{minted}
   \caption{Python code extract on how to scrape the Liste der Staaten der Erde table from Wikipedia using BeautifulSoup. The table is extracted using the \texttt{table, tbody} and \texttt{tr} tag and the \texttt{wikitable sortable zebra} class.}
   \label{lst:wikipedia}
 \end{listing}
 
 \subsection{Wikidata and RKI-Internal Data}\label{wikidata}
-I queried all disease names in German and English from \href{https://www.wikidata.org/wiki/Wikidata:Main_Page}{Wikidata} and used them as a dictionary to transform all German disease names of the EDB into English \ref{lst:wikidata}. Additionally, I used a list of RKI-internal abbreviation to translate them to their full English name.
+I queried all disease names in German and English from \href{https://www.wikidata.org/wiki/Wikidata:Main_Page}{Wikidata} (Lis. \ref{lst:wikidata}) and used them as a dictionary to transform all German disease names of the EDB into English. Additionally, I used a list of RKI-internal abbreviation to translate them to their full English name.
 
 \begin{listing}[h]
   \begin{minted}[autogobble]{python}
@@ -198,7 +206,7 @@ I queried all disease names in German and English from \href{https://www.wikidat
                 }"""
     disease_translation_dictonary = get_results_of_sparql(endpoint_url, query)
   \end{minted}
-  \caption{The SPARQL request made to retrieve a list of tuples with the German and English disease name from Wikidata.}
+  \caption{The SPARQL request made to retrieve a list of tuples with the German and English disease name from Wikidata where \texttt{wdt:P31 wd:Q12136} is the item name of the disease list of Wikidata.}
   \label{lst:wikidata}
 \end{listing}
 
@@ -220,10 +228,10 @@ The crucial part of the preprocessing was, however, the transformation of the va
 The dates needed to be transformed into a machine-parsable format which I did with the pandas \texttt{totimestamp} method. If the method is provided with the information whether date or month is mentioned first, \texttt{totimestamp} automatically recognizes several forms of dates and transforms them to a pandas Timestamp object on which arithmetic operations and comparison are possible.
 
 \paragraph{Counts}
-Every case counts entry was cleaned from any non-digit entry. In the case of several numerical values, the first one was taken.
+Every entry of case counts was cleaned from any non-digit entry. In the case of several numerical values, the first one was taken.
 
 \paragraph{URLs}
-I removed invalid URLs, and transformed ProMED URLs into a uniform style. The ProMED URLs in the EDB are written with both, \texttt{http} and \texttt{https} as a protocol. Furthermore, ProMED URLs in the EDB are written like \textquotesingle \texttt{https://www.promedmail.org/post/6400233} \textquotesingle as an example or without the \texttt{www.} preceding the URL. However, to be consistent with the scraped URL format returned by \ref{lst:promed}, I transformed all URLs into the form \textquotesingle \texttt{https://\allowbreak www.promedmail.org/\allowbreak direct.php?id=6400233} \textquotesingle.
+I removed invalid URLs, and transformed ProMED URLs into a uniform style. The ProMED URLs in the EDB are written with both, \texttt{http} and \texttt{https} as a protocol. Furthermore, ProMED URLs in the EDB are written like \textquotesingle \texttt{https://www.promedmail.org/post/6400233} \textquotesingle as an example or without the \texttt{www.} preceding the URL. However, to be consistent with the scraped URL format returned by Lis. \ref{lst:promed}, I transformed all URLs into the form \textquotesingle \texttt{https://\allowbreak www.promedmail.org/\allowbreak direct.php?id=6400233} \textquotesingle.
 
 \paragraph{Countries and diseases}
 Country and disease names needed to be translated to make them comparable to the output of EpiTator. Therefore, I used the scraped dictionaries as in \ref{wikidata}, \ref{wikipedia} through which I eradicated spelling mistakes and translated these words to English. The procedure is shown in Lis. \ref{lst:translate}.
@@ -232,9 +240,10 @@ Country and disease names needed to be translated to make them comparable to the
   \SetAlgoLined
     \KwIn{$t_{\neg controlled}$}
     \KwResult{$t_{controlled}$}
-    $dictionary: K_{\neg controlled} \to V_{controlled}$\;
+    \tcc{Initialize}
+    $\operatorname{dictionary}: K_{\neg controlled} \to V_{controlled}$\;
     \uIf{$t_{\neg controlled} \in K$}{
-      \Return $dictionary(t_{\neg controlled})$\;
+      \Return $\operatorname{dictionary}(t_{\neg controlled})$\;
       }
       \Else{
       \[ \operatorname{lev}_{a,b}(i,j) = \begin{cases}
@@ -246,38 +255,58 @@ Country and disease names needed to be translated to make them comparable to the
      \end{cases} \hfill \text{ otherwise.}
      \end{cases}\]
      \tcc{Where lev is the Levenshtein distance of word $a$ and $b$ at string $i$ of $a$ and $j$ ob $b$.}
-     $t_{corrected} \leftarrow \argmin_{k \in K} \operatorname{lev}_{\neg controlled}, k$\;
+     $t_{corrected} \leftarrow \argmin_{k \in K} \operatorname{lev}_{\neg controlled, k}$\;
        \uIf{$t_{corrected} \in K$}{
-          \Return $dictionary(t_{corrected})$\;
+          \Return $\operatorname{dictionary}(t_{corrected})$\;
           }
       \Else{$t_{corrected} \leftarrow \operatorname{endsOrStartsWith}(t_{\neg controlled}, dictionary)$\;
-      \Return $dictionary(t_{corrected})$\;}
+      \Return $\operatorname{dictionary}(t_{corrected})$\;}
       }
-\caption{Translation algorithm to transform input to controlled vocabulary. If initially no translation is available, the most similar written word is chosen using the the Levenshtein distance. The word $w \in K$ with the shortest Levenshtein distance to the input word is picked to correct the input word. If there is still no match to the controlled vocabulary, the algorithm assumes a shortened form and searches for an overlap in the first or last strings.}
+\caption{Translation algorithm to transform input to controlled vocabulary. If initially no translation is available, the most similar written word is chosen using the the Levenshtein distance. The word $k \in K$ with the shortest Levenshtein distance to the input word $t_{\neg controlled}$ is picked to correct the input word. If there is still no match to the controlled vocabulary, the algorithm assumes a shortened form and searches for an overlap in the first or last strings.}
 \label{lst:translate}
 \end{algorithm}
 
 \subsection{NLP-Pipeline}
-All the scraped data needed to be transformed into a machine-readable format to perform machine learning. In the following, I describe the steps each text underwent before being fed into a classification algorithm.
+The WHO DONs and the ProMED Mail articles needed to be transformed into a machine-readable format to perform machine learning. In the following, I describe the steps of the NLP-pipeline each text underwent before being fed into a classification algorithm.
 
 \subsubsection{Literal Processing}
-In the case of PDFs, I replaced unrecognized characters, indicated by the Unicode code \texttt{U+FFFD}, by one single white space. In the case of the scraped HTML, I replaced all UTF-8 control characters with a single whitespace characters like so: \mintinline{python}{string = \allowbreak "".join\allowbreak(char\allowbreak if unicodedata\allowbreak.category(char)[0]\allowbreak !=\allowbreak "C" else\allowbreak ' '\allowbreak for char in string)}.
+In the case of PDFs, I replaced unrecognized characters, indicated by the Unicode code \texttt{U+FFFD}, by one single white space. In the case of the scraped HTML, I replaced all UTF-8 control characters with a single whitespace characters illustrated by the following Python code: \mintinline[breaklines]{python}{string = "".join(char if unicodedata.category(char)[0] != "C" else ' ' for char in string)}.
 
 \subsubsection{Embedding}
 I used pretrained GloVe embeddings with 50 dimensions provided by Flair for the word embeddings.
 
-\subsection{Classification}
+\section{Classification}
 I trained a classifier to be able to distinguish between \emph{relevant} and \emph{irrelevant} outbreak news based on the whole text, and also based on the embeddings of the text.
 
 Furthermore, I tested two methods for the keyword extraction: First, taking the most frequent entity occurring in a text as the keyword (e.g., making the most common disease entity as the primary disease being addressed) and second, train a classifier based on sentences that contain such entities. The classifier is trained on the EDB keyword entries and the text these entries are based on.
 Sentences containing the keywords found in the EDB are the positive training labels.
 All other sentences containing keyword entities of the same category (e.g., confirmed cases) recognized by EpiTator, but are not found in the EDB entry, are counterexamples for the classifier.
 
-\subsubsection{Naive Bayes Classifier}
-I used the multinomial and complement naive Bayes for the text classification and the multinomial and Bernoulli naive Bayes classifier for the keyword extraction.
+\subsection{Naive Key Word Extraction}
+During the reading of epidemiological news, I noticed that the key entities of a text are repeatedly mentioned. Therefore, I decided to naively determine a keyword entity, by choosing the most occurring entity, i.e., the key disease entity would be the disease mentioned most frequently shown in Lis. \ref{lst:mostoccure}.
+\begin{listing}[h!]
+  \begin{minted}[autogobble, breaklines]{python}
+    def return_most_occuring_entities(list_of_entities):
+      list_of_entity_occurence_tuple = [(key, len(list(group)))
+                                        for key, group
+                                        in groupby(sorted(list_of_strings))]
+      sorted_by_occurence = sorted(list_of_entity_occurence_tuple,
+                                   key=lambda x: x[1],
+                                   reverse=True)
+      most_occuring_string = max(sorted_by_occurence, key=itemgetter(1))[0]
+      return most_occuring_string
+  \end{minted}
+  \caption{A simplified python function to detect the most occurring entity in a list of entities.}
+  \label{lst:mostoccure}
+\end{listing}
 
-\subsubsection{Deep Learning}
+\subsection{Naive Bayes Classifier}
+I used the multinomial and complement naive Bayes for the text classification using all WHO DONs and ProMED Mail articles in the year 2018. Articles denoted in the EDB are labeled \emph{relevant} and the rest is labeled \emph{irrelevant}. I applied tf-idf and set the prior of the NBC based on the proportion of the classes.
 
-\subsection{Web App}
-I used Flask and \href{https://www.datatables.net}{DataTables} to create a web app that allows the entry of an URL where then the text is extracted, summarized, and put into a data table which can be downloaded in various formats.
+ For the keyword extraction I used the multinomial and Bernoulli naive Bayes classifier for each entity class fed by all sentences containing this entity class. Sentences of texts that contain entities found in the corresponding EDB entity entry for this text are labeled as \emph{true} whereas the rest is labeled \emph{false}.
+
+\subsection{Deep Learning}
+
+\section{Web App}
+Using Flask and \href{https://www.datatables.net}{DataTables}, I built a web app that allows the entry of an URL where then the text is extracted, summarized, and put into a data table which can be downloaded in various formats.
 The web app also contains a method to scrape all articles from one source from the last analysis on, annotate the content, and dump it into the database.
