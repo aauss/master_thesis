@@ -1,50 +1,67 @@
 \chapter{Introduction}
 
 \section{Epidemiological Surveillance at the Robert Koch Institute}
-The Robert Koch Institute, as the public health institute, is a key figure for the containment of any health risk.
-Therefore, it is the main institution for the disease prevention and surveillance, with its main purposes being the detection, prevention, and control of infectious diseases \citep{rki_definition}. One main body of the RKI to fulfill this objective is epidemiology.
+The Robert Koch Institute \GLS{RKI}, as a public health institute, is a key figure in the containment of any health risk.
+By being the main institution for disease prevention and surveillance in Germany, its main purposes are the detection, prevention, and control of infectious diseases \citep{rki_definition}.
+To fulfill this objective, the priority tasks of the RKI are in the field of epidemiology \citep{rki_definition}.
 
-\subsection{Epidemiology}
-According to the World Health Organization (\GLS{WHO}), epidemiology is a large field of studies that focuses on the distribution and the determinants of health-related signals \citep{WHOepi}.
+% \subsection{Epidemiology}
+\paragraph{Epidemiology}
+Epidemiology is a large field of studies that focuses on the distribution and the determinants of health-related events \citep{WHOepi}.
 Among many foci of epidemiology like health and demography, mental health, and non-communicable diseases, the primary interest during to proceedings of this thesis lies on \textbf{infectious epidemiology}.
 Its overall goal is the detection and (subsequent) containment of infectious disease outbreaks to minimize health consequences and the burden to the public health apparatus.
-To detect such potential risks, a simple definition could be expressed as \textit{the occurrences of cases more than usual given time and region}.
-For the investigation and prevention of outbreaks, epidemiology is not limiting itself to specific methods but include several families of methods like surveillance and descriptive studies.
+To detect such potential risks, a significantly simplified description for such a procedure could be expressed as the detection of \textit{occurrences of cases more than usual given time and region}.
+For the investigation and prevention of outbreaks, epidemiology makes use of several methodologies like surveillance and descriptive studies.
 
 \paragraph{Epidemiological Surveillance}
 Infectious epidemiology is firmly linked to an early detection objective to minimize the potential risk to human health \citep{EarlyDetection}.
 Therefore, surveillance is an indispensable tool for a functional early warning mechanism.
-Through surveillance, epidemiologists can detect all hazard (nuclear, chemical, infectious diseases \ldots) origins menacing public health.
-The detection of such threats is then answered by a rapid investigation and containment of further damage.
-But, the monitoring of an outbreak is also essential to allocate resources of the public health systems effectively \citep{EarlyDetection}.
+% The detection of such threats is then answered by a rapid investigation and containment of further damage.
+% But, the monitoring of an outbreak is also essential to allocate resources of the public health systems effectively \citep{EarlyDetection}.
+Since 2001 the \textbf{Infektionsschutzgesetz} (the Protection against Infection Act) (\GLS{IfSG})is the foundation of the German surveillance system \citep{IfSG} which demands a report to the authorities after the determination of a notifiable disease (mostly based on a laboratory analysis).
+The IfSG demanded an electronic report system which led to the development of \textbf{SurvNet@RKI}, a web service for reporting communicable diseases that is used in all 431 local health departments and 15 state health departments of Germany \citep{Faensen2006}.
+Finally, epidemiological surveillance is conducted by querying these data through SurvStat@RKI \citep{Faensen2004}, a query web interface of the SurvNet@RKI data, and apply analyzes to detect conspicuities and outbreaks ahead of time.
 
-Hints for an outbreak can be an increased amount of reported cases of a dangerous infection or changed circumstances that are known to entail disease outbreaks (e.g., a loss of proper sanitation can lead to a cholera outbreak).
-Besides the traditional disease-based surveillance that processes laboratory confirmations other systems such as, syndromic surveillance, external factors like weather, attendance monitoring at school and workplace, social media, and the web are also informative \citep{EarlyDetection}.
+% \subparagraph{Epidemic Intelligence}
+The idea to provide an infrastructure for epidemiologists to systematically detect, verify, and share data to acquire an informative picture of the epidemic threat to global health is called \textbf{epidemic intelligence}\index{epidemic intelligence} \citep{EarlyDetection}. It facilitates epidemiological surveillance through information processing and supply of formal, informal, actively and passively acquired information.
 
-\subparagraph{Epidemic Intelligence}
-Independent of the surveillance source, epidemiologists need to systematically detect, verify, and share data to acquire an informative picture of the epidemic threat to global health \citep{EarlyDetection}.
-This process is called \textbf{epidemic intelligence}\index{epidemic intelligence} and facilitates epidemiological surveillance through information processing and supply of formal, informal, actively and passively acquired information.
+\paragraph{Indicator-Based Surveillance}
+The IfSg describes a traditional reporting system that facilitates the acquisition of trustworthy, human and non-human related health-based formal sources for the subsequent interpretation of such structured data \citep{EarlyDetection}. This process is called \textbf{indicator-based-surveillance}\index{indicator-based-surveillance}.
+The acquisition of this data is mostly a passive process and follows routines established by the legislator and the public health institute which in the case of Germany is the RKI together with SurvNet@RKI and SurvStat@RKI.
+These routines follow rules that are disease or syndrome-specific.
+Indicator-based surveillance is not only responsible for event detection but also for measuring the impact and evaluation of programs \citep{EarlyDetection}.
 
+Hints for an outbreak can be an detected throguh an increased amount of reported cases of a dangerous infection or changed circumstances that are known to entail disease outbreaks e.g., increased cases of salmonellosis during a hot spell or (in the international context) a loss of proper sanitation that often leads to a cholera outbreak.
+Therefore, besides the traditional disease-based surveillance that processes laboratory confirmations other systems such as, syndromic surveillance, external factors like weather, attendance monitoring at school and workplace, social media, and the web are also informative \citep{EarlyDetection}.
 
-\subparagraph{Event-Based Surveillance}
-The monitoring of information not generated by the public health system and its analysis is called \textbf{event-based-surveillance}\index{event-based-surveillance}(\gls{EBS}) and is the speed determining factor in epidemiological surveillance.
+\paragraph{Event-Based Surveillance}
+The monitoring of information also generated outside the public health system and its analysis is called \textbf{event-based-surveillance}\index{event-based-surveillance}(\gls{EBS}) and is the speed determining factor in epidemiological surveillance.
 Only with EBS, epidemiologists can detect and report events before the recognition of human cases in the reporting system of the public health system \citep{EarlyDetection}.
 The fast detection and verification of possibly threatening events are essential and heavily depend on a good-working epidemic intelligence to handle a large amount of data from various sources.
 Especially in the times of the internet, the topicality and quantity of data can be useful to detect even rumors of suspected outbreaks.
+%TODO: Think about where to place the 60 percent information
 As a result, more than 60\% of the initial outbreak reports come from such informal sources \citep{EpiSurv}.
 However, filtering this massive amount of data for notorious diseases poses the difficulty to find the right threshold for which events to consider interesting and which to discard.
 The required high sensitivity to warn about findings competes with the demand to filter the massive amount of data on the web.
+At the RKI, there are two main units that conduct EBS.
 
-\subparagraph{Indicator-Based Surveillance}
-Following a more traditional approach, \textbf{indicator-based-surveillance}\index{indicator-based-surveillance} concerns itself with the interpretation of structured data, using trustworthy, human and non-human related health-based formal sources \citep{EarlyDetection}.
-The acquisition of this data is a passive process and follows routines established by the legislator and the public health institute.
-These routines follow rules that are disease or syndrome-specific.
-Opposed to EBS, indicator-based surveillance is not only responsible for event detection but also for measuring the impact and evaluation of programs \citep{EarlyDetection}.
+\subparagraph{EpiLag}
+To have an adequate response mechanism that cannot be satisfied by existing surveillance infrastructure, in 2009 the \textbf{epidemiologische L\"ander-Bund-Konferenz} (\gls{EpiLag})  established \citep{Mohr2010}.
+Since the federal states of Germany govern health policy, the infrastructure of the health authorities is different for each state.
+To still communicate efficiently, the EpiLag established a weekly conference call where the RKI and the federal states are exchanging on events of high importance for the public health which require immediate attention.
+The EpiLag gives recommendations on how to handle threats for public health and provides a platform to coordinate undertakings that affect several federal states.
 
-\subsection{The Robert Koch Institute}
-The Robert Koch Institute is the public health institute of Germany.
-It consists of several departments which cover responsibilities as microbiological research, monitoring of non-communicable diseases, infectious disease epidemiology, and biological threats intervention.
-These departments consist of several units with more specific agendas.
+\subparagraph{INIG}
+The Information Centre for International Health Protection (\GLS{INIG}) is a young unit that is staffed by epidemiologists from several units to combine expertise from different backgrounds in medicine and public health to provide international epidemiological surveillance for the RKI.
+For this, they tasked epidemiologists with reading trusted sources (\ref{INIGsources}) for epidemiological articles to find international events that are particularly important for the public health of Germany.
+When INIG members are unsure whether an article describes a noteworthy outbreak, they have the opportunity to consult each other.
+This procedure then often leads to a more educated decision whether an outbreak article is interesting.
+INIG also supports the work of the EpiLag by providing intelligence about countries that exceed Germany's neighboring states, countries with which the RKI has no official information exchange agreement.
+According to former Minister of Health \citeauthor{Grohe2017}, the importance of global health was most evident during the uprise of the Ebola disease and Zika epidemic starting 2015 which made clear that the protection of the German citizen and, most importantly, the aid for affected people require international cooperation.
+% \subsection{The Robert Koch Institute}
+% The Robert Koch Institute is the public health institute of Germany.
+% It consists of several departments which cover responsibilities as microbiological research, monitoring of non-communicable diseases, infectious disease epidemiology, and biological threats intervention.
+% These departments consist of several units with more specific agendas.
 
 \subsubsection{Signale}
 Among those units, the Infectious Disease Data Science Unit carries the main responsibility for providing in-house software solutions for the RKI.
@@ -52,21 +69,10 @@ Most units organize themselves as groups based on their different missions.
 \textbf{Signale} is one group in the Infectious Disease Data Science Unit, and it is the interface between machine learning and application.
 This group provides intuitive access to critical numerical analyzes via dashboards for different use cases within the RKI and is the head of data science.
 
-\subsubsection{EpiLag}
-To have an adequate response mechanism that cannot be satisfied by existing surveillance infrastructure, in 2009 the \textbf{epidemiologische L\"ander-Bund-Konferenz} (\gls{EpiLag})  established \citep{Mohr2010}.
-Since the federal states of Germany govern health policy, the infrastructure of the health authorities is different for each state.
-To still communicate efficiently, the EpiLag established a weekly conference call where the RKI and the federal states are exchanging on events of high importance for the public health which require immediate attention.
-The EpiLag gives recommendations on how to handle threats for public health and provides a platform to coordinate undertakings that affect several federal states.
 
-\subsubsection{INIG}
-The Information Centre for International Health Protection (\GLS{INIG}) is a young unit that is staffed by epidemiologists from several units to combine expertise from different backgrounds in medicine and public health to provide international epidemiological surveillance for the RKI.
-For this, they tasked epidemiologists with reading trusted sources (\ref{INIGsources}) for epidemiological articles to find international events that are particularly important for the public health of Germany.
-When INIG members are unsure whether an article describes a noteworthy outbreak, they have the opportunity to consult each other.
-This procedure then often leads to a more educated decision whether an outbreak article is interesting.
-INIG also supports the work of the EpiLag by providing intelligence about countries that exceed Germany's neighboring states, countries with which the RKI has no official information exchange agreement.
-According to former Minister of Health \citeauthor{Grohe2017}, the importance of global health was most evident during the uprise of the Ebola disease and Zika epidemic starting 2015 which made clear that the protection of the German citizen and, most importantly, the aid for affected people require international cooperation.
 
 \section{Machine Learning and Epidemiology}
+Although the processing of informal sources as part of EBS promises a faster and more effective surveillance, the large quantity of data and their inaccuracy, poses the chalange to efficiently unlock the potential of those sources.
 Epidemiology is a delicate field from the perspective of machine learning.
 Assessments and decisions in this field can decide over the survival of people.
 Thus, each decision made in epidemiology must in all circumstances avoid overseeing signs for emerging outbreaks.
