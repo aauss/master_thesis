@@ -1,16 +1,16 @@
 \abstract{%
 To ensure permanent responsiveness to emerging disease outbreaks, the Robert Koch Institute (\GLS{RKI}) is the contact and evaluation point for notifications of reportable diseases form health departments and other public health institutes.
 However, the RKI also needs to search for emerging outbreaks in the vast amount of international disease outbreak news to detect dangerous outbreaks as early as possible.
-For this, epidemiologists read the news from several foreign sources every day, summarize the most important articles, and then write reports about them.
-This time-consuming procedure can be shortened by my developed surveillance tool which summarizes epidemiological news and rates the relevance of articles for the RKI.
+For this, a dedicated group of epidemiologists reads the news from several foreign sources every day, summarize the most important articles, and then write reports about them. All, sources and key information about the articles like the described disease, country of origin, or confirmed cases are put into a curated list named incident database.
+This time-consuming procedure could be shortened by an automatic procedure to extract and asses epidemiological news.
+To this end I have developed a surveillance tool which summarizes epidemiological news and rates the relevance of articles for the RKI.
 
 Before I could develop the surveillance tool, I needed to acquire data to train machine learning models.
-The RKI provided a simple Excel sheet that contained all articles considered important in the year 2018 and several columns mentioning the critical points of the articles (e.g., disease, country, confirmed cases \ldots).
-I preprocessed the Excel sheet and transferred it to a controlled vocabulary.
-Additionally, I scraped all articles from the most used sources of the epidemiologists and created a labeled data set where articles extracted by the RKI have a \emph{relevant} label and all the other articles an \emph{irrelevant} label.
+To train those models, I used the incident database and
+additionally scraped all articles from the most used sources of the incident database to create a labeled data set where articles extracted by the RKI have a \emph{relevant} label and all the other articles an \emph{irrelevant} label.
 
 To summarize articles, I applied name entity recognition to epidemiological texts and then trained a naive Bayes classifier with the RKI data to find the most important entities to describe the article.
-The learner used all sentences of one article as an input to find the most salient sentence-entity combination to extract the key points of the article.
-The recommendation system was trained based on the whole text in conjunction with those key entities.
-For this, I compared a naive Bayes classifier using the bag-of-words approach which I compared with a multilayer perceptron trained on document embeddings.
+% The classifier used all sentences of one article as an input to find the most salient sentence-entity combination to extract the key points of the article.
+% The recommendation system was trained based on the whole text in conjunction with those key entities.
+For the recommendation system, I compared a naive Bayes classifier using the bag-of-words approach which I compared with a multilayer perceptron trained on document embeddings trained on the articles' texts.
 Finally, I built a web app to demonstrate the accessibility and usability of this tool. With this, I showed how epidemiologists in the future could shift their focus to more relevant tasks.}
