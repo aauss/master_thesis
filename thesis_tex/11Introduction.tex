@@ -20,16 +20,16 @@ Therefore, surveillance is an indispensable tool for a functional early warning 
 % But, the monitoring of an outbreak is also essential to allocate resources of the public health systems effectively \citep{EarlyDetection}.
 Since 2001, the \textbf{Infektionsschutzgesetz} (the Protection against Infection Act) (\gls{IfSG})
 is the foundation of the German surveillance system which demands a report to the authorities after the determination of a notifiable disease \citep{IfSG}.
-The IfSG earmarked an electronic report system which led to the development of \textbf{SurvNet@RKI}, a web service for reporting communicable diseases that is used in all 431 local health departments and 15 state health departments of Germany \citep{Faensen2006}.
-Finally, epidemiological surveillance is conducted by querying these data through SurvStat@RKI \citep{Faensen2004}, a query web interface of the SurvNet@RKI data, and apply analyzes to detect conspicuities and outbreaks ahead of time.
+The IfSG earmarked an electronic reporting system which led to the development of \textbf{SurvNet@RKI}, a web service for reporting communicable diseases that is used in all 431 local health departments and 15 state health departments of Germany \citep{Faensen2006}.
+Finally, epidemiological surveillance is conducted by using these data through SurvStat@RKI \citep{Faensen2004}, a query web interface of the SurvNet@RKI data, and apply analyzes to detect conspicuities and outbreaks ahead of time.
 
 % \subparagraph{Epidemic Intelligence}
-The idea to provide an infrastructure for epidemiologists to systematically detect, verify, and share data to acquire an informative picture of the epidemic threat to global health is called \textbf{epidemic intelligence}\index{epidemic intelligence} \citep{EarlyDetection}. It facilitates epidemiological surveillance through information processing and supply of formal, informal, actively and passively acquired information.
+The idea to provide an infrastructure for epidemiologists to systematically detect, verify, and share data to acquire an informative picture of the epidemic threat to public health is called \textbf{epidemic intelligence}\index{epidemic intelligence} \citep{EarlyDetection}. It facilitates epidemiological surveillance through information processing and supply of formal, informal, actively and passively acquired information.
 
 \paragraph{Indicator-Based Surveillance}
 The IfSG describes a traditional reporting system that facilitates the acquisition of trustworthy, human and non-human related health-based formal sources for the subsequent interpretation of such structured data \citep{EarlyDetection}. This process is called \textbf{indicator-based-surveillance}\index{indicator-based-surveillance}.
 The acquisition of this data is mostly a passive process and follows routines established by the legislator and the public health institute which in the case of Germany is the RKI facilitated by SurvNet@RKI and SurvStat@RKI.
-These routines follow rules that are disease or syndrome-specific.
+These routines follow rules that are disease- or syndrome-specific.
 Indicator-based surveillance is not only responsible for event detection but also for measuring the impact and evaluation of health programs \citep{EarlyDetection}.
 
 Hints for an outbreak can be detected through an increased amount of reported cases of a dangerous infection or changed circumstances that are known to entail disease outbreaks, e.g., increased reporting of salmonellosis during warm weather or (in the international context) a loss of proper sanitation that often leads to a cholera outbreak.
@@ -67,7 +67,7 @@ According to former Minister of Health \citeauthor{Grohe2017}, the importance of
 
 \section{Natural Language Processing and Epidemiology}
 Although the processing of informal sources as part of EBS promises faster and more effective surveillance, the large quantity of data and their inaccuracy poses the challenge to unlock the potential of those sources efficiently.
-Algorithms in the field of natural language processing ((\GLS{NLP})), however, are well suited to tap the resources available on the web and help structure and filter that information.
+Algorithms in the field of natural language processing (\GLS{NLP}), however, are well suited to tap the resources available on the web and help structure and filter that information.
 These algorithms are mostly data-driven, i.e., they independently select features from the data and are not necessarily dependent on formalized expert knowledge to return useful output.
 % Epidemiology is a delicate field from the perspective of machine learning.
 % Assessments and decisions in this field can decide over the survival of people.
@@ -75,9 +75,9 @@ These algorithms are mostly data-driven, i.e., they independently select feature
 % Thus, each decision made in epidemiology must in all circumstances avoid overseeing signs for emerging outbreaks.
 % The necessity for high sensitivity is the strong opposition to non-medical fields in which false decisions would most of the time only reduce the customer's satisfaction.
 % Hence, the preferred approach in the methodology of epidemiologists is to formulate statistical models explicitly which includes the selection of features/variables and their interaction (top-down).
-The general data-driven approach (bottom-up) in machine learning is perceived precarious in the health sector because it usually does not answer \texttt{how} a decision was made.
-Indeed, while a machine learning model could perform better than a custom formula, the machine learning model's decisions used to be hard to disentangle.
-But with the recent improvements in making those decision accessible \citep{Arras2017}, and endeavors to tackle biases in machine learning models, those usual reservations can be better approached.
+The general data-driven approach (bottom-up) in machine learning is perceived precarious in the health sector because it usually does not answer \textit{how} a decision was made.
+Indeed, while a machine learning model could perform better than a designed formal model, the machine learning model's decisions used to be hard to disentangle.
+But, with the recent improvements in making those decision accessible \citep{Arras2017}, and endeavors to tackle biases in machine learning models, those usual reservations can be better approached.
 Furthermore, with advancing digitalization of public health, more and better quality data becomes available \citep{DEMIS}.
 Due to that, a bottom-up approach is now more often a valid alternative.
 
@@ -98,7 +98,7 @@ Therefore, Signale is essential for the pursuit to draw more from EBS and fuel t
 \section{Motivation}
 The broad idea at the beginning of this project was to utilize NLP in a dashboard for epidemiologists who perform epidemiologically
 surveillance to assist them in their reading intensive work.
-With EBS being the method being in more demand for handling large unstructured data, I decided to shit my attention to solutions for EBS.
+EBS was a more interesting and better suited topic due to its dependency of large unstructured data.
 The RKI has two groups that perform EBS that would profit the most from NLP aided tools. The two groups, EpiLag and INIG, analyze numerous, also informal textual sources for their work and thus I decided to look into their work to pinpoint whether and how NLP might prove useful for them.
 
 While the EpiLag focuses on disease outbreaks within Germany, INIG is mainly interested in international disease outbreaks. Since the EpiLag is a phone conference and the information provided are from the 16 local health authorities of Germany, it is hard to retrace the origin of all their reported information.

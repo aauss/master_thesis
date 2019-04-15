@@ -7,10 +7,10 @@ To this end, I have developed a surveillance tool which summarizes epidemiologic
 
 Before I could develop the surveillance tool, I needed to acquire data to train machine learning models.
 To train those models, I used the incident database and
-additionally scraped all articles from the most used sources of the incident database to create a labeled data set where articles extracted by the RKI have a \emph{relevant} label and all the other scraped articles not found in the incident database have an \emph{irrelevant} label.
+additionally scraped all articles from the most used sources of the incident database to create a labeled data set where articles extracted by the RKI have a \emph{relevant} label and all the other scraped epidemiological articles not found in the incident database have an \emph{irrelevant} label.
 
-To summarize articles, I applied name entity recognition to epidemiological texts and then trained a naive Bayes classifier with the RKI data to find the most important entities to describe the article using the incident database for training.
+To summarize articles, I applied name entity recognition to epidemiological texts and then trained a naive Bayes classifier with the incident database to find the most important entities of an epidemiological article.
 % The classifier used all sentences of one article as an input to find the most salient sentence-entity combination to extract the key points of the article.
 % The recommendation system was trained based on the whole text in conjunction with those key entities.
-For the relevance scoring, I compared a naive Bayes classifier using the bag-of-words approach with a multilayer perceptron trained on document embeddings trained on the articles' texts.
+For the relevance scoring, I compared a naive Bayes classifier using the bag-of-words approach with a multilayer perceptron and a convolutional neural network trained on document and word embeddings by texts from the incident database and the scraped articles.
 Finally, I built a web app to demonstrate the accessibility and usability of this tool. With this, I showed how epidemiologists in the future could shift their focus to more relevant tasks.}
