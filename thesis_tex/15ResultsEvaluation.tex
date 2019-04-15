@@ -4,9 +4,17 @@
 A substantial part of my work was the exploiting of available sources which includes the EDB and scraped epidemiological news. In the following I introduce how I managed to recover most of the information in the EDB for my further analyzes and how I managed to scrape a large amount epidemiological data with a limited time profile.
 
 \subsection{Source Determination}
-Before I could train a classifier to detect relevant articles or extract meaningful key words from texts, I needed to create a labeled dataset from the EDB. The entries in the EDB were the positive labels, but I lacked the negative examples, i.e., the articles that were read by the epidemiologists but were not considered. However, writing a scraper can be time consuming so I needed to narrow down the, at that moment, 75 sources.
+Before I could train a classifier to detect relevant articles or extract meaningful key words from texts, I needed to create a labeled dataset from the EDB. The entries in the EDB were the positive labels, but I lacked the negative examples, i.e., the articles that were read by the epidemiologists but were not considered. However, writing a scraper can be time consuming so I needed to narrow down the, at that moment, 75 sources of the EDB.
 
-For this, I extracted all URLs from the EDB and clustered them to identify sources that were used more often than others. Due to my limited time, I focused only on the most used sources that were also easy to scrape. I determined the importance of the articles by counting the binning the referenced Netlocs from the EDB and chose the highest ranking ones. The difficulty, on the other hand, I found by exemplary text extractions. With this information at thand I knew which sources to scrape. The EDB contained the work of INIG throughout the year 2018. Thus, I needed to extract all articles of the year 2018 from the determined sources that are partly shown in Tab. \ref{table:INIGsources}.
+For this, I extracted all URLs from the EDB and clustered them to identify sources that were used more often than others  (Fig . \ref{fig:netloc}). Then, I focused only on the most used sources that were also unproblematic to scrape (Fig. \ref{table:INIGsources}). I determined the importance of the articles by binning the referenced Netlocs from the EDB and chose the highest ranking ones. The difficulty, on the other hand, I found by exemplary text extractions. With this information at hand I knew which sources to scrape. The EDB contained the work of INIG throughout the year 2018. Thus, I needed to extract all articles of the year 2018 from the determined sources that are partly shown in Tab. \ref{table:INIGsources}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.5]{netloc.pdf}
+    \caption{KJhaskdj.}
+    \label{fig:netloc}
+\end{figure}
+
 
 \begin{table}[h!]
   \centering
@@ -34,7 +42,8 @@ For this, I extracted all URLs from the EDB and clustered them to identify sourc
 \end{table}
 
 \subsection{Data Quality}
-Due to the unrestrained column settings, every entry in the EDB was free text with spelling mistakes and different formatting. The transferral of the EDB into a controlled vocabulary was a crucial steps since it opened up more data points usable for analyzes. Tab. \ref{table:preprocessing performance} shows that the preprocessing made up to 100 EDB entries usable per keyword.
+Due to the unrestrained column settings, every entry in the EDB was free text with spelling mistakes and different formatting. The transferral of the EDB into a controlled vocabulary was a vital steps since it made more data points usabel. Tab. \ref{table:preprocessing performance} shows that the preprocessing made up to 100 EDB entries accessible per keyword.
+
 \begin{table}
   \centering
   \caption{Performance evaluation of the EDB preprocessing per key word. The table shows the amount of valid and invalid entries before and after preprocessing was applied. The EDB in sum has 557 entries.  }
