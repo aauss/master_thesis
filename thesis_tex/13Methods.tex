@@ -5,16 +5,16 @@ At the beginning of my work, I needed to assess the applicability of several pos
 Therefore, if applicable, I monitored the functioning of the target groups and evaluated their used textual sources.
 The direction of the thesis was determined based on the exploitability of the sources and the gain for the work practices through NLP.
 
-Below, I introduce available targets, and why they were or were not suitable for the proceedings of this thesis. The assessments showed also, that project goals for EBS are much better suited for NLP methodology.
+Below, I introduce available targets, and why they were or were not suitable for the proceedings of this thesis. The assessments also showed that project goals for EBS are much better suited for NLP methodology.
 
 \subsection{RASFF}
-The Rapid Alert System for Food and Feed (\GLS{RASFF}) has been established by the European Union (\GLS{EU}) to share information for an effective food safety. As a member of the RASFF, the RKI receives PDFs about recent incidences of contaminated food. Such a PDF contains several prototypical information about the contamination.
+The Rapid Alert System for Food and Feed (\GLS{RASFF}) has been established by the European Union (\GLS{EU}) to share information for effective food safety. As a member of the RASFF, the RKI receives PDFs about recent incidences of contaminated food. Such a PDF contains several prototypical information about the contamination.
 
 However, the document is strongly formatted, and my attempts to extract the text from the PDF without altering the structure of the report failed. I used Tika (\ref{Tika}) for the text extraction, but the return contained misplaced line breaks and other formatting errors. Due to these complications and difficulties to extract text from a PDF without optical character recognition, I decided not to consider the RASFF reports for my thesis.
 
 \subsection{EpiLag}
-Due to the majority of communication in the EpiLag happening orally and the sources mainly being reports from medical practices and hospitals, and emails, EpiLag poses a difficult target for NLP methodology.
-Without a clear in and output, there is no obvious approach to process the data of EpiLag.
+Due to the majority of communication in the EpiLag happening orally and the sources mainly being reports from medical practices and hospitals, and emails, EpiLag poses an ambitious target for NLP methodology.
+Without a clear in and output, there is no clear approach to process the data of EpiLag.
 
 \subsection{EPIS}
 As the RASFF, the Epidemic Intelligence Information System (\GLS{EPIS}) is also an EU project. It is a web tool that allows several EU members to report alarming disease outbreaks. To stay up-to-date, EPIS has an email notification system, and every outbreak report is downloadable as a formatted Excel sheet.
@@ -24,8 +24,8 @@ Though the formatted data output of EPIS would have been ideal for my further wo
 
 \subsection{INIG}\label{INIGsources}
 The INIG has a curated list of sources that they visit every day and check for new alerting events (Tab. \ref{table:INIGsources}).
-The list consists of a heterogeneous set of sources where some are frequently reporting and some less but in more extent. Also, the data format is different and can be a simple HTML website, PDF, or email.
-The mostly easy and public access to data and the clearly defined in- and output in INIG's working procedure made them a good fit for my topic.
+The list consists of a various set of sources where some are frequently reporting and some less but in more extent. Also, the data format is different and can be a simple HTML website, PDF, or email.
+The rather easy and public access to data and the clearly defined in- and output in INIG's working procedure made them a good fit for my topic.
 
 \section{Libraries}
 In the following sections, I am introducing the most important libraries I used for my work.
@@ -75,7 +75,7 @@ Boilerpipe is a Java package that uses shallow text features (word count, hyperl
 Although I could have written the web scrapers such that they would have only extracted the main content, I wanted to have a solution that allows me to expand the work of my thesis to more websites. Thus, I wrote scrapers that extract the whole HTML content of a site containing some outbreak article and then used Boilerpipe to obtain the main purport.
 
 \subsection{Apache Tika}\label{Tika}
-Apache Tika is a large content analysis framework for text and metadata extraction from over a thousand data types. I used it for text extraction from PDFs.
+Apache Tika is a broad content analysis framework for text and metadata extraction from over a thousand data types. I used it for text extraction from PDFs.
 
 \subsection{Luigi}
 Luigi is a pipeline builder made by Spotify. It manages different jobs, coordinates dependencies, and visualizes them. It is similar to GNU Make but offers more flexibility for data-heavy tasks or scheduling all accessible from Python.
@@ -83,14 +83,14 @@ Luigi is a pipeline builder made by Spotify. It manages different jobs, coordina
 With Luigi, I modularize my work in case there is a requirement to modify or replace certain parts of my pipeline and automatically serialize the outcome of long and tedious computations such as scraping.
 
 \subsection{Sacred}
-Sacred helps to track experiments by saving the hyper-parameters, model name, and performance of computational experiments e.g., a machine learning model which I used to track my experiments.
+Sacred helps to track experiments by saving the hyper-parameters, model name, and performance of computational experiments, e.g., a machine learning model which I used to track my experiments.
 
 \subsection{Flask}
 Flask is a web development mini-framework for Python.
 To demonstrate the final product which is capable of extracting the main content from some URL, annotate the most critical entities from an epidemiological perspective and then puts this information into a database, I built a web app using Flask.
 
 \section{Data Acquisition}
-After the decision was made to focus on data associated with INIG, I pinpointed the most crucial sources (\ref{edb analysis}) for further work. In the following, I show the necessary preprocessing and scraping methods applied for the acquisition of the data used in this thesis.
+After the decision was made to focus on data associated with INIG, I pinpointed the most important sources (\ref{edb analysis}) for further work. In the following, I show the necessary preprocessing and scraping methods applied for the acquisition of the data used in this thesis.
 
 \subsection{Incident Database - \textit{Ereignisdatenbank}}
 The \textbf{Ereignisdatenbank} (\GLS{EDB}) is an Excel sheet and the main recording method of the work of INIG. They track various parts of their work in this sheet but most importantly they enter every detected outbreak article into the EDB. Every entry consists of several columns, of which only some are mandatory such as the reported \textbf{disease}, the \textbf{country} of origin, the number of \textbf{confirmed cases}, and the case number's reporting \textbf{date}.
@@ -125,7 +125,7 @@ I wrote a scraper that accesses the archive URL and then, based on the function 
 \end{listing}
 
 \subsection{ProMED Mail}
-Opposed to WHO DONs, much more authors are contributing to ProMED Mail and therefore generate higher output. Usually, ProMED publishes around a handful of articles a day. ProMED mail content is dynamically loaded via Ajax and therefore not directly accessible. Through the analysis of the website, I reverse engineered the article search of the website to write a function with which I can scrape ProMED article given a time range shown in Lis. \ref{lst:promed}. The access to page number shown in Lis. \ref{lst:promed} is important since after 200 pages, the GET request made by my program returns an error although there would be more pages. The full algorithm iterates over 200 pages given a time range, remembers the date of the oldest ProMED article from this search and reruns the search with the initial temporal lower bound and the date of the last retrieved article as the newer upperbound.
+Opposed to WHO DONs, much more authors are contributing to ProMED Mail and therefore generate higher output. Usually, ProMED publishes around a handful of articles a day. ProMED mail content is dynamically loaded via Ajax and therefore not directly accessible. Through the analysis of the website, I reverse engineered the article search of the website to write a function with which I can scrape ProMED article given a time range shown in Lis. \ref{lst:promed}. The access to page number shown in Lis. \ref{lst:promed} is important since after 200 pages the GET request made by my program returns an error although there would be more pages. The full algorithm iterates over 200 pages given a time range, remembers the date of the oldest ProMED article from this search and reruns the search with the initial temporal lower bound and the date of the last retrieved article as the newer upper bound.
 
 \begin{listing}[h!]
   \begin{minted}[autogobble]{python}
@@ -254,7 +254,7 @@ I used pretrained GloVe embeddings with 50 dimensions provided by Flair for the 
 \section{Classification}
 I trained a classifier to be able to distinguish between \emph{relevant} and \emph{irrelevant} outbreak news based on the whole text, and also based on the embeddings of the text.
 
-Furthermore, I tested two methods for the keyword extraction: First, taking the most frequent entity occurring in a text as the keyword (e.g., making the most common disease entity as the primary disease being addressed) and second, train a classifier based on sentences that contain such entities. The classifier is trained on the EDB keyword entries and the text these entries are based on.
+Furthermore, I tested two methods for the keyword extraction: First, taking the most frequent entity occurring in a text as the keyword (e.g., making the most common disease entity as the primary disease being addressed) and second, train a classifier based on sentences that contain such entities. The classifier is trained on the EDB text and keyword entries.
 Sentences containing the keywords found in the EDB are the positive training labels.
 All other sentences containing keyword entities of the same category (e.g., confirmed cases) recognized by EpiTator, but are not found in the EDB entry, are counterexamples for the classifier.
 
@@ -277,9 +277,9 @@ During the reading of epidemiological news, I noticed that the key entities of a
 \end{listing}
 
 \subsection{Naive Bayes Classifier}
-I used the multinomial and complement naive Bayes for the text classification using all WHO DONs and ProMED Mail articles in the year 2018. Articles denoted in the EDB are labeled \emph{relevant} and the rest is labeled \emph{irrelevant}. I applied tf-idf and set the prior of the NBC based on the proportion of the classes.
+I used the multinomial and complement naive Bayes for the text classification using all WHO DONs and ProMED Mail articles in the year 2018. Articles denoted in the EDB are labeled \emph{relevant} and the rest is labeled \emph{irrelevant}. I applied tf-idf and set the prior of the NBC to  the proportion of the classes.
 
- For the keyword extraction I used the multinomial and Bernoulli naive Bayes classifier for each entity class fed by all sentences containing this entity class. Sentences of texts that contain entities found in the corresponding EDB entity entry for this text are labeled as \emph{true} whereas the rest is labeled \emph{false}.
+ For the keyword extraction, I used the multinomial and Bernoulli naive Bayes classifier for each entity class fed by all sentences containing this entity class. Sentences of texts that contain entities found in the corresponding EDB entity entry for this text are labeled as \emph{true} whereas the rest is labeled \emph{false}.
 
 \subsection{Deep Learning}
 

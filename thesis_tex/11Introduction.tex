@@ -1,26 +1,26 @@
 \chapter{Introduction}
 
 \section{Epidemiological Surveillance at the Robert Koch Institute}
-The Robert Koch Institute \GLS{RKI}, as a public health institute, is a key figure in the containment of health risks to the populace by being the main institution for disease prevention and surveillance in Germany.
+The Robert Koch Institute \GLS{RKI}, as a public health institute, is a crucial figure in the containment of health risks to the populace by being the primary institution for disease prevention and surveillance in Germany.
 Its main purposes are the detection, prevention, and control of infectious diseases \citep{rki_definition}.
 To fulfill this objective, the priority tasks of the RKI are in the field of epidemiology \citep{rki_definition}.
 
 % \subsection{Epidemiology}
 %\paragraph{Epidemiology}
-Epidemiology is a large field of studies that focuses on the distribution and the determinants of health-related events \citep{WHOepi}.
-Among many foci of epidemiology like health and demography, mental health, and non-communicable diseases, the primary interest during to proceedings of this thesis lies on \textbf{infectious epidemiology}.
+Epidemiology consists of a large field of studies that focuses on the distribution and the determinants of health-related events \citep{WHOepi}.
+Among many foci of epidemiology like health and demography, mental health, and non-communicable diseases, the primary interest during the proceedings of this thesis lies in \textbf{infectious epidemiology}.
 Its overall goal is the detection and (subsequent) containment of infectious disease outbreaks to minimize health consequences and the burden to the public health apparatus.
-To detect such potential risks, a simplified description for such a procedure could be expressed as the detection of \textit{occurrences of cases more than usual given time and region}.
-For the investigation and prevention of outbreaks, epidemiology makes use of several methodologies like surveillance and descriptive studies \citep{WHOepi}.
+The procedure to detect such potential risks could be simplified expressed as the detection of \textit{occurrences of cases more than usual given time and region}.
+For the investigation and prevention of outbreaks, epidemiology makes use of several methodologies like descriptive studies and surveillance \citep{WHOepi}.
 
 %\paragraph{Epidemiological Surveillance}
-Infectious epidemiology is firmly linked to an early detection objective to minimize the potential risk to human health \citep{EarlyDetection}.
-Therefore, surveillance is an indispensable tool for a functional early warning mechanism.
+One primary mission of infectious epidemiology is the early detection objective \citep{EarlyDetection}.
+Therefore, surveillance is an indispensable tool for a functional early warning mechanism and thus, epidemiology.
 % The detection of such threats is then answered by a rapid investigation and containment of further damage.
 % But, the monitoring of an outbreak is also essential to allocate resources of the public health systems effectively \citep{EarlyDetection}.
-Since 2001 the \textbf{Infektionsschutzgesetz} (the Protection against Infection Act) (\gls{IfSG})
-is the foundation of the German surveillance system which demands a report to the authorities after the determination of a notifiable disease (mostly based on a laboratory analysis) \citep{IfSG}.
-The IfSG earmarked an electronic report system for reporting which led to the development of \textbf{SurvNet@RKI}, a web service for reporting communicable diseases that is used in all 431 local health departments and 15 state health departments of Germany \citep{Faensen2006}.
+Since 2001, the \textbf{Infektionsschutzgesetz} (the Protection against Infection Act) (\gls{IfSG})
+is the foundation of the German surveillance system which demands a report to the authorities after the determination of a notifiable disease \citep{IfSG}.
+The IfSG earmarked an electronic report system which led to the development of \textbf{SurvNet@RKI}, a web service for reporting communicable diseases that is used in all 431 local health departments and 15 state health departments of Germany \citep{Faensen2006}.
 Finally, epidemiological surveillance is conducted by querying these data through SurvStat@RKI \citep{Faensen2004}, a query web interface of the SurvNet@RKI data, and apply analyzes to detect conspicuities and outbreaks ahead of time.
 
 % \subparagraph{Epidemic Intelligence}
@@ -32,28 +32,28 @@ The acquisition of this data is mostly a passive process and follows routines es
 These routines follow rules that are disease or syndrome-specific.
 Indicator-based surveillance is not only responsible for event detection but also for measuring the impact and evaluation of health programs \citep{EarlyDetection}.
 
-Hints for an outbreak can be detected through an increased amount of reported cases of a dangerous infection or changed circumstances that are known to entail disease outbreaks e.g., increased cases of salmonellosis during warm weather or (in the international context) a loss of proper sanitation that often leads to a cholera outbreak.
+Hints for an outbreak can be detected through an increased amount of reported cases of a dangerous infection or changed circumstances that are known to entail disease outbreaks, e.g., increased reporting of salmonellosis during warm weather or (in the international context) a loss of proper sanitation that often leads to a cholera outbreak.
 Therefore, besides the traditional disease-based surveillance that processes laboratory confirmations external factors like weather, attendance monitoring at school and workplace, social media, and the web are also informative \citep{EarlyDetection}.
 
 \paragraph{Event-Based Surveillance}
-The monitoring of information also generated outside the public health system and its analysis is called \textbf{event-based-surveillance}\index{event-based-surveillance}(\gls{EBS}) and is the speed determining factor in epidemiological surveillance.
+The monitoring of information also generated outside the public health system, and its analysis is called \textbf{event-based-surveillance}\index{event-based-surveillance}(\gls{EBS}) and is the speed determining factor in epidemiological surveillance.
 With EBS, epidemiologists can detect and report events before the recognition of human cases in the reporting system of the public health system \citep{EarlyDetection}.
 The fast detection and verification of possibly threatening events are essential and heavily depend on a good-working epidemic intelligence to handle a large amount of data from various sources.
 Especially in the times of the internet, the topicality and quantity of data can be useful to detect even rumors of suspected outbreaks.
 %TODO: Think about where to place the 60 percent information
 As a result, more than 60\% of the initial outbreak reports come from such informal sources \citep{EpiSurv}.
-However, filtering this massive amount of data for notorious diseases poses the difficulty to find the right threshold for which events to consider interesting and which to discard.
+However, filtering this massive amount of data for notorious diseases poses the difficulty to find the right criteria for which events to consider interesting and which to discard.
 The required high sensitivity to warn about findings competes with the demand to filter the massive amount of data on the web.
-At the RKI, there are two main units that conduct EBS.
+At the RKI, two central units conduct EBS, namely EpiLag and INIG.
 
 \subsection{EpiLag}
-To have an adequate response mechanism that cannot be satisfied by existing surveillance infrastructure, in 2009 the \textbf{epidemiologische L\"ander-Bund-Konferenz} (\gls{EpiLag})  established \citep{Mohr2010}.
+To have an adequate response mechanism that cannot be satisfied by existing surveillance infrastructure, in 2009 the \textbf{epidemiologische L\"ander-Bund-Konferenz} (\gls{EpiLag}) was established \citep{Mohr2010}.
 Since the federal states of Germany govern health policy, the infrastructure of the health authorities is different for each state.
 To still communicate efficiently, the EpiLag established a weekly conference call where the RKI and the federal states are exchanging on events of high importance for the public health which require immediate attention.
-The EpiLag gives recommendations on how to handle threats for public health and provides a platform to coordinate undertakings that affect several federal states.
+The EpiLag gives recommendations on how to handle threats to public health and provides a platform to coordinate undertakings that affect several federal states.
 
 \subsection{INIG}
-The Information Centre for International Health Protection (\GLS{INIG}) is a young unit that is staffed by epidemiologists from several units to combine expertise from different backgrounds in medicine and public health to provide international epidemiological surveillance for the RKI.
+The \textbf{Informationsstelle für Internationalen Gesundheitsschutz} (\GLS{INIG}) is a young unit that is staffed by epidemiologists from different backgrounds in medicine and public health to provide international epidemiological surveillance for the RKI.
 For this, they tasked epidemiologists with reading trusted sources (\ref{INIGsources}) for epidemiological articles to find international events that are particularly important for the public health of Germany.
 When INIG members are unsure whether an article describes a noteworthy outbreak, they have the opportunity to consult each other.
 This procedure then often leads to a more educated decision whether an outbreak article is interesting.
@@ -66,52 +66,55 @@ According to former Minister of Health \citeauthor{Grohe2017}, the importance of
 
 
 \section{Natural Language Processing and Epidemiology}
-
-Although the processing of informal sources as part of EBS promises a faster and more effective surveillance, the large quantity of data and their inaccuracy, poses the challenge to efficiently unlock the potential of those sources.
-Algorithms in the field of natural language processing ((\GLS{NLP})), however, are well suited to tap the resources available on the web and help structure and filter those information.
-These algorithms are mostly data-drive, i.e., the algorithm independently selects features from the data and is not dependent on formalized expert knowledge.
+Although the processing of informal sources as part of EBS promises faster and more effective surveillance, the large quantity of data and their inaccuracy poses the challenge to unlock the potential of those sources efficiently.
+Algorithms in the field of natural language processing ((\GLS{NLP})), however, are well suited to tap the resources available on the web and help structure and filter that information.
+These algorithms are mostly data-driven, i.e., they independently select features from the data and are not necessarily dependent on formalized expert knowledge to return useful output.
 % Epidemiology is a delicate field from the perspective of machine learning.
 % Assessments and decisions in this field can decide over the survival of people.
-% Making decision in the field of health from the perspective of
+% Making decisions in the area of health from the perspective of
 % Thus, each decision made in epidemiology must in all circumstances avoid overseeing signs for emerging outbreaks.
 % The necessity for high sensitivity is the strong opposition to non-medical fields in which false decisions would most of the time only reduce the customer's satisfaction.
 % Hence, the preferred approach in the methodology of epidemiologists is to formulate statistical models explicitly which includes the selection of features/variables and their interaction (top-down).
-The general data-driven approach (bottom-up) in classical machine learning is perceived precarious in the health sector because it usually does not answer \texttt{how} a decision was made.
+The general data-driven approach (bottom-up) in machine learning is perceived precarious in the health sector because it usually does not answer \texttt{how} a decision was made.
 Indeed, while a machine learning model could perform better than a custom formula, the machine learning model's decisions used to be hard to disentangle.
 But with the recent improvements in making those decision accessible \citep{Arras2017}, and endeavors to tackle biases in machine learning models, those usual reservations can be better approached.
-Furthermore, with advancing digitalization of public health, more and better quality data become available \citep{DEMIS}.
+Furthermore, with advancing digitalization of public health, more and better quality data becomes available \citep{DEMIS}.
 Due to that, a bottom-up approach is now more often a valid alternative.
 
 This paradigm shift is particularly apparent in the field of NLP.
 Up to the first decade of the 21st century, mainly explicitly model translation algorithms were used, called \textbf{rule-based-machine-translation}.
 They demanded a behemoth of rules to account not only for two grammatical systems that needed to be aligned but also handle special cases, idioms, and dynamics of language \citep{Bar-Hillel1953, Bar-Hillel1960}.
-With the renaissance of deep learning, the bottom-up approached performed much better and required less modeling and at the same time accuracy in translations improved by a manifold for several language combinations \citep{Bengio2003}.
+With the renaissance of deep learning, the bottom-up approach performed much better and required less modeling and at the same time accuracy in translations improved by a manifold \citep{Bengio2003}.
 The ease with which already existing labeled data (websites that provide their content in different languages) could be utilized was also exemplary for the advancing digitalization \citep{Macklovitch00}.
 
 \paragraph{Signale}
 The \textbf{Infectious Disease Data Science Unit} at the RKI carries the main responsibility for providing in-house software solutions for the RKI.
 % Most units organize themselves as groups based on their different missions.
 \textbf{Signale} is a group in the Infectious Disease Data Science Unit, and it is the interface between application and machine learning, including NLP.
-This group provides intuitive access to critical numerical analyzes via dashboards for different use cases within the RKI and is the head of data science.
-Therefore, Signale is a key figure for the pursuit to draw more from EBS and fuel the paradigm shift in epidemiological surveillance and utilize the new capabilities of NLP.
-
-
+This group provides intuitive access to critical epidemiological analyzes via dashboards for different use cases within the RKI and is the head of data science.
+Therefore, Signale is essential for the pursuit to draw more from EBS and fuel the paradigm shift in epidemiological surveillance and utilize the new capabilities of NLP.
 
 
 \section{Motivation}
-The broad idea at the beginning of this project was to utilize NLP in a dashboard for epidemiologists who perform epidemiological
+The broad idea at the beginning of this project was to utilize NLP in a dashboard for epidemiologists who perform epidemiologically
 surveillance to assist them in their reading intensive work.
-With EBS being the method being in more demand for handling large unstructured data, I decided to find use cases in EBS.
-The RKI has two groups that perform EBS that would profit the most from NLP aided tools. The two groups, EpiLag and INIG, analyze numerous, also informal textual sources for their work and thus I decided to look into their work to pinpoint whether and how NLP might proof useful for them.
+With EBS being the method being in more demand for handling large unstructured data, I decided to shit my attention to solutions for EBS.
+The RKI has two groups that perform EBS that would profit the most from NLP aided tools. The two groups, EpiLag and INIG, analyze numerous, also informal textual sources for their work and thus I decided to look into their work to pinpoint whether and how NLP might prove useful for them.
 
 While the EpiLag focuses on disease outbreaks within Germany, INIG is mainly interested in international disease outbreaks. Since the EpiLag is a phone conference and the information provided are from the 16 local health authorities of Germany, it is hard to retrace the origin of all their reported information.
 Due to the difficult access to data, they did not pose an ideal candidate for the development of an NLP-driven aid.
 INIG, however, is a young project that much more depends on self-acquired intelligence.
-Unlike EpiLag, INIG has a clear operating procedure to collect information from well-defined sources.
-Each week one person of the INIG team has to read articles from a fixed set of sources and filter out outbreak news that are considered important for German officials like the ministry of health or the military.
+Unlike EpiLag, INIG collects information from well-defined, publicly accessible sources.
+Each week one person of the INIG team reads articles from a fixed set of sources and filter out outbreak news that is considered important for German officials like the RKI, the ministry of health or the German army.
 The INIG stuff member then fills an Excel sheet with the information from the found article.
 The overall process costs around 30 minutes every day which led to the idea to automate this process.
 
-The first goal of the thesis was to automatically put key points of an outbreak article into a database and replace the previous Excel-workflow. Being able to describe the article based on its key points led to the second goal: The usage of articles and their keywords to learn the relevance of an article and then use this knowledge to write a recommendation system to decrease the burden of finding important articles.
+The first goal of the thesis was to automatically put key information like disease or confirmed cases of an outbreak article into a database and replace the previous Excel-workflow. Being able to describe the article based on its key information led to the second goal: The usage of articles and their keywords to learn the relevance of an article and then use this knowledge to write a recommendation system to decrease the burden of finding important articles.
 Third, when having a functional recommendation system, a further goal was to unravel the epidemiologists' decision process and try to detect biases between the different INIG member.
 With a working summarization and relevance scoring pipeline, the goal was to expand the work of INIG to more sources and support the parsing of non-English text.
+
+
+\section{Related Work}
+\href{https://grits.eha.io}{GRITS} by the \href{https://www.ecohealthalliance.org}{EcoHealth Alliance} is a website that allows evaluating epidemiological texts automatically. It extracts key information about the text and makes a classification about which disease is most likely reported in the text. GRITS, however, is not scalable and customizable. In case INIG members would like to use GRITS, they would need to manually copy-paste URLs and manually extract the information gathered by GRITS.
+
+\href{http://medisys.newsbrief.eu}{MEDISYS} is a webpage that filters outbreak news from a vast amount of sources, where INIG's used sources are mostly covered. However, the classification of disease outbreak news is in-transparent and does not include key information extraction as in GRITS. It might filter for other criteria that are not if interest for INIG, and therefore does not promise any time-saving.

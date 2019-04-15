@@ -1,7 +1,7 @@
 \chapter{Background}
 
 \section{Natural language Processing}
-Natural language processing consists of a set of methods that operate on natural language (language that naturally evolved among humans) to solve tasks like translation, question answering, text summarization, and interaction with spoken language. While these tasks can be intuitively solved by humans, machines are confronted by the difficult task to make sense out of natural language. Thus, NLP requires a whole batch of preprocessing steps to utilize such raw data and cope with the redundancy in language and facilitate the otherwise not accessible underlying rules (including but not limited to grammar). Fig. \ref{fig:pipeline} shows a pipeline that illustrates the language wrangling common in NLP for information extraction.
+Natural language processing consists of a set of methods that operate on natural language (language that naturally evolved among humans) to solve tasks like translation, question answering, text summarization, and interaction with spoken language. While humans can intuitively solve these tasks, machines are confronted by the difficult task to make sense of natural language. Thus, NLP requires a whole batch of preprocessing steps to utilize such raw data and cope with the redundancy in language and facilitate the otherwise not accessible underlying rules (including but not limited to grammar). Fig. \ref{fig:pipeline} shows a pipeline that illustrates the language wrangling common in NLP for information extraction.
 
 \begin{figure}[h!]
     \centering
@@ -40,7 +40,7 @@ Tokenization (\ref{tokenization}) or stemming (\ref{stemming}) are preprocessing
 \subsection{Tokenization}\label{tokenization}
 A token is an abstraction of a piece of information consisting of a byte representation for some symbol.
 In NLP this can be a single character, word, punctuation, or sentences.
-The goal in \textbf{tokenization}\index{tokenization} is to split a text into meaningful chunks that obey the rules of the natural language the text is written in.
+The goal in \textbf{tokenization}\index{tokenization} is to split a text into meaningful chunks that obey the rules of the natural language.
 Word-tokenization is the cornerstone for the vast majority of NLP analyzes \citep{Webster1992}.
 Nevertheless, tokens are not equal to what we perceive as an atomic unit in language, and we need to keep in mind that in the case of computers it is just a representation of some (hopefully) UTF-8 code.
 
@@ -79,7 +79,7 @@ To find the noun, we apply \textbf{position-of-speech tagging} (\gls{POS-tagging
 When the correct grammatical function of all tokens is determined, it is simple to detect the grammatical number of the noun occurring before \textit{that} and hence correct the sentence grammatically.
 
 \subsection{Lemmatization and Stemming}\label{stemming}
-Having a well-tokenized text now, we can do descriptive statistics on the text, e.g. by simply counting the occurrences of tokens or detect tokens that only occur once, so-called \textbf{hapax legomenon}.
+Having a well-tokenized text now, we can do descriptive statistics on the text, e.g., by simply counting the occurrences of tokens or detect tokens that only occur once, so-called \textbf{hapax legomenon}.
 The simplest way to sensibly reason about a text would be to find the most occurring words given we removed all stop words to infer the subject of a text.
 If the goal were to infer the type of sport based on the most occurring words in sports news we would hope to find a large term frequency for something like \textit{throw} for baseball or \textit{strike} for soccer.
 Merely counting tokens to display the most occurring ones in a text will not be sufficient.
@@ -140,12 +140,12 @@ Machine learning (\GLS{ML}) is an attempt to make the computer learn. \citeautho
 There are, however, ML algorithms that not necessarily defined $\mathcal{E}$. Making experience from seeing labeled examples is called \textbf{supervised learning}\index{supervised learning} and learning a model without labels is called \textbf{unsupervised learning}\index{unsupervised learning}. Therefore, one could also consider the following definition  \[f: X \rightarrow \hat{y}\] where $f$ is a machine learning model that takes some data $X$ and tries to predict the most likely label $\hat{y}$ where $\hat{y} \approx y$ and $y$ being the true label.
 
 \subsection{Bag-Of-Words}\label{section:bow}
-It is typical in a machine learning task, that explicit feature engineering can be compensated by large amounts of data.
+It is typical in a machine learning task that large amounts of data can compensate for explicit feature engineering.
 Also, instead of requiring too much domain knowledge (e.g., about the text source), it is preferred to let the algorithm determine important features.
 One apparent example for this in NLP is the \textbf{bag-of-words}\index{bag-of-words} approach.
 
 It is particularly challenging to model language because of its entangled grammar, all its special cases, idioms, and ambiguity.
-Therefore, we can try to analyze a text based only on the occurrences of the words in the text without their grammatical context. We do so by tokenizing a text, lemmatize the token and operate on the set of words left after this preprocessing as our set of features.
+Therefore, we can try to analyze a text-based only on the occurrences of the words in the text without their grammatical context. We do so by tokenizing a text, lemmatize the token and operate on the set of words left after this preprocessing as our set of features.
 
 A typical example of the performance of this simple approach is spam detection.
 Given a set of emails and labels \emph{spam} and \emph{not spam}, a machine learning model could learn these labels based on the learned word distributions of the labels.
@@ -232,7 +232,7 @@ The proposed solution by \cite{Rennie2003} is to minimize the probability of a v
 \[\argmin p(\neg\, \mathcal{C}_k) \prod_{i=1}^{|t_{d}|} \frac{1}{p(t_{d,i}|\neg\, \mathcal{C}_k)} \]
 
 \subsection{Deep Learning}
-The idea to model the brain lead to the development of the perceptron, which is a formal and simplified replica of a biological neuron. With the development of the backpropagation algorithm, it was then possible to stack several perceptrons and develop the multi layer perceptron which was capable of image and vowel classification. For a long time, training these models was computationally expensive and thus limited to small-sized neural nets. This long believed limit changed only recently with AlexNet which used graphic cards to stem the heavy computational demand to train large neural nets that are the concern of deep learning.
+The idea to model the brain led to the development of the perceptron, which is a formal and simplified replica of a biological neuron. With the development of the backpropagation algorithm, it was then possible to stack several perceptrons and develop the multilayer perceptron which was capable of image and vowel classification. For a long time, training these models was computationally expensive and thus limited to small-sized neural nets. This long believed limit changed only recently with AlexNet which used graphics cards to stem the heavy computational demand to train large neural nets that are the concern of deep learning.
 
 \subsubsection{Perceptron}
 A \textbf{perceptron}\index{perceptron} is an algorithm inspired by biological neurons. It is a binary classifier that learns by adjusting its threshold to \textsl{fire} an \textsl{action potential} when the correct class is detected. Formally it is
@@ -296,7 +296,7 @@ where $E$ is the sum over the errors over all output neurons at step $t$ and $\D
 \end{figure}
 
 \subsubsection{Convolutional Neural Network}
-While the MLP is only capable of receiving a single vector as an input at a time, the \textbf{convolutional neural network}(\GLS{CNN})\index{convolutional neural network} can process an input matrix. The additional dimension can then represent time or spatial dependencies. So-called feature maps extract these two-dimensional features in the hidden layers. Feature maps are smaller than the input matrices and they consist of real-valued weights that are adjusted during the training process. These feature maps are striding over the input and apply a convolution,
+While the MLP is only capable of receiving a single vector as an input at a time, the \textbf{convolutional neural network}(\GLS{CNN})\index{convolutional neural network} can process an input matrix. The additional dimension can then represent time or spatial dependencies. So-called feature maps extract these two-dimensional features in the hidden layers. Feature maps are smaller than the input matrices, and they consist of real-valued weights that are adjusted during the training process. These feature maps are striding over the input and apply a convolution,
 \[C(i,j) = (I \ast F)(i,j) = \sum_m \sum_n I(m, n) F(i-m, j-n)\] where $\ast$ is the convolutional operator, $I$ is the input matrix, $F$ the feature map, and $C(i,j)$ the output for the convolution at position $(i,j)$ of the feature map. The output matrix $C$ of the convolution step is then pooled which is, i.e., the max or average value of $C$. In the end, a fully connected layer (an MLP where every neuron is connected with each neuron) incorporates all information and yields a classification (Fig. \ref{fig:cnn}).
 \begin{figure}[h!]
     \centering
@@ -306,10 +306,10 @@ While the MLP is only capable of receiving a single vector as an input at a time
 \end{figure}
 
 \subsection{Embeddings}\label{section:embeddings}
-In \ref{section:bow} I introduced the bag-of-words approach to cope with the difficulty to explicitly model language and in \ref{section:nbc} I showed that this approach does not hurt the performance of the classifier. However, the bag-of-words approach models language incorrectly and having a better representation of language is more desirable for the improvement of ML algorithms. Word embeddings are such methods that model language more accurately by representing words as n-dimensional vectors that much better capture syntactic and semantic characteristics of language.
+In \ref{section:bow} I introduced the bag-of-words approach to cope with the difficulty to explicitly model language and in \ref{section:nbc} I showed that this approach does not hurt the performance of the classifier. However, the bag-of-words approach models language incorrectly and having better representation of language is more desirable for the improvement of ML algorithms. Word embeddings are such methods that model language more accurately by representing words as n-dimensional vectors that much better capture syntactic and semantic characteristics of language.
 
 \subsubsection{Word2Vec}
-In 2013 \citeauthor{Mikolov2013} published two algorithms to efficiently compute high quality distributed representations of words and phrases. The synonym for this approach is called \textbf{word2vec}\index{word2vec}. The general approach in both algorithms is to maximize the similarity measures of vectorized words that appear in a similar context. The \textbf{continuous bag-of-words model}\index{continues bag-of-words model} is trained to predict the vector representation of a word or phrase given $n$ words before and after the target word in its sentence. The \textbf{continuous skip-gram-model}\index{continuous skip-gram-model} is a slower implementation with the benefit to model infrequent words better \citep{word2vec}. The skip-gram-model tries to predict the context given a target word and is thus the opposite approach of the continuous bag-of-words model.
+In 2013 \citeauthor{Mikolov2013} published two algorithms to compute high quality distributed representations of words and phrases efficiently. The synonym for this approach is called \textbf{word2vec}\index{word2vec}. The general approach in both algorithms is to maximize the similarity measures of vectorized words that appear in a similar context. The \textbf{continuous bag-of-words model}\index{continues bag-of-words model} is trained to predict the vector representation of a word or phrase given $n$ words before and after the target word in its sentence. The \textbf{continuous skip-gram-model}\index{continuous skip-gram-model} is a slower implementation with the benefit to model infrequent words better \citep{word2vec}. The skip-gram-model tries to predict the context given a target word and is thus the opposite approach of the continuous bag-of-words model.
 
 In practice we generate labeled data in the form of tuples $(\mathbf{w}_t, \mathbf{w}_{c_{1}}, \dots, \mathbf{w}_{c_{n}})$, where one entry is the target word $\mathbf{w}_t$ and the other entries are context words $\mathbf{w}_c$. The tuple can either contain actual context words found in the text, or random words from the vocabulary (\textbf{negative sampling}\index{negative sampling}). The embedding layer learns the weights of the input and context words, by yielding an n-dimensional vector for all of these words, calculate the dot-product of both vectors in the merge-layer and then pass it to a sigmoid layer that predicts whether the words are actual context words or were negatively sampled. The objective of the algorithm is to maximize
     \[\sum_{t \in T} \sum_{c \in \mathcal{C}_t} log( p(\mathbf{W}_c|\mathbf{w}_t))\]
@@ -325,7 +325,7 @@ To be able to model the semantic information of words, their relationship needs 
 
 %\subsubsection{BERT}
 \subsubsection{Document Embedding}
-If an algorithm only needs to operate on the document level then the whole document can be embedded. A simple approach is to take the mean or the maximum of all word embeddings of a document. There are also more elaborated methods \citep{Wu2018, Liu2018, Andrew2015} that have a learning objective, similar to word embeddings. However, their downside is the demand for a large corpus to learn a meaningful document embedding which is not available in the scope of this thesis.
+If an algorithm only needs to operate on the document level, then the whole document can be embedded. A simple approach is to take the mean or the maximum of all word embeddings of a document. There are also more elaborated methods \citep{Wu2018, Liu2018, Andrew2015} that have a learning objective, similar to word embeddings. However, their downside is the demand for a large corpus to learn a meaningful document embedding which is not available in the scope of this thesis.
 
 \subsection{Web Scraping}
 The process of automatically extracting content available on the world wide web, i.e., parts of websites is called \textbf{web scraping}\index{web scraping}. It is different from web crawling, where the primary purpose is the following of hyperlinks on websites to index the linkage between pages. However, both techniques can be combined to systematically search for some specific content within a network of websites, e.g., crawling flight provider sites and monitor their prices.
@@ -348,17 +348,17 @@ The process of automatically extracting content available on the world wide web,
 \end{listing}
 
 This way, we can apply the style like so \mintinline{HTML}{<h1 class="header"> I am a Header </h1>}. While a class can be accessed from several HTML tags, there is also a CSS \emph{id} that can only be accessed once in one HTML file but otherwise has the same functionality as a CSS class.
-Both languages thereby reveal a way of filtering the content of a website. Web scraping is exploiting HTML tags and CSS selectors like classes or ids to filter the content of a website.
+Both languages thereby reveal a way of filtering the content of a website. Web scraping is exploiting HTML tags and CSS selectors like classes or ids to filter the content of a site.
 
 Important tags for scraping are the paragraph tag \mintinline{HTML}{<p>} that normally contains text intended for the reader of a website and the \mintinline{HTML}{<a>} tag that contains hyperlinks. By investigating certain websites thoroughly, one might also find a schema in the assignment of CSS selectors that can be exploited during web scraping.
 
 \subsubsection{REST}
 
-Most websites offer a web service which is a broad term for some user interface that allows the communication to a database and optionally performs some operation on this data. The standard application program interface for this form of communication is the \textbf{Representational State Transfer} (\GLS{REST}), and its methods are GET, POST, PUT, PATCH, and DELETE which are often executed via HTTP in websites. The most important method in web scraping is the GET method since it retrieves data. It is sometimes necessary to understand how GET requests are made in a website to copy them and use them for automated content extraction.
+Most websites offer a web service which is a broad term for some user interface that allows the communication to a database and optionally performs some operation on this data. The standard application program interface for this form of communication is the \textbf{Representational State Transfer} (\GLS{REST}), and its methods are GET, POST, PUT, PATCH, and DELETE which are often executed via HTTP in websites. The most important method in web scraping is the GET method since it retrieves data. It is sometimes necessary to understand how GET requests are made on a website to copy them and use them for automated content extraction.
 
 \subsubsection{Ajax}
 
-Should the client (user) request data from a database via a website and a reload of the website is undesired, \textbf{Ajax}\index{Ajax} allows an asynchronous data retrieval. This asynchronous GET request starts on an event (e.g., clicking on a button on the website). Ajax is frequently used to reduce loading time and traffic to only refresh the necessary part of a website. A popular abstraction of Ajax is \textbf{jQuery} and mostly used in combination with JavaScript that is required to integrate the retrieved data into the website.
+Should the client (user) request data from a database via a website and a reload of the site is undesired, \textbf{Ajax}\index{Ajax} allows an asynchronous data retrieval. This asynchronous GET request starts on an event (e.g., clicking on a button on the website). Ajax is frequently used to reduce loading time and traffic to only refresh the necessary part of a website. A popular abstraction of Ajax is \textbf{jQuery} and mostly used in combination with JavaScript that is required to integrate the retrieved data into the website.
 
 A problem of scraping and crawling programs is that content which is only visible after Ajax has requested it is not visible to the program. Therefore, it might be necessary to monitor the website's behavior via the developer mode of an internet browser and see which GET requests would get you the right data or trigger the Ajax calls programmatically.
 % TODO: Add unbalanced learn
