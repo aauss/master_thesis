@@ -58,7 +58,8 @@ I used the following features of EpiTator in my thesis:
 \subsection{SpaCy}
 SpaCy is an industrial NLP library that contains every basic algorithm as illustrated in \ref{fig:pipeline}, but also newer methods from the field of deep learning such as CNNs and word embeddings. Additionally, SpaCy is written in the much fast CPython language. Altogether, speed and state of the art algorithms give SpaCy the industrial strength.
 
-In this thesis, SpaCy is mainly used by EpiTator for preprocessing. I got involved with SpaCy when I wanted to serialize EpiTator output which is not trivial in SpaCy. Therefore, I needed to transform the output of EpiTator such that it did not contain SpaCy dependencies anymore.
+I used SpaCy's text classification module which uses a simple CNN that uses word2vec embedded words as an input and an automatically determined pooling layer using average pooling.
+SpaCy is also mainly used by EpiTator for preprocessing. Serialization of EpiTator was difficult because SpaCy is not trivial to serialize. Therefore, I needed to transform the output of EpiTator such that it did not contain SpaCy dependencies anymore.
 
 \subsection{Flair}
 Flair is a small library that only contains state of the art algorithms in NLP. It does not directly provide preprocessing such as stop word removal, tokenization, or stemming but does the preprocessing automatically depending on the final task.
@@ -282,6 +283,8 @@ I used the multinomial and complement naive Bayes for the text classification us
  For the keyword extraction, I used the multinomial and Bernoulli naive Bayes classifier for each entity class fed by all sentences containing this entity class. Sentences of texts that contain entities found in the corresponding EDB entity entry for this text are labeled as \emph{true} whereas the rest is labeled \emph{false}.
 
 \subsection{Deep Learning}
+For a visualization of the corpus, I trained word2vec. During the text classification I first used the mean of all word embeddings as the document embedding and fed it into a multi layer perceptron with 100 neurons in the hidden layer, a rectified linear unit as the activation function, the Adam optimizer using the default values during training, and L2 penalty to avoid overfitting.
+In the other text classification, I used a CNN to iterate over all word embeddings using an automatically selected kernel size (by SpaCy), and max pooling.
 
 \section{Web App}
 Using Flask and \href{https://www.datatables.net}{DataTables}, I built a web app that allows the entry of an URL where then the text is extracted, summarized, and put into a data table which can be downloaded in various formats.
