@@ -5,7 +5,7 @@ At the beginning of my work, I needed to assess the applicability of several pos
 Therefore, if applicable, I monitored the functioning of the target groups and evaluated their used textual sources.
 The direction of the thesis was determined based on the exploitability of the sources and the gain for the work practices through NLP.
 
-Below, I introduce available targets, and why they were or were not suitable for the proceedings of this thesis.
+Below, I introduce available targets, and why they were or were not suitable for the proceedings of this thesis. The assessments showed also, that project goals for EBS are much better suited for NLP methodology.
 
 \subsection{RASFF}
 The Rapid Alert System for Food and Feed (\GLS{RASFF}) has been established by the European Union (\GLS{EU}) to share information for an effective food safety. As a member of the RASFF, the RKI receives PDFs about recent incidences of contaminated food. Such a PDF contains several prototypical information about the contamination.
@@ -13,47 +13,24 @@ The Rapid Alert System for Food and Feed (\GLS{RASFF}) has been established by t
 However, the document is strongly formatted, and my attempts to extract the text from the PDF without altering the structure of the report failed. I used Tika (\ref{Tika}) for the text extraction, but the return contained misplaced line breaks and other formatting errors. Due to these complications and difficulties to extract text from a PDF without optical character recognition, I decided not to consider the RASFF reports for my thesis.
 
 \subsection{EpiLag}
-Due to the majority of communication in the EpiLag happening orally and the sources mainly being reports from medical practices and hospitals, EpiLag poses a difficult target for NLP methodology.
+Due to the majority of communication in the EpiLag happening orally and the sources mainly being reports from medical practices and hospitals, and emails, EpiLag poses a difficult target for NLP methodology.
 Without a clear in and output, there is no obvious approach to process the data of EpiLag.
 
 \subsection{EPIS}
 As the RASFF, the Epidemic Intelligence Information System (\GLS{EPIS}) is also an EU project. It is a web tool that allows several EU members to report alarming disease outbreaks. To stay up-to-date, EPIS has an email notification system, and every outbreak report is downloadable as a formatted Excel sheet.
 
-The downside of EPIS is a missing source for reported outbreaks. Mostly, local health departments detect these events and then share them through EPIS leaving out how they discovered them. This procedure makes the comparison of events difficult especially since different countries might not share the definition for a disease outbreak.
+The downside of EPIS is a missing source for reported outbreaks. Mostly, local health departments detect these events which are then shared through EPIS leaving out how they were discovered. This procedure makes the comparison of events difficult especially since different countries might not share the definition for a disease outbreak.
 Though the formatted data output of EPIS would have been ideal for my further work, the regulations on how to process EPIS data were unclear and partially restrictive which excluded to further work with EPIS data.
 
 \subsection{INIG}\label{INIGsources}
 The INIG has a curated list of sources that they visit every day and check for new alerting events (Tab. \ref{table:INIGsources}).
-The list consists of a heterogeneous set of sources where some are frequently reporting and some less but in more extent. Also, the data format is different and can be a simple HTML website, PD, or email.
-The easy access to data and the clearly defined in- and output in INIG's working procedure made them a good fit for my topic.
-\begin{table}[h!]
-  \centering
-  \caption{A list of the obligated sources for the daily screening of INIG and the data type of the source. Furthermore, I assessed the sources for their quality, i.e., whether they only contain information relevant for epidemiological surveillance or also research findings and ongoing projects (mixed content). After exemplary testing, I rated the difficulty to extract analyzable text from these sources where \textsl{easy} posed no difficulty, \textsl{intermediate} would have required additional work but is promising to function and \textsl{hard} was unsure whether it could work satisfactorily.}
-  % \setlength{\tabcolsep}{1.5em}
-  \begin{tabular}{@{}cccc@{}}
-    \toprule
-    \textbf{Source} & \textbf{Data Format} & \textbf{Data Quality} & \textbf{Accesibility}\\
-    \midrule
-    \href{http://www.cidrap.umn.edu/}{CIDRAP} & HTML & Mixed content & Intermediate \\
-    \href{http://www.promedmail.org/}{ProMED Mail} & HTML & Only relevant & Easy\\
-    \href{http://www.who.int/csr/don/en/}{WHO DONs} & HTML & Only relevant & Easy \\
-    EIOS daily digest & Email & Only relevant & Hard \\
-    \href{http://outbreaknewstoday.com/}{OutbreakNewsToday} & HTML & Mixed content & Intermediate\\
-    ECDC Report & Email & Only relevant & Hard \\
-    \href{http://www.afro.who.int/fr/health-topics/disease-outbreaks/outbreaks-and-other-emergencies-updates}{WHO Afro Bulletin} & PDF & Only relevant & Hard \\
-    \href{http://www.eurosurveillance.org/content/eurosurveillance/browse}{EuroSurveillance} & PDF and HTML & Mixed content & Intermediate \\
-    \href{http://www.who.int/wer/en/}{WHO WER} & PDF & Mixed content & Hard\\
-    \href{https://ecdc.europa.eu/en/threats-and-outbreaks/reports-and-data/weekly-threats}{ECDC CDTR} & PDF & Only relevant & Intermediate \\
-    \href{http://www.emro.who.int/pandemic-epidemic-diseases/information-resources/weekly-epidemiological-monitor.html}{WHO EMRO} & PDF & Mixed content & Hard \\
-    \href{https://www.paho.org/hq/index.php?option=com_content&view=article&id=14044:epidemiological-alerts-archive-by-year-2018&Itemid=72203&lang=en}{WHP PAHO} & PDF & Only relevant & Intermediate\\
-    \bottomrule
-  \end{tabular}
-  \label{table:INIGsources}
-\end{table}
+The list consists of a heterogeneous set of sources where some are frequently reporting and some less but in more extent. Also, the data format is different and can be a simple HTML website, PDF, or email.
+The mostly easy and public access to data and the clearly defined in- and output in INIG's working procedure made them a good fit for my topic.
 
 \section{Libraries}
 In the following sections, I am introducing the most important libraries I used for my work.
 The list lacks libraries that are common for data-driven work with Python or are part of the standard library.
+
 \subsection{NLTK}
 The Natural Language Tool Kit (\GLS{NLTK}) is an established and large package for NLP.
 It has 50 corpora and lexical resources as well as all important algorithms to build an NLP-pipeline as in Fig. \ref{fig:pipeline}.
@@ -61,6 +38,7 @@ NLTK was built initially to teach NLP and thus contains also outdated algorithms
 
 I used the stop word list, word and sentence tokenizer provided by NLTK.
 Furthermore, I used the multinomial NBC in NLTK to investigate the features with the highest explanatory power for classification, i.e., words that influence the classification decision by NBC the most.
+
 
 \subsection{EpiTator}
 EpiTator is a library used in \href{https://grits.eha.io}{GRITS} which is a website maintained by the \href{https://www.ecohealthalliance.org}{EcoHealth Alliance}.
@@ -73,10 +51,8 @@ I used the following features of EpiTator in my thesis:
   \item EpiTator's count annotator that extracts the glyph and word representation for numbers and associated attributes, e.g., \textit{``5 cases of smallpox''} will detect \textit{5} as a count and \textit{cases} as its attribute
   \item The date annotator that extracts dates and date ranges from a text
   \item EpiTator's geoname annotator that extracts all geographical entities from a text.
-  \item  Finally, I also used Epitator's resolved keyword annotator, that uses an SQLite database of entities to decide from multiple synonyms of infectious disease entities.
+  \item Finally, I also used Epitator's resolved keyword annotator, that uses an SQLite database of entities to decide from multiple synonyms of infectious disease entities.
 \end{itemize}
-
-
 
 
 \subsection{SpaCy}
@@ -107,8 +83,7 @@ Luigi is a pipeline builder made by Spotify. It manages different jobs, coordina
 With Luigi, I modularize my work in case there is a requirement to modify or replace certain parts of my pipeline and automatically serialize the outcome of long and tedious computations such as scraping.
 
 \subsection{Sacred}
-Sacred helps to track experiments by saving the hyper-parameters, model name, and performance of computational experiments (e.g., a machine learning model)
-which I used to track my experiments.
+Sacred helps to track experiments by saving the hyper-parameters, model name, and performance of computational experiments e.g., a machine learning model which I used to track my experiments.
 
 \subsection{Flask}
 Flask is a web development mini-framework for Python.
@@ -123,7 +98,7 @@ The \textbf{Ereignisdatenbank} (\GLS{EDB}) is an Excel sheet and the main record
 \subsection{WHO DONs}
 The WHO has a channel where they publish the latest disease outbreak news (DONs).
 It is a low output source with only a handful of reports every week.
-All WHO DONs are archived, sorted by year and month, and therefore can be conveniently accessed.
+All WHO DONs are archived, sorted by year and month, and therefore can be systematically accessed.
 
 I wrote a scraper that accesses the archive URL and then, based on the function parameter, visits the URL with the requested time range and scrapes the content \ref{lst:who}.
 
@@ -136,6 +111,7 @@ I wrote a scraper that accesses the archive URL and then, based on the function 
     all_years_links = archive_years.find_all('a')
     years_as_links = ['http://www.who.int' + link.get('href')
                       for link in all_years_links]
+
     # Obtain all report URLs per year
     for year_link in years_as_links:
       page_year = requests.get(year_link)
@@ -149,7 +125,7 @@ I wrote a scraper that accesses the archive URL and then, based on the function 
 \end{listing}
 
 \subsection{ProMED Mail}
-Opposed to WHO DONs, much more authors are contributing to ProMED Mail and therefore generate higher output. Usually, ProMED publishes around a handful of articles a day. ProMED mail content is dynamically loaded via Ajax and therefore not directly accessible. Through the analysis of the website, I detected the GET requests for the article retrieval and reverse engineered the search to write a function with which I can scrape ProMED article given a time range shown in Lis. \ref{lst:promed}. The access to page number shown in Lis. \ref{lst:promed} is important since after 200 pages, the GET request returns an error although there would be more pages. The full algorithm iterates over 200 pages given a time range, remembers the date of the oldest ProMED article from this search and reruns the search with the initial temporal lower bound and the date of the last retrieved article as the newer upperbound.
+Opposed to WHO DONs, much more authors are contributing to ProMED Mail and therefore generate higher output. Usually, ProMED publishes around a handful of articles a day. ProMED mail content is dynamically loaded via Ajax and therefore not directly accessible. Through the analysis of the website, I reverse engineered the article search of the website to write a function with which I can scrape ProMED article given a time range shown in Lis. \ref{lst:promed}. The access to page number shown in Lis. \ref{lst:promed} is important since after 200 pages, the GET request made by my program returns an error although there would be more pages. The full algorithm iterates over 200 pages given a time range, remembers the date of the oldest ProMED article from this search and reruns the search with the initial temporal lower bound and the date of the last retrieved article as the newer upperbound.
 
 \begin{listing}[h!]
   \begin{minted}[autogobble]{python}
