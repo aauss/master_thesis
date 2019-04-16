@@ -43,11 +43,45 @@ First, I extracted all URLs from the EDB and clustered them based on their netlo
 \end{table}
 
 \subsection{Data Quality}
-Due to the unrestrained column settings, every entry in the EDB was free text with spelling mistakes and different formatting. The transferral of the EDB into a controlled vocabulary was a vital steps since it made more data points useable. Tab. \ref{table:preprocessing performance} shows that the preprocessing made up to 100 EDB entries accessible per keyword.
+Due to the unrestrained column settings, every entry in the EDB was free text with spelling mistakes and different formatting. The transferral of the EDB into a controlled vocabulary, as described in \ref{controlled vocabulary}, was a vital steps since it made more data points useable. Tab. \ref{table:preprocessing performance} shows that the preprocessing made up to 100 EDB entries accessible per keyword.
 
 \begin{table}
   \centering
-  \caption{Performance evaluation of the EDB preprocessing per key word. The table shows the amount of valid and invalid entries before and after preprocessing was applied. The EDB in sum has 557 entries.  }
+  \caption{The most important words during the classification of the NBC.}
+  \begin{tabular}{@{}lcc@{}}
+    \toprule
+    \textbf{Entity Class}& \textbf{Word} & \textbf{Positive (\%)}\\
+
+    \midrule
+    \textbf{Counts}& variant& 31.1\\
+    & poultry& 27.1\\
+    & Laibin& 27.1\\
+    & 42-year-old& 22.2\\
+    & strains.& 19.2\\
+    & province.Aug& 19.2\\
+    & 13For& 19.2\vspace{2mm}\\
+    \textbf{Dates}
+    & worm& 6.0\\
+    & occuring& 5.3\\
+    & Nothern& 5.3\\
+    & emerging& 5.3\\
+    & patients& 4.5\\
+    & South& 4.1\\
+    & deaths& 3.9\\
+
+    \bottomrule
+  \end{tabular}
+  \label{table:important_words}
+\end{table}
+
+\section{Key Information Extraction}
+Although, EpiTator extracted only relevant entity classes, I still needed to filter them.
+To do so, I used the most often occurring entity in one entity class, e.g., the most frequent disease in one text (Lis. \ref{lst:mostoccure}).
+Additionally, I trained NBCs using all sentences of a text containing a specific entity class and used the extracted key entity from the EDB to detect the sentence matching the EDB entry to then label the data.
+
+\begin{table}
+  \centering
+  \caption{Most informative words.}
   \begin{tabular}{@{}cccc@{}}
     \toprule
     \textbf{Key Word} & \textbf{Valid Before} & \textbf{Valid After} & \textbf{Invalid After} \\
@@ -62,12 +96,73 @@ Due to the unrestrained column settings, every entry in the EDB was free text wi
   \label{table:preprocessing performance}
 \end{table}
 
-\section{Key Information Extraction}
-Although, EpiTator extracted only relevant entity classes, I still needed to filter them.
-To do so, I used the most often occurring entity in one entity class e.g., the most frequent disease in one text (Lis. \ref{lst:mostoccure}).
-Additionally, I trained NBCs using all sentences of a text containing a specific entity class and used the extracted key entity from the EDB to detect the sentence matching the EDB entry to then label the data.
 
 \section{Article Recommendation}
 For the detection of relevant disease outbreak articles, I used the scraped WHO DONs and ProMED Mail articles of 2018 together with the EDB entries from both those sources as the training data.
 
+As a prior assessment, I looked into the word embeddings of my corpus (Fig. \ref{fig:t-sne}).
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.3]{t-sne.pdf}
+    \caption{A plot of the word embeddings using t-SNE for dimensionality reduction. The plot consists of the scraped news corpus.}
+    \label{fig:t-sne}
+\end{figure}
+
+The final results are shown in (Tab. \ref{table:recommender_performance})
+\begin{table}
+
+  \ra{1.1}
+  \caption{A results table.}
+  \centering
+  \begin{tabular}{@{}rcccccccc@{}}
+    \toprule
+     & \textbf{Pre.} & \textbf{Rec.} & \textbf{Spec.}
+    & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
+    \midrule
+    \textbf{Multinomial Naive Bayes}\\
+    \emph{Irrelevant}& 0.96& 1.00&  0.00& 0.98& 0.00& 620 \\
+    \emph{Relevant}& 0.00& 0.00&  1.00& 0.00& 0.00& 27 \\
+    Average/Total& 0.92& 0.96& 0.04& 0.94& 0.00& 647 \vspace{2mm}\\
+    \textbf{Complement Naive Bayes}\\
+    \emph{Irrelevant}& 0.96& 1.00&  000.& 0.98& 0.00& 618 \\
+    \emph{Relevant}& 0.00& 0.00&  1.00& 0.00& 0.00& 29 \\
+    Average/Total& 0.91& 0.96& 0.04& 0.93& 0.00& 647 \vspace{2mm}\\
+    \textbf{Logistic Regression}\\
+    \emph{Irrelevant}& 0.97& 0.67&  0.63& 0.79& 0.42& 762 \\
+    \emph{Relevant}& 0.09& 0.63&  0.67& 0.15& 0.42& 38 \\
+    Average/Total& 0.93& 0.66& 0.63& 0.76& 0.42& 800 \vspace{2mm}\\
+    \textbf{K-Nearest Neighbor Classifier}\\
+    \emph{Irrelevant}& 0.97& 0.77&  0.53& 0.86& 0.41& 762 \\
+    \emph{Relevant}& 0.10& 0.53&  0.77& 0.17& 0.39& 38 \\
+    Average/Total& 0.93& 0.75& 0.54& 0.82& 0.41& 800 \vspace{2mm}\\
+    \textbf{Logistic Regression}\\
+    \emph{Irrelevant}& 0.97& 0.67&  0.63& 0.79& 0.42& 762 \\
+    \emph{Relevant}& 0.09& 0.63&  0.67& 0.15& 0.42& 38 \\
+    Average/Total& 0.93& 0.66& 0.63& 0.76& 0.42& 800 \vspace{2mm}\\
+    \textbf{Support Vector Classifier (RBF)}\\
+    \emph{Irrelevant}& 0.98& 0.60&  0.79& 0.74& 0.46& 762 \\
+    \emph{Relevant}& 0.09& 0.79&  0.60& 0.16& 0.48& 38 \\
+    Average/Total& 0.94& 0.61& 0.78& 0.72& 0.47& 800 \vspace{2mm}\\
+    \textbf{Support Vector Classifier (linear)}\\
+    \emph{Irrelevant}& 0.98& 0.65&  0.68& 0.78& 0.44& 762 \\
+    \emph{Relevant}& 0.09& 0.68&  0.65& 0.16& 0.45& 38 \\
+    Average/Total& 0.93& 0.65& 0.68& 0.75& 0.44& 800 \vspace{2mm}\\
+    \textbf{Multi Layer Perceptron}\\
+    \emph{Irrelevant}& 0.97& 0.85&  0.53& 0.91& 0.46& 762 \\
+    \emph{Relevant}& 0.15& 0.53&  0.85& 0.23& 0.43& 38 \\
+    Average/Total& 0.93& 0.84& 0.54& 0.88& 0.46& 800 \\
+    \bottomrule
+  \end{tabular}
+  \label{table:recommender_performance}
+\end{table}
+
 \section{Web App}
+Finally, I built a web application using Flask and Datatables to visualize a possible workflow (Fig. \ref{fig:t-aussinator}).
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.3]{aussinator.pdf}
+    \caption{A Flask web application using the keyword extraction and relevance scoring trained as part of this thesis.}
+    \label{fig:t-aussinator}
+\end{figure}
