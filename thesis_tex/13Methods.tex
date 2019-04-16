@@ -1,7 +1,7 @@
 \chapter{Methods}
 
 \section{Requirement Analysis}
-At the beginning of my work, I needed to assess the applicability of several possible targets at the RKI for their suitability of NLP methods.
+At the beginning of my work, I needed to assess the suitability of several possible targets at the RKI for NLP.
 Therefore, if applicable, I monitored the functioning of the target groups and evaluated their used textual sources.
 The direction of the thesis was determined based on the exploitability of the sources and the gain for the work practices through NLP.
 
@@ -283,8 +283,8 @@ I used the multinomial and complement naive Bayes for the text classification us
  For the keyword extraction, I used the multinomial and Bernoulli naive Bayes classifier for each entity class fed by all sentences containing this entity class. Sentences of texts that contain entities found in the corresponding EDB entity entry for this text are labeled as \emph{true} whereas the rest is labeled \emph{false}.
 
 \subsection{Deep Learning}
-For a visualization of the corpus, I trained word2vec. During the text classification I first used the mean of all word embeddings as the document embedding and fed it into a multi layer perceptron with 100 neurons in the hidden layer, a rectified linear unit as the activation function, the Adam optimizer using the default values during training, and L2 penalty to avoid overfitting.
-In the other text classification, I used a CNN to iterate over all word embeddings using an automatically selected kernel size (by SpaCy), and max pooling.
+For a visualization of the available corpus, I embeddings trained by word2vec. During the text classification I first used the mean of all word embeddings as the document embedding and fed it into a multi layer perceptron with 100 neurons in the hidden layer, a rectified linear unit as the activation function, the Adam optimizer using the default values during training, and L2 penalty to avoid overfitting.
+Also, I used a CNN to iterate over all word embeddings using an automatically selected kernel size by SpaCy, and mean pooling.
 
 \section{Web App}
 Using Flask and \href{https://www.datatables.net}{DataTables}, I built a web app that allows the entry of an URL where then the text is extracted, summarized, and put into a data table which can be downloaded in various formats.

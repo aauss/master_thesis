@@ -4,14 +4,15 @@
 A substantial part of my work was the exploiting of available sources which includes the EDB and scraped epidemiological news. In the following I introduce how I managed to recover most of the information in the EDB for my further analyzes and how I managed to scrape a large amount epidemiological data with a limited time profile.
 
 \subsection{Source Determination}
-Before I could train a classifier to detect relevant articles or extract meaningful key words from texts, I needed to create a labeled dataset from the EDB. The entries in the EDB were the positive labels, but I lacked the negative examples, i.e., the articles that were read by the epidemiologists but were not considered. However, writing a scraper can be time consuming so I needed to narrow down the, at that moment, 75 sources of the EDB.
+Before I could train a classifier to detect relevant articles or extract meaningful key words from texts, I needed to create a labeled dataset from the EDB. Therefor, I collected all articles that were read by the epidemiologists but were not put into the EDB. However, writing an algorithm for information retrieval can be time consuming so I needed to narrow down the, at that moment, 75 sources used in the EDB.
 
-For this, I extracted all URLs from the EDB and clustered them to identify sources that were used more often than others  (Fig . \ref{fig:netloc}). Then, I focused only on the most used sources that were also unproblematic to scrape (Fig. \ref{table:INIGsources}). I determined the importance of the articles by binning the referenced Netlocs from the EDB and chose the highest ranking ones. The difficulty, on the other hand, I found by exemplary text extractions. With this information at hand I knew which sources to scrape. The EDB contained the work of INIG throughout the year 2018. Thus, I needed to extract all articles of the year 2018 from the determined sources that are partly shown in Tab. \ref{table:INIGsources}.
+The decision which source to extract was then made by the relevance of the source, the complexity to retrieve information from this source, and the relevance of the content provided by this source.
+First, I extracted all URLs from the EDB and clustered them based on their netloc to rank the sources used in the EDB (Fig. \ref{fig:netloc}). Then, I focused only on the most used sources that were most accessible (Fig. \ref{table:INIGsources}). The difficulty to access the information of the text, on the other hand, I found by exemplary text extractions. Additionally, I made an evaluation that showed how relevant the source is for the work of INIG. All sources that are mandatory for INIG to observe are shown in Tab. \ref{table:INIGsources}.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.5]{netloc.pdf}
-    \caption{KJhaskdj.}
+    \includegraphics[scale=0.8]{netloc.pdf}
+    \caption{The netflow frequency of sources used in the EDB. Shown in grey is the sum of EDB entries referencing a source with a netloc not shown in this figure.}
     \label{fig:netloc}
 \end{figure}
 
@@ -42,7 +43,7 @@ For this, I extracted all URLs from the EDB and clustered them to identify sourc
 \end{table}
 
 \subsection{Data Quality}
-Due to the unrestrained column settings, every entry in the EDB was free text with spelling mistakes and different formatting. The transferral of the EDB into a controlled vocabulary was a vital steps since it made more data points usabel. Tab. \ref{table:preprocessing performance} shows that the preprocessing made up to 100 EDB entries accessible per keyword.
+Due to the unrestrained column settings, every entry in the EDB was free text with spelling mistakes and different formatting. The transferral of the EDB into a controlled vocabulary was a vital steps since it made more data points useable. Tab. \ref{table:preprocessing performance} shows that the preprocessing made up to 100 EDB entries accessible per keyword.
 
 \begin{table}
   \centering
@@ -62,4 +63,11 @@ Due to the unrestrained column settings, every entry in the EDB was free text wi
 \end{table}
 
 \section{Key Information Extraction}
+Although, EpiTator extracted only relevant entity classes, I still needed to filter them.
+To do so, I used the most often occurring entity in one entity class e.g., the most frequent disease in one text (Lis. \ref{lst:mostoccure}).
+Additionally, I trained NBCs using all sentences of a text containing a specific entity class and used the extracted key entity from the EDB to detect the sentence matching the EDB entry to then label the data.
+
 \section{Article Recommendation}
+For the detection of relevant disease outbreak articles, I used the scraped WHO DONs and ProMED Mail articles of 2018 together with the EDB entries from both those sources as the training data.
+
+\section{Web App}
