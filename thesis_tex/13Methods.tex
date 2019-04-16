@@ -200,7 +200,7 @@ The \emph{URL} of the article, the \emph{disease}, the \emph{country} of outbrea
 The preprocessing steps were the removal of empty rows, trailing white spaces, and the split-up of several entries in one cell to several rows or the merge of redundant columns to be per the tidy data concept \citep{Wickham2014}.
 The crucial part of the preprocessing was, however, the transformation of the variables into a controlled vocabulary.
 
-\subsection{Controlled Vocabulary}
+\subsection{Controlled Vocabulary}\label{controlled vocabulary}
 \paragraph{Dates}
 The dates needed to be transformed into a machine-parsable format which I did with the pandas \texttt{totimestamp} method. If the method is provided with the information whether date or month is mentioned first, \texttt{totimestamp} automatically recognizes several forms of dates and transforms them to a pandas Timestamp object on which arithmetic operations and comparison are possible.
 
