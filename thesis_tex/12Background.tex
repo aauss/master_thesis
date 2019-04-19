@@ -159,16 +159,18 @@ Another way is using up- and downsampling methods. A naive downsampling approach
 The general procedure of ADASYN is described as,
 \begin{align}
   d &= \frac{m_s}{m_l} \\
-  G &= (m_l - m_s) \times \beta \\
+  G &= (m_l - m_s) \cdot \beta \\
   r_i &= \frac{\Delta_i/}{K}, i=1, \dots, m_s \\
   \hat{r} &= \frac{r_i}{\sum_{i=1}^{m_s}} \\
-  g_i &= \hat{r} \times G \\
-  \forall \boldsymbol{x_i} \text{ repeat } g_i \text{ times: } \boldsymbol{s_i} &= \boldsymbol{x_i} + (\boldsymbol{x_{zi}} - \boldsymbol{x_i}) \times \lambda
+  g_i &= \hat{r} \cdot G \\
+  \forall \boldsymbol{x_i} \text{ repeat } g_i \text{ times: } \boldsymbol{s_i} &= \boldsymbol{x_i} + (\boldsymbol{x_{zi}} - \boldsymbol{x_i}) \cdot \lambda
 \end{align}
 where $d$ is the degree of imbalance of the small and large class ($m_s$ and $m_l$ respectively), $G$ is the amount of synthetic data examples required to achieve a class balance $\beta \in [0,1]$. $r_i$ is the ration of $\Delta_i$ examples in the $K$ nearest neighborhood of data vector $\boldsymbol{x_i}$ of the majority class. (2.4) is a normalization step. $g_i$ is the amount of synthetic data instances that need to be generated for each minorty example $\boldsymbol{x_i}$.
 (2.6) is the main algorithm where for each data point $\boldsymbol{x_i}$, $g_i$ synthesizations are conducted. Thereby, $\boldsymbol{x_{zi}}$ is a random data example for the $K$ nearest neighborhood, and $\lambda \in [0,1]$ is a random number.
 
-Finally, a good performance measure is required to evaluate the classifier's learning progress. Accuracy as illustrated before, is not a reliable indicator in a binary imbalanced dataset. The \textbf{Index of Balanced Accuracy} (\GLS{IBA})
+Finally, a good performance measure is required to evaluate the classifier's learning progress. Accuracy as illustrated before, is not a reliable indicator in a binary imbalanced dataset. The \textbf{Index of Balanced Accuracy} (\GLS{IBA}), however, tries to take the imbalance into account and is defined as,
+\[IBA_{\alpha} = (1 + \alpha \cdot (TPrate - TNrate)) \cdot TPrate \cdot TNrate \]
+where  0 \leq \alpha \lq 1 and \alpha being a dominance index, that needs to be fine tuned based on which and how significant the dominating class is supposed to be.
 
 \subsection{Naive Bayes Classifier}\label{section:nbc}
 The \textbf{naive Bayes classifier}\index{naive Bayes classifier} (\GLS{NBC}) is a probabilistic classifier. It describes a set of algorithms capable of learning to infer a class given a set of features and labels. The NBC is defined as,
