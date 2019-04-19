@@ -4,10 +4,10 @@
 Natural language processing consists of a set of methods that operate on natural language (language that naturally evolved among humans) to solve tasks like translation, question answering, text summarization, and interaction with spoken language. While humans can intuitively solve these tasks, machines are confronted by the difficult task to make sense of natural language. Thus, NLP requires a whole batch of preprocessing steps to utilize such raw data and cope with the redundancy in language and facilitate the otherwise not accessible underlying rules (including but not limited to grammar). Fig. \ref{fig:pipeline} shows a pipeline that illustrates the language wrangling common in NLP for information extraction.
 
 \begin{figure}[h!]
-    \centering
-    \includegraphics[scale=0.5]{pipeline.png}
-    \caption{An illustration of a typical pipeline in information extraction in NLP. The pipeline starts with the raw text and undergoes several preprocessing steps (indicated by the square) yielding intermediate output (placed next to the arrows). The output can be a list of tuples of the entity and the correspond word like \texttt{[(ORG, \textquotesingle Bayer\textquotesingle), (LOC, \textquotesingle Baveria\textquotesingle)]} (adopted from \citep{Bird2009}).}
-    \label{fig:pipeline}
+  \centering
+  \includegraphics[scale=0.5]{pipeline.png}
+  \caption{An illustration of a typical pipeline in information extraction in NLP. The pipeline starts with the raw text and undergoes several preprocessing steps (indicated by the square) yielding intermediate output (placed next to the arrows). The output can be a list of tuples of the entity and the correspond word like \texttt{[(ORG, \textquotesingle Bayer\textquotesingle), (LOC, \textquotesingle Baveria\textquotesingle)]} (adopted from \citep{Bird2009}).}
+\label{fig:pipeline}
 \end{figure}
 
 \subsection{Stop Words}
@@ -149,6 +149,26 @@ Therefore, we can try to analyze a text-based only on the occurrences of the wor
 
 A typical example of the performance of this simple approach is spam detection.
 Given a set of emails and labels \emph{spam} and \emph{not spam}, a machine learning model could learn these labels based on the learned word distributions of the labels.
+
+\subsection{Imbalanced Class Problem}
+When it is required to detect seldom events, like the cancer in patients through imaging, we often suffer from an imbalanced classes where important classification needs to be learned from the minority class. In the cancer example, this would mean that the images of cancer are much more rare than those without cancer. A classifier then tends to classify most input as the majority class, i.e., the patient not having cancer, which would yield a high accuracy but is fatal for the patient. The accuracy in this case is not a useful measure but there are many ways to tackle the class imbalance problem.
+
+One way is cost-sensitive learning, which treats different misclassifications differently opposed to cost-insensitive learning that only tries to maximize the accuracy, hence the true positive rate. Thus, in cost-sensitive learning it is possible to explicitly model the, e.g.,  minimization of false negatives such as in the cancer detection example by introducing a cost function for misclassifications or adopting the decision threshold of the classifier to the imbalanced classes \citep{Ling2008}.
+
+Another way is using up- and downsampling methods. A naive downsampling approach would be to discard data of the majority class until the classes are balanced. The naive counterpart to downsampling is the duplication of minority class instances and is called upsampling. However, there are more sophisticated methods, that will downsample redundant majority class instanced or synthesize data, in order to create novel examples of the minority class. One well performing upsampling method is called \textbf{Adaptive Synthetic Sampling Approach for Imbalanced Learning} (\GLS{ADASYN}) \citep{He2008}.
+The general procedure of ADASYN is described as,
+\begin{align}
+  d &= \frac{m_s}{m_l} \\
+  G &= (m_l - m_s) \times \beta \\
+  r_i &= \frac{\Delta_i/}{K}, i=1, \dots, m_s \\
+  \hat{r} &= \frac{r_i}{\sum_{i=1}^{m_s}} \\
+  g_i &= \hat{r} \times G \\
+  \forall \boldsymbol{x_i} \text{ repeat } g_i \text{ times: } \boldsymbol{s_i} &= \boldsymbol{x_i} + (\boldsymbol{x_{zi}} - \boldsymbol{x_i}) \times \lambda
+\end{align}
+where $d$ is the degree of imbalance of the small and large class ($m_s$ and $m_l$ respectively), $G$ is the amount of synthetic data examples required to achieve a class balance $\beta \in [0,1]$. $r_i$ is the ration of $\Delta_i$ examples in the $K$ nearest neighborhood of data vector $\boldsymbol{x_i}$ of the majority class. (2.4) is a normalization step. $g_i$ is the amount of synthetic data instances that need to be generated for each minorty example $\boldsymbol{x_i}$.
+(2.6) is the main algorithm where for each data point $\boldsymbol{x_i}$, $g_i$ synthesizations are conducted. Thereby, $\boldsymbol{x_{zi}}$ is a random data example for the $K$ nearest neighborhood, and $\lambda \in [0,1]$ is a random number.
+
+Finally, a good performance measure is required to evaluate the classifier's learning progress. Accuracy as illustrated before, is not a reliable indicator in a binary imbalanced dataset. The \textbf{Index of Balanced Accuracy} (\GLS{IBA})
 
 \subsection{Naive Bayes Classifier}\label{section:nbc}
 The \textbf{naive Bayes classifier}\index{naive Bayes classifier} (\GLS{NBC}) is a probabilistic classifier. It describes a set of algorithms capable of learning to infer a class given a set of features and labels. The NBC is defined as,
