@@ -44,12 +44,12 @@ The goal in \textbf{tokenization}\index{tokenization} is to split a text into me
 Word-tokenization is the cornerstone for the vast majority of NLP analyzes \citep{Webster1992}.
 Nevertheless, tokens are not equal to what we perceive as an atomic unit in language, and we need to keep in mind that in the case of computers it is just a representation of some (hopefully) UTF-8 code.
 
-Token not always match how we think about words or sentences which can be shown by the following example.
+Tokens not always match how we think about words or sentences which can be shown by the following example.
 If we would formulate simple rules for tokenization, then a definition for a word would be a string enclosed by single white space characters.
 A simple regex for word tokenization would be \texttt{[a-z,A-Z]+} that matches 1 to $n$ (indicated by \texttt{+}) lower or uppercase letter (indicated by \texttt{[ ]}) in succession.
 Words delimited by periods would then be a sentence.
 These regexs, however, do not work in all cases.
-\textit{The United States of America} is such an example were our rules would fail. They lead to splitting this string into two tokens \mbox{\{\textquotesingle \textit{United}\textquotesingle, \textquotesingle \textit{States}\textquotesingle, \textquotesingle \textit{of}\textquotesingle, \textquotesingle \textit{America}\textquotesingle\}} although it is a single name.
+\textit{The United States of America} is such an example where our rules would fail. They lead to splitting this string into two tokens \mbox{\{\textquotesingle \textit{United}\textquotesingle, \textquotesingle \textit{States}\textquotesingle, \textquotesingle \textit{of}\textquotesingle, \textquotesingle \textit{America}\textquotesingle\}} although it is a single name.
 Longer names like this one often have acronyms such as \textit{U.S.A}.
 Following our simple rules, the word \textit{U.S.A} would be split into six tokens \mbox{\{\textquotesingle \textit{U}\textquotesingle, \textquotesingle \textbf{.}\textquotesingle, \textquotesingle \textit{S}\textquotesingle, \textquotesingle \textbf{.}\textquotesingle, \textquotesingle \textit{A}\textquotesingle, \textquotesingle \textbf{.}\textquotesingle\}} since it is mistaken by a sentence.
 
@@ -81,7 +81,7 @@ When the correct grammatical function of all tokens is determined, it is simple 
 \subsection{Lemmatization and Stemming}\label{stemming}
 Having a well-tokenized text now, we can do descriptive statistics on the text, e.g., by simply counting the occurrences of tokens or detect tokens that only occur once, so-called \textbf{hapax legomenon}.
 The simplest way to sensibly reason about a text would be to find the most occurring words given we removed all stop words to infer the subject of a text.
-If the goal were to infer the type of sport based on the most occurring words in sports news we would hope to find a large term frequency for something like \textit{throw} for baseball or \textit{strike} for soccer.
+If the goal was to infer the type of sport based on the most occurring words in sports news we would hope to find a large term frequency for something like \textit{throw} for baseball or \textit{strike} for soccer.
 Merely counting tokens to display the most occurring ones in a text will not be sufficient.
 The words in the text will be used in many forms due to grammatical conjugation.
 For example, \textit{thrown} and \textit{throw} will be treated as unequal tokens by the computer although they mean the same.
@@ -119,16 +119,10 @@ Therefore, the exact procedure to perform disease NER depends on the source of i
 
 \subsection{Corpus}
 A \textbf{corpus}\index{corpus} is a organized collection of (related) text documents that are simple to access. They can be annotated (as required in POS-tagging) or simply preprocessed (like tokenization) \citep{Bengfort2018}.
-Preprocessing can be time-intensive especially for large amounts of data. This process irreversibly changes the raw text. Thus, each intermediate step needs to be stored in the corpus as well.
-Optimally, a corpus is easily accessible and safely stored since it contains laboriously created data. NoSQL databases have an advantage for corpus saving due to their minimal overhead.
+Preprocessing, however, can be time-intensive especially for large amounts of data and this process irreversibly changes the raw text. Thus, each intermediate step should be stored in the corpus as well. This way, quality control, replacement of preprocessing steps is streamlined and repeated computations or even human labour is avoided.
+Optimally, a corpus is easily accessible and safely stored since it contains laboriously created data.
+NoSQL databases are advantageous for corpus saving due to their minimal overhead and allow access to data that would be too large for a normal machine.
 This way corpora can easily be shared by providing access to the database or extract its content as a folder system containing \texttt{.txt}, \texttt{.XML}, or \texttt{.JSON} files.
-In summary, the advantages of corpora are:
-\begin{itemize}
-  \item database-like access facilitates the use of extensive data that is too large for a normal machine
-  \item quality control due to convenient tracking of processing steps
-  \item no repetition of processing steps that require long computation or even human labor
-  \item uncomplicated replacement or comparison of processing steps
-\end{itemize}
 
 \section{Machine Learning}
 Machine learning (\GLS{ML}) is an attempt to make the computer learn. \citeauthor{Mitchell1997} described learning broadly as,
@@ -342,7 +336,7 @@ Word2vec embeddings are local since only $n$ surrounding words to calculate the 
 
 As the first step, a co-occurrence matrix of all documents is calculated. The underlying assumption of GloVe is that the co-occurrence ratio is connected to meaning.
 Let $X_{ij}$ be the co-occurrence count of token $j$ in context of $i$. Let $X_i = \sum_{t \in T} X_{it}$ be the occurrence of token i given any other token then $p(j|i) = \frac{X_{ij}}{X_i}$ is the probability of token $j$ appearing in the context of token $i$.
-To be able to model the semantic information of words, their relationship needs to be modeled. GloVe defines a function $F((w_i-w_j)^T \widetilde{w_t}) = \frac{p(i|k)}{p(j|k)}$ where $w$ is a real-valued word vector where the context words are subtracted from the input words, and the dot product with the weights of the output vocabulary is taken (see \cite{Pennington2014} for more). This step facilitates embedding arithmetic, i.e., meaning of word embeddings can be deducted from arithmetic calculations such as $w_{man} + w_{royalty} = w_{king}$. Further steps are required for computability, such as weighting of the word vectors or handling zero entries which are described by \cite{Pennington2014}.
+To be able to model the semantic information of words, their relationship needs to be modeled. GloVe defines a function $F((w_i-w_j)^T \widetilde{w_t}) = \frac{p(i|k)}{p(j|k)}$ where $w$ is a real-valued word vector where the context words are subtracted from the input words, and the dot product with the weights of the output vocabulary is taken (see \cite{Pennington2014} for details). This step facilitates embedding arithmetic, i.e., meaning of word embeddings can be deducted from arithmetic calculations such as $w_{man} + w_{royalty} = w_{king}$. Further steps are required for computability, such as weighting of the word vectors or handling zero entries which are described by \cite{Pennington2014}.
 
 
 %\subsubsection{BERT}
@@ -382,5 +376,4 @@ Most websites offer a web service which is a broad term for some user interface 
 
 Should the client (user) request data from a database via a website and a reload of the site is undesired, \textbf{Ajax}\index{Ajax} allows an asynchronous data retrieval. This asynchronous GET request starts on an event (e.g., clicking on a button on the website). Ajax is frequently used to reduce loading time and traffic to only refresh the necessary part of a website. A popular abstraction of Ajax is \textbf{jQuery} and mostly used in combination with JavaScript that is required to integrate the retrieved data into the website.
 
-A problem of scraping and crawling programs is that content which is only visible after Ajax has requested it is not visible to the program. Therefore, it might be necessary to monitor the website's behavior via the developer mode of an internet browser and see which GET requests would get you the right data or trigger the Ajax calls programmatically.
-% TODO: Add unbalanced learn
+A problem of scraping and crawling programs is that content, which is only visible after Ajax has requested it, is not visible to the program. Therefore, it might be necessary to monitor the website's behavior via the developer mode of an internet browser and see which GET requests would retrieve data of interest or trigger the Ajax calls programmatically.

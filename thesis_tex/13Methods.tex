@@ -56,15 +56,15 @@ I used the following features of EpiTator in my thesis:
 
 
 \subsection{SpaCy}
-SpaCy is an industrial NLP library that contains every basic algorithm as illustrated in \ref{fig:pipeline}, but also newer methods from the field of deep learning such as CNNs and word embeddings. Additionally, SpaCy is written in the much fast CPython language. Altogether, speed and state of the art algorithms give SpaCy the industrial strength.
+SpaCy is an industrial NLP library that contains every basic algorithm as illustrated in \ref{fig:pipeline}, but also newer methods from the field of deep learning such as CNNs and word embeddings. Additionally, SpaCy is written in the much fast CPython language. Altogether, speed and a selection of only the best performing algorithms for NLP tasks give SpaCy the industrial strength.
 
 I used SpaCy's text classification module which uses a simple CNN that uses word2vec embedded words as an input and an automatically determined pooling layer using average pooling.
 SpaCy is also mainly used by EpiTator for preprocessing. Serialization of EpiTator was difficult because SpaCy is not trivial to serialize. Therefore, I needed to transform the output of EpiTator such that it did not contain SpaCy dependencies anymore.
 
 \subsection{Flair}
-Flair is a small library that only contains state of the art algorithms in NLP. It does not directly provide preprocessing such as stop word removal, tokenization, or stemming but does the preprocessing automatically depending on the final task.
+Flair is a small library that only contains state-of-the-art algorithms in NLP. It does not directly provide preprocessing such as stop word removal, tokenization, or stemming but does the preprocessing automatically depending on the final task.
 
-Flair has a powerful word embedding module with state of the art results that I used for the text classification.
+Flair has a powerful word embedding module that offers flexibility and offers embeddings that outperform most available embeddings which I used for the text classification.
 
 \subsection{Beautiful Soup}
 Beautiful Soup is a package to parse HTML and XML as a tree structure that can be traversed. Given the structured access to HTML content via tags, classes or ids, web scraping is much simpler with Beautiful Soup.
@@ -97,7 +97,7 @@ After the decision was made to focus on data associated with INIG, I pinpointed 
 The \textbf{Ereignisdatenbank} (\GLS{EDB}) is an Excel sheet and the main recording method of the work of INIG. They track various parts of their work in this sheet but most importantly they enter every detected outbreak article into the EDB. Every entry consists of several columns, of which only some are mandatory such as the reported \textbf{disease}, the \textbf{country} of origin, the number of \textbf{confirmed cases}, and the case number's reporting \textbf{date}.
 
 \subsection{WHO DONs}
-The WHO has a channel where they publish the latest disease outbreak news (DONs).
+The WHO regularly publishes the latest disease outbreak news (DONs) as a publicly available web resource.
 It is a low output source with only a handful of reports every week.
 All WHO DONs are archived, sorted by year and month, and therefore can be systematically accessed.
 
@@ -121,7 +121,7 @@ I wrote a scraper that accesses the archive URL and then, based on the function 
       daily_links = ['http://www.who.int' + link.get('href')
                      for link in  archive_year.find_all('a')]
   \end{minted}
-  \caption{An extract from the scraping script of the WHO DONs. The extract starts with extracting the content of \textquotesingle \texttt{http://www.who.int/csr/don/archive/year/en}\textquotesingle, then filtering the URL links for the archived reports of all years with the help of the \texttt{ul} tag and \texttt{list} class. To extract all DONs per year the \texttt{auto\char`_archive} class is used. All links are found in the \texttt{a} tag and \texttt{href} selector.}
+  \caption{An extract from the scraping script of the WHO DONs. The algorithm starts with extracting the content of \textquotesingle \texttt{http://www.who.int/csr/don/archive/year/en}\textquotesingle, then filter the URL links for the archived reports of all years with the help of the \texttt{ul} tag and \texttt{list} class. To extract all DONs per year the \texttt{auto\char`_archive} class is used. All links are found in the \texttt{a} tag and \texttt{href} selector.}
   \label{lst:who}
 \end{listing}
 
@@ -283,7 +283,7 @@ I used the multinomial and complement naive Bayes for the text classification us
 For the keyword extraction, I used the multinomial and Bernoulli naive Bayes classifier for each entity class fed by all sentences containing this entity class. Sentences of texts that contain entities found in the corresponding EDB entity entry for this text are labeled as \emph{true} whereas the rest is labeled \emph{false}.
 
 \subsection{Deep Learning}
-For a visualization of the available corpus, I embeddings trained by word2vec. During the text classification I first used the mean of all word embeddings as the document embedding and fed it into a multi layer perceptron with 100 neurons in the hidden layer, a rectified linear unit as the activation function, the Adam optimizer using the default values during training, and L2 penalty to avoid overfitting.
+For a visualization of the available corpus, I self-trained word embeddings using word2vec with the continuous bag-of-words model approach. During the text classification I first used the average of all word embeddings as the document embedding and fed it into a multi layer perceptron with 100 neurons in the hidden layer, a rectified linear unit as the activation function, the Adam optimizer using the default values during training, and L2 penalty to avoid overfitting.
 Also, I used a CNN to iterate over all word embeddings using an automatically selected kernel size by SpaCy, and mean pooling.
 For the classifier trained on embeddings, I used ADASYN to upsample the dataset.
 
