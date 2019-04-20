@@ -1,16 +1,16 @@
 \abstract{%
 To ensure permanent responsiveness to emerging disease outbreaks, the Robert Koch Institute (\GLS{RKI}) is the contact and evaluation point for notifications of reportable diseases form health departments and other public health institutes.
-However, the RKI also needs to search for emerging outbreaks in the vast amount of international disease outbreak news to detect dangerous outbreaks as early as possible.
-For this, a dedicated group of epidemiologists reads the news from several foreign sources every day, summarizes the most important articles, and then write reports about them. All references and key information about these articles like the described disease, country of origin, or confirmed cases are put into a curated list named incident database.
+However, the RKI also needs to search for emerging outbreaks in the vast amount of international epidemiological news to detect relevant outbreaks as early as possible.
+For this, a dedicated group of epidemiologists reads the news from several foreign sources every day, summarizes the most important articles, and then write reports about them. The source and the key information about these articles like the described disease, country of origin, or confirmed cases are put into a curated list named Incident Database.
 This time-consuming procedure can be shortened by an automated information extraction and assessment of epidemiological news.
 To this end, I have developed a surveillance tool which summarizes epidemiological news and rates the relevance of articles for the RKI.
 
 Before I could develop the surveillance tool, I needed to acquire data to train machine learning models.
-To train those models, I used the incident database and
-additionally scraped all articles from the most used sources of the incident database to create a labeled data set where articles extracted by the RKI have a \emph{relevant} label and all the other scraped epidemiological articles not found in the incident database have an \emph{irrelevant} label.
+To train those models, I used the Incident Database and
+additionally scraped all articles from the most used sources of the Incident Database to create a labeled data set where articles extracted by the RKI have a \emph{relevant} label and all the other scraped epidemiological articles not found in the Incident Database have an \emph{irrelevant} label.
 
-To summarize articles, I applied name entity recognition to epidemiological texts and then trained a naive Bayes classifier with the incident database to find the most important entities of an epidemiological article.
+To summarize articles, I applied name entity recognition to epidemiological texts and then trained a naive Bayes classifier with the Incident Database to find the most important entities of an epidemiological article.
 % The classifier used all sentences of one article as an input to find the most salient sentence-entity combination to extract the key points of the article.
 % The recommendation system was trained based on the whole text in conjunction with those key entities.
-For the relevance scoring, I compared a naive Bayes classifier using the bag-of-words approach with a multilayer perceptron and a convolutional neural network trained on document and word embeddings by texts from the incident database and the scraped articles.
+For the relevance scoring, I compared a naive Bayes classifier using the bag-of-words approach with a multilayer perceptron and a convolutional neural network trained on document and word embeddings by texts from the Incident Database and the scraped articles.
 Finally, I built a web app to demonstrate the accessibility and usability of this tool. With this, I showed how epidemiologists in the future could shift their focus to more relevant tasks.}
