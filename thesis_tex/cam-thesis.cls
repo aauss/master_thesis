@@ -365,7 +365,7 @@ for the degree of Master of Science%
 \setlength{\cam@logorightnudge}{-0.5\paperwidth+12mm}
 \newsavebox{\cam@logo}
 \begin{lrbox}{\cam@logo}
-\hspace*{\cam@logorightnudge}\includegraphics[width=73mm]{CollegeShields/CUni}
+\hspace*{\cam@logorightnudge}\includegraphics[width=73mm]{CollegeShields/merged}
 \end{lrbox}
 
 %% THESIS TITLE box
