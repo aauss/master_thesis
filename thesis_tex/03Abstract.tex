@@ -6,11 +6,10 @@ This time-consuming procedure can be shortened by an automated information extra
 To this end, I have developed a surveillance tool which summarizes epidemiological news and rates the relevance of articles for the RKI.
 
 Before I could develop the surveillance tool, I needed to acquire data to train machine learning models.
-To train those models, I used the Incident Database and
-additionally scraped all articles from the most used sources of the Incident Database to create a labeled data set where articles extracted by the RKI have a \emph{relevant} label and all the other scraped epidemiological articles not found in the Incident Database have an \emph{irrelevant} label.
+Therefore, I used the annotations in the Incident Database and additionally scraped all articles from the most used sources of the Incident Database to create a labeled data set where articles put into the Incident Database have a \textsl{relevant} label and all the other scraped epidemiological articles have an \textsl{irrelevant} label.
 
-To summarize articles, I applied name entity recognition to epidemiological texts and then trained a naive Bayes classifier with the Incident Database to find the most important entities of an epidemiological article.
+To summarize articles, I applied named entity recognition to epidemiological texts and then trained a naive Bayes classifier with the Incident Database to find the most important entities of an epidemiological article such as disease, country, and confirmed cases.
 % The classifier used all sentences of one article as an input to find the most salient sentence-entity combination to extract the key points of the article.
 % The recommendation system was trained based on the whole text in conjunction with those key entities.
-For the relevance scoring, I compared a naive Bayes classifier using the bag-of-words approach with a multilayer perceptron and a convolutional neural network trained on document and word embeddings by texts from the Incident Database and the scraped articles.
-Finally, I built a web app to demonstrate the accessibility and usability of this tool. With this, I showed how epidemiologists in the future could shift their focus to more relevant tasks.}
+For the relevance scoring, I compared a naive Bayes classifier using the bag-of-words approach with a multilayer perceptron and a convolutional neural network trained with document embeddings by texts from the Incident Database and the scraped articles.
+Finally, I built a web app to demonstrate the usability of this tool. With this, I showed how epidemiologists in the future could overcome the difficulty to process large amounts of international epidemiological intelligence.}
