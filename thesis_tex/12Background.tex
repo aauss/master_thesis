@@ -422,8 +422,8 @@
 
   \textbf{Cascading Style Sheets}(\GLS{CSS})\index{CSS} is a style sheet language that is used for styling HTML code.
   Given the example above, we could modify the header to have another color, \mintinline{HTML}{<h1 style="color:red">  I am a Header </h1>}.
-  It is also possible to define a \textbf{CSS class} and use this class to automatically apply several styles such as in Lis. \ref{lst:css},\renewcommand{\figurename}{Listing}
-
+  It is also possible to define a \textbf{CSS class} and use this class to automatically apply several styles such as in Lis. \ref{lst:css},
+  %
   \begin{listing}[h!]
     \centering
     \begin{cminted}{CSS}
@@ -435,7 +435,7 @@
     \caption{CSS class named \emph{header} that sets the font to verdana and color to red when used.}
     \label{lst:css}
   \end{listing}
-
+%
   This way, we can apply the style like so \mintinline{HTML}{<h1 class="header"> I am a Header </h1>}.
   While a class can be accessed from several HTML tags, there is also a \textbf{CSS id} that can only be accessed once in one HTML file but otherwise has the same functionality as a CSS class.
   Both languages thereby reveal a way of filtering the content of a website.

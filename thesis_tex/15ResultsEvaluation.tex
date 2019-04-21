@@ -1,11 +1,11 @@
 \chapter{Results and Evaluation}
 
 \section{EDB Analysis}\label{edb analysis}
-  A substantial part of my work was the exploitation of available sources, namely the EDB and the scraped epidemiological news.
+  A substantial part of my work was the exploitation of the EDB and the scraped epidemiological news.
   In the following I introduce how I recovered most of the information in the EDB for my further analyzes and how I managed to scrape a large amount of epidemiological data with a limited time profile.
 
 \subsection{Source Determination}
-  Before I could train a classifier to detect relevant articles or extract meaningful key words from texts, I needed to create a labeled dataset from the EDB.
+  Before I could train a classifier to detect relevant articles or extract meaningful key information from texts, I needed to create a labeled dataset from the EDB.
   Therefore, I collected all articles that were read by the epidemiologists but were not put into the EDB.
   However, writing a script for IR (such as scraping) can be time consuming so I needed to narrow down the, at that moment, 75 sources used in the EDB.
 
@@ -13,8 +13,8 @@
   First, I extracted all URLs from the EDB and clustered them based on their netloc (a first level domain such as www.rki.de) to rank the URLs used in the EDB (Fig. \ref{fig:netloc}) to then only focus on sources frequently used.
   Then, I pinpointed those sources that are the most accessible.
   To do so, I evaluated the INIG reading checklist which includes all sources that are mandatory to observe.
-  In this evaluation, I determined the data type, conducted exemplary information extractions to determine the accessibility, and evaluated the relevance of these sources by their articles(Fig. \ref{table:INIGsources}).
-  Generally, information extraction from the INIG reading checklist was more difficult for PDF and Emails.
+  In this evaluation, I determined the data type, conducted exemplary information extractions to determine the accessibility, and evaluated the relevance of these sources by their articles (Fig. \ref{table:INIGsources}).
+  Generally, information extraction from the INIG reading checklist was more difficult for PDFs and Emails.
   PDFs, unlike HTML, do not consist of an markup language were certain information can specifically be extracted.
   Emails, on the other hand, were difficult to get access to due to privacy reasons and the information in them was usually less structured.
 
@@ -84,8 +84,8 @@
   This worked well for the key information extraction of disease and country entities.
   Except for one occurrence of a disease that was not recognized by EpiTator, all countries and disease were detected correctly.
   However, this approach did not detect the correct key information of count and date entities.
-  Thus, I trained multinomial and Bernoulli naive Bayes classifier using all sentences of a text containing a specific entity class.
-  The label \emph{is key} was given to those sentences where the extracted entity matched the entity found in the EDB for this text and \emph{is not key} to the others.
+  Thus, I trained multinomial and Bernoulli NBC using all sentences of a text containing a specific entity class.
+  The label \textsl{is key} was given to those sentences where the extracted entity matched the entity found in the EDB for this text and \textsl{is not key} to the others.
 
 \subsection{Results}
   The performance of both classifier for the key information extraction of count entities is shown in Fig. \ref{table:keyword_performance_counts} and for date entities in Fig. \ref{table:keyword_performance_dates}. The corresponding ROC curves and their AUC values are shown in Fig. \ref{fig:roc_key}. Since, there were strong expectations which phrases indicated the mentioning of a key entity such as \dots \textit{``confirmed cases"} \dots or \dots \textit{`` cases \dots as of"}\dots, I retrieved those token that were strong indicator for the \textsl{is key} label (Tab. \ref{table:important_words}).
@@ -119,7 +119,7 @@
 
 \begin{table}
   \ra{1.1}
-  \caption{The performance evaluation of the count entity key information extraction. For each classifier and label, the precision (Pre.), recall (Rec.), specificity (Spec.), F1, index balanced accuracy (IBA), and support (Sup.) is given.}
+  \caption{The performance evaluation of the count entity key information extraction. For each classifier and label, the precision (Pre.), recall (Rec.), specificity (Spec.), F1, index balanced accuracy (IBA), and support (Sup.) is given. Green values are the best in their category and red values the worst.}
   \centering
   \begin{tabular}{@{}rcccccccc@{}}
     \toprule
@@ -127,13 +127,13 @@
     & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
     \midrule
     \textbf{Multinomial Naive Bayes}\\
-    \emph{is not key}& 0.91& 1.00&  0.00& 0.95& 0.00& 446 \\
-    \emph{is key}& 0.00& 0.00&  1.00& 0.00& 0.00& 43 \\
-    Average/Total& 0.83& 0.91& 0.09& 0.87& 0.00& 489 \vspace{2mm}\\
+    \textsl{is not key}& 0.91& 1.00&  0.00& 0.95& 0.00& 446 \\
+    \textsl{is key}& 0.00& \textcolor{red}{0.00}&  1.00& 0.00& 0.00& 43 \\
+    Average/Total& 0.83& 0.91& 0.09& 0.87& \textcolor{red}{0.00}& 489 \vspace{2mm}\\
     \textbf{Bernoulli Naive Bayes}\\
-    \emph{is not key}& 0.93& 0.90&  0.24& 0.91& 0.23& 447 \\
-    \emph{is key}& 0.18& 0.24&  0.90& 0.21& 0.20& 42 \\
-    Average/Total& 0.86& 0.84& 0.29& 0.85& 0.23& 489 \vspace{2mm}\\
+    \textsl{is not key}& 0.93& 0.90&  0.24& 0.91& 0.23& 447 \\
+    \textsl{is key}& 0.18& \textcolor{green}{0.24}&  0.90& 0.21& 0.20& 42 \\
+    Average/Total& 0.86& 0.84& 0.29& 0.85& \textcolor{green}{0.23}& 489 \vspace{2mm}\\
     \bottomrule
   \end{tabular}
 \label{table:keyword_performance_counts}
@@ -141,7 +141,7 @@
 
 \begin{table}
   \ra{1.1}
-  \caption{The performance evaluation of the date entity key information extraction. For each classifier and label, the precision (Pre.), recall (Rec.), specificity (Spec.), F1, index balanced accuracy (IBA), and support (Sup.) is given.}
+  \caption{The performance evaluation of the date entity key information extraction. For each classifier and label, the precision (Pre.), recall (Rec.), specificity (Spec.), F1, index balanced accuracy (IBA), and support (Sup.) is given. Green values are the best in their category and red values the worst.}
   \centering
   \begin{tabular}{@{}rcccccccc@{}}
     \toprule
@@ -149,13 +149,13 @@
     & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
     \midrule
     \textbf{Multinomial Naive Bayes}\\
-    \emph{Irrelevant}& 0.67& 1.00&  0.00& 0.80& 0.00& 26 \\
-    \emph{Relevant}& 0.00& 0.00&  1.00& 0.00& 0.00& 27 \\
-    Average/Total& 0.44& 0.67& 0.33& 0.53& 0.00& 39 \vspace{2mm}\\
+    \textsl{Irrelevant}& 0.67& 1.00&  0.00& 0.80& 0.00& 26 \\
+    \textsl{Relevant}& 0.00& \textcolor{red}{0.00}&  1.00& 0.00& 0.00& 27 \\
+    Average/Total& 0.44& 0.67& 0.33& 0.53& \textcolor{red}{0.00}& 39 \vspace{2mm}\\
     \textbf{Bernoulli Naive Bayes}\\
-    \emph{Irrelevant}& 0.78& 0.93&  0.11& 0.85& 0.11& 30 \\
-    \emph{Relevant}& 0.33& 0.11&  0.93& 0.17& 0.10& 9 \\
-    Average/Total& 0.68& 0.74& 0.30& 0.69& 0.11& 39 \vspace{2mm}\\
+    \textsl{Irrelevant}& 0.78& 0.93&  0.11& 0.85& 0.11& 30 \\
+    \textsl{Relevant}& 0.33& \textcolor{green}{0.11}&  0.93& 0.17& 0.10& 9 \\
+    Average/Total& 0.68& 0.74& 0.30& 0.69& \textcolor{green}{0.11}& 39 \vspace{2mm}\\
     \bottomrule
   \end{tabular}
 \label{table:keyword_performance_dates}
@@ -164,7 +164,7 @@
 \begin{figure}
   \centering
   \includegraphics[scale=0.8]{roc_curves_key.pdf}
-  \caption{A ROC-curve comparison of the different key information extraction classifier trained using a Multinomial naive Bayes (MNB) and Bernoulli naive Bayes (BNB) classifier with the respective value for the area under the curve (AUC).}
+  \caption{A ROC-curve comparison of the different key information extraction classifier trained using a Multinomial naive Bayes (MNB) and Bernoulli naive Bayes (BNB) classifier with the respective value for the AUC.}
 \label{fig:roc_key}
 \end{figure}
 
@@ -172,11 +172,11 @@
   It is interesting that the multinomial naive Bayes was by a large margin better performing in the date entity selection from sentences than the Bernoulli naive Bayes.
   This finding contradicts the former expectation that Bernoulli naive Bayes is normally preferred in short text classifications.
   However, the opposite is true for the count entity recognition where the Bernoulli naive Bayes indeed is better, yet with a smaller difference.
-  Nevertheless, both classifier were able to learn form the data, despite of their size (2445 data points in the count entity data set and 195 for the date entity data set). Surely, with more  and better quality data that also originates from a controlled database, better results can be expected. Also, the words most responsible for a positive classification (Tab. \ref{table:important_words}) did not match the expectation of words like \textit{confirmed} or phrases like \textit{as of}. Especially the count classification is based on poor tokenization (\textit{13For}, \textit{province.Aug}, and \textit{strains}). The detection of such unique (wrong) tokens in positive examples then leads to a strong weighting of them.  It looks better for the date classification and the word \textit{patients} or \textit{death} appear to make sense. Both words could be used in a sentence were the author would also place the date as of the confirmed case numbers are form.
+  Nevertheless, both classifier were able to learn form the data, despite of their size (2445 data points in the count entity data set and 195 for the date entity data set). Surely, with more  and better quality data that also originates from a controlled database, better results can be expected. Also, the words most responsible for a positive classification for an important count entity (Tab. \ref{table:important_words}) did not match the expectation for words like \textit{confirmed} or phrases like \textit{as of}. Especially the count classification is based on poor tokenization (\textit{13For}, \textit{province.Aug}, and \textit{strains}). The detection of such unique (wrong) tokens in positive examples then leads to a strong weighting of them.  The extracted words look more reasonable for the date classification and the word \textit{patients} or \textit{death} appear to make sense. Both words could be used in a sentence were the author would also place the date as of the confirmed case numbers are form.
 
 \section{Article Recommendation}
   For the detection of relevant disease outbreak articles, I used the scraped WHO DONs and ProMED Mail articles together with the EDB entries, both of the year 2018, to built a labeled dataset.
-  Since I intended to use also use word embeddings besides the bag-of-words approach to train a classifier, I visualized the word embeddings of the training data pretrained on the Wikipedia and Gigaword Corpus and self-trained embeddings using WHO DON and ProMED articles (Fig. \ref{fig:t-sne}).
+  Since I intended to also use word embeddings besides the bag-of-words approach to train a classifier, I visualized the word embeddings of the training data pretrained on the Wikipedia and Gigaword Corpus and self-trained embeddings using WHO DON and ProMED articles (Fig. \ref{fig:t-sne}).
   Finally, I compared different classifier trained with the tf-idf transformed bag-of-word approach and document embeddings balanced with ADASYN shown in Tab. \ref{table:recommender_performance}.
 
 \subsection{Results}
@@ -208,36 +208,36 @@
       & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
       \midrule
       \textbf{Multinomial Naive Bayes}\\
-      \emph{Irrelevant}& 0.96& 0.98&  0.10& 0.97& 0.11& 617 \\
-      \emph{Relevant}& 0.21& 0.10&  0.98& 0.14& 0.09& 30 \\
+      \textsl{Irrelevant}& 0.96& 0.98&  0.10& 0.97& 0.11& 617 \\
+      \textsl{Relevant}& 0.21& 0.10&  0.98& 0.14& 0.09& 30 \\
       Average/Total& 0.92& 0.94& 0.14& 0.93& 0.11& 647 \vspace{2mm}\\
       \textbf{Complement Naive Bayes}\\
-      \emph{Irrelevant}& 0.96& 0.98&  0,10& 0.97& 0.11& 617 \\
-      \emph{Relevant}& 0.21& 0.10&  0.98& 0.14& 0.09& 30 \\
+      \textsl{Irrelevant}& 0.96& 0.98&  0,10& 0.97& 0.11& 617 \\
+      \textsl{Relevant}& 0.21& 0.10&  0.98& 0.14& 0.09& 30 \\
       Average/Total& 0.92& 0.94& 0.14& 0.93& 0.11& 647 \vspace{2mm}\\
       \textbf{Logistic Regression}\\
-      \emph{Irrelevant}& 0.97& 0.67&  0.63& 0.79& 0.42& 762 \\
-      \emph{Relevant}& 0.09& 0.63&  0.67& 0.15& 0.42& 38 \\
+      \textsl{Irrelevant}& 0.97& 0.67&  0.63& 0.79& 0.42& 762 \\
+      \textsl{Relevant}& 0.09& 0.63&  0.67& 0.15& 0.42& 38 \\
       Average/Total& 0.93& 0.66& 0.63& 0.76& 0.42& 800 \vspace{2mm}\\
       \textbf{K-Nearest Neighbor Classifier}\\
-      \emph{Irrelevant}& 0.97& 0.77&  0.53& 0.86& 0.41& 762 \\
-      \emph{Relevant}& 0.10& 0.53&  0.77& 0.17& 0.39& 38 \\
+      \textsl{Irrelevant}& 0.97& 0.77&  0.53& 0.86& 0.41& 762 \\
+      \textsl{Relevant}& 0.10& 0.53&  0.77& 0.17& 0.39& 38 \\
       Average/Total& 0.93& 0.75& 0.54& 0.82& 0.41& 800 \vspace{2mm}\\
       \textbf{Support Vector Machine (RBF)}\\
-      \emph{Irrelevant}& 0.98& 0.60&  0.79& 0.74& 0.46& 762 \\
-      \emph{Relevant}& 0.09& \textcolor{green}{0.79}&  0.60& 0.16& 0.48& 38 \\
+      \textsl{Irrelevant}& 0.98& 0.60&  0.79& 0.74& 0.46& 762 \\
+      \textsl{Relevant}& 0.09& \textcolor{green}{0.79}&  0.60& 0.16& 0.48& 38 \\
       Average/Total& 0.94& 0.61& 0.78& 0.72& \textcolor{green}{0.47}& 800 \vspace{2mm}\\
       % \textbf{Support Vector Classifier (linear)}\\
-      % \emph{Irrelevant}& 0.98& 0.65&  0.68& 0.78& 0.44& 762 \\
-      % \emph{Relevant}& 0.09& 0.68&  0.65& 0.16& 0.45& 38 \\
+      % \textsl{Irrelevant}& 0.98& 0.65&  0.68& 0.78& 0.44& 762 \\
+      % \textsl{Relevant}& 0.09& 0.68&  0.65& 0.16& 0.45& 38 \\
       % Average/Total& 0.93& 0.65& 0.68& 0.75& 0.44& 800 \vspace{2mm}\\
       \textbf{Multi Layer Perceptron}\\
-      \emph{Irrelevant}& 0.97& 0.78&  0.58& 0.87& 0.46& 762 \\
-      \emph{Relevant}& 0.12& 0.58&  0.78& 0.19& 0.44& 38 \\
+      \textsl{Irrelevant}& 0.97& 0.78&  0.58& 0.87& 0.46& 762 \\
+      \textsl{Relevant}& 0.12& 0.58&  0.78& 0.19& 0.44& 38 \\
       Average/Total& 0.93& 0.77& 0.59& 0.83& 0.46& 800 \\
       \textbf{Convolutional Neural Network}\\
-      \emph{Irrelevant}& 0.95& 1.00&  0.00& 0.98& 0.00& 762 \\
-      \emph{Relevant}& 0.00& \textcolor{red}{0.00}&  1.00& 0.00& 0.00& 38 \\
+      \textsl{Irrelevant}& 0.95& 1.00&  0.00& 0.98& 0.00& 762 \\
+      \textsl{Relevant}& 0.00& \textcolor{red}{0.00}&  1.00& 0.00& 0.00& 38 \\
       Average/Total& 0.91& 0.95& 0.05& 0.93& \textcolor{red}{0.00}& 800 \\
       \bottomrule
     \end{tabular}
@@ -247,15 +247,15 @@
   \begin{figure}
     \centering
     \includegraphics[scale=0.8]{roc_curves.pdf}
-    \caption{A ROC-curve comparison of the different relevance classifier trained using a Multinomial naive Bayes (MNB), complement naive Bayes (CNB) classifier, logistic regression (LR), k-nearest neighbor classifier(kNN), support vector machine (SVM), multi layer perceptron (MLP) and convolutional neural network (CNN) with the respective value for the area under the curve (AUC). Note, the curves of the MNB and CNB overlay.}
-  \label{fig:roc_key}
+    \caption{A ROC-curve comparison of the different relevance classifier trained using a Multinomial naive Bayes (MNB), complement naive Bayes (CNB) classifier, logistic regression (LR), k-nearest neighbor classifier(kNN), support vector machine (SVM), multi layer perceptron (MLP) and convolutional neural network (CNN) with the respective value for the AUC. Note, the curves of the MNB and CNB overlay.}
+  \label{fig:roc}
   \end{figure}
 
 \subsection{Evaluation}
   It appears, that the pretrained word embeddings lacks the same amount of technical vocabulary compared to the self-trained embeddings.
   It is likely that a larger corpus containing the same specific language used in epidemiological news would yield a better foundation for training word embeddings and thus, a better classifier.
 
-  Against expectations, the multinomial and complement naive Bayes both performed equally good, although the complement naive Bayes tackles problems occurring in imbalances datasets specifically.
+  Against expectations, the multinomial and complement NBC hand an identical performance, although the complement NBC tackles problems occurring in imbalances datasets specifically.
   Also, the deep learning methods worked worked worse in respect of the imbalanced class measures and were only excelling regarding usual measures like the F1 score.
   A reason especially for the CNN might be, that it overfitted.
   This can be avoided with dropout (removal of nodes in the network during training time), regularization (e.g. L2), and early stopping.
@@ -282,9 +282,10 @@
   \end{figure}
 
 \subsection{Evaluation}
-  Aussinator offers an easy access to the information extraction and relevance scoring developed during this thesis. Furthermore, it offers enough freedom during operation for the user who has a possibility to also validate the output of the app.
+  Aussinator offers an easy access to the information extraction and relevance scoring developed during this thesis. Furthermore, it offers enough freedom to the user during operation by offering a possibility to also validate the output of the app.
   However, the live extraction is rather slow. The processing of one URL takes one second and is noticeably too slow for spontaneous evaluations. This is particularly notable when extracting several articles as in intended by \texttt{Get ProMED articles}.
-  The preprocessing by EpiTator is the bottleneck. NER usually takes some time, and EpiTator looks up for several entities which causes the delay.
-  A solution would be a faster processor, which is however costly.
-  Another solution to this would be a daemon process that regularly checks whether the sources in question published new articles.
-  If so, it would then start evaluation this article and stores it in the background to increase the retrieval for the update functions \texttt{Get ProMED articles} and \texttt{Get WHO DONs}.
+  The preprocessing by EpiTator is the bottleneck.
+  NER often is a slow process, and EpiTator looks up for several entities which causes the delay.
+  A solution would be a faster processor, which is, however, costly.
+  Another solution to this would be a daemon process that regularly checks whether the sources of interest published new articles.
+  If so, it would then start scraping, evaluation, and store these articles in the background to increase the retrieval speed for the update functions \texttt{Get ProMED articles} and \texttt{Get WHO DONs}.
