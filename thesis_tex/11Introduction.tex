@@ -1,8 +1,8 @@
 \chapter{Introduction}
 
 \section{Epidemiological Surveillance at the Robert Koch Institute}
-  The Robert Koch Institute \GLS{RKI}, as a public health institute, is a crucial figure in the containment of health risks to the populace by being the primary institution for disease prevention and surveillance in Germany.
-  Its main purposes are the detection, prevention, and control of infectious diseases \citep{rki_definition}.
+  The Robert Koch Institute \GLS{RKI}, as a public health institute, is a central figure in the containment of health risks to the populace by being the primary institution for disease prevention and surveillance in Germany.
+  Its primary purposes are the detection, prevention, and control of infectious diseases \citep{rki_definition}.
   To fulfill this objective, the priority tasks of the RKI lie in the field of epidemiology \citep{rki_definition}.
 
   % \subsection{Epidemiology}
@@ -21,7 +21,7 @@
   Since 2001, the \textbf{Infektionsschutzgesetz} (the Protection against Infection Act) (\gls{IfSG})
   is the foundation of the German surveillance system which demands a report to the authorities after the determination of a notifiable disease \citep{IfSG}.
   The IfSG earmarked an electronic reporting system which led to the development of \textbf{SurvNet@RKI}, a web service for reporting communicable diseases that is used in all 431 local health departments and 16 state health departments of Germany \citep{Faensen2006}.
-  Finally, epidemiological surveillance is conducted by using this data through SurvStat@RKI \citep{Faensen2004},the query web interface of the SurvNet@RKI data, and apply analyzes to detect conspicuities and disease outbreaks.
+  Finally, epidemiological surveillance is conducted by using this data through SurvStat@RKI \citep{Faensen2004}, the query web interface of the SurvNet@RKI data, and apply analyzes to detect conspicuities and disease outbreaks.
 
   % \subparagraph{Epidemic Intelligence}
   The idea to provide an infrastructure for epidemiologists to systematically detect, verify, and share data to acquire an informative picture of the epidemic threat to public health is called \textbf{epidemic intelligence}\index{epidemic intelligence} \citep{EarlyDetection}.
@@ -84,22 +84,22 @@
   Due to that, a bottom-up approach is now more often a valid alternative.
 
   This paradigm shift is particularly apparent in the field of NLP.
-  Up to the end of the 20st century, mainly explicitly model translation algorithms were used, called \textbf{rule-based-machine-translation}.
+  Up to the end of the 20th century, mainly explicitly model translation algorithms were used, called \textbf{rule-based-machine-translation}.
   They demanded a behemoth of rules to account not only for two grammatical systems that needed to be aligned but also handle special cases, idioms, and dynamics of language \citep{Bar-Hillel1953, Bar-Hillel1960}.
   With the renaissance of deep learning, the bottom-up approach performed much better and required less modeling and at the same time accuracy in translations improved by a manifold \citep{Bengio2003}.
-  The ease with which already existing labeled data, like websites that provide their content in different languages, could be utilized was also exemplary for the advancing improvement of bootom-up methods \citep{Macklovitch00}.
+  The ease with which already existing labeled data, like websites that provide their content in different languages, could be utilized was also exemplary for the advancing improvement of bottom-up methods \citep{Macklovitch00}.
 
 \paragraph{Signale}
   The main responsibility for providing in-house software solutions for the RKI is carried by the \textbf{Infectious Disease Data Science Unit}.
   % Most units organize themselves as groups based on their different missions.
-  Within this unit, \textbf{Signale} is the group that is main responsible to provide interfaces between application and machine learning, including NLP.
+  Within this unit, \textbf{Signale} is the group that is mainly responsible for providing interfaces between application and machine learning, including NLP.
   Signale provides intuitive access to critical epidemiological analyzes via dashboards for different use cases within the RKI, develops outbreak algorithms, and is the head of data science.
   Therefore, Signale is essential for the pursuit to draw more from EBS and fuel the paradigm shift in epidemiological surveillance and utilize the new capabilities of NLP.
 
 
 \section{Motivation}
-  The broad idea at the beginning of this project was to integrate NLP into a dashboard for epidemiologists who perform epidemiologically surveillance to assist them in their reading intensive work.
-  EBS was a interesting and well suited topic for this project due to its dependency of large unstructured data.
+  The broad idea at the beginning of this project was to integrate NLP into a dashboard for epidemiologists who perform epidemiological surveillance to assist them in their reading intensive work.
+  EBS was an interesting and well-suited topic for this project due to its dependency on large unstructured data.
   The RKI has two groups that perform EBS that would profit the most from NLP aided tools. The two groups, EpiLag and INIG, analyze numerous, also informal textual sources for their work and thus, I decided to look into their work to pinpoint whether and how NLP might prove useful for them.
 
   While the EpiLag focuses on disease outbreaks within Germany, INIG is mainly interested in international disease outbreaks. Since the EpiLag is a phone conference and the information provided to them is from the 16 state health departments of Germany, it is hard to retrace the origin of all their reported information.
@@ -110,7 +110,7 @@
   The INIG staff member then fills an Excel sheet with the information from the found article.
   The overall process costs around 30 minutes every day which led to the idea to automate this process.
 
-  The first goal of the thesis was to automatically put key information like the disease or the amount of confirmed cases from an outbreak article into a database and replace the previous Excel-workflow. Being able to describe the article based on its key information led to the second goal: The usage of articles and their keywords to learn the relevance of an article and then use this knowledge to write a recommendation system to decrease the burden of finding important articles.
+  The first goal of the thesis was to automatically put key information like the disease or the number of confirmed cases from an outbreak article into a database and replace the previous Excel-workflow. Being able to describe the article based on its key information led to the second goal: The usage of articles and their keywords to learn the relevance of an article and then use this knowledge to write a recommendation system to decrease the burden of finding important articles.
   Third, when having a functional recommendation system, a further goal was to unravel the epidemiologists' decision process and try to detect biases between the different INIG member.
   With a working summarization and relevance scoring pipeline, the goal was to expand the work of INIG to more sources and support the parsing of non-English text.
 

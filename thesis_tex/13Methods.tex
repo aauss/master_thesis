@@ -48,7 +48,6 @@
   I used the stop word list, and the word and sentence tokenizer provided by NLTK.
   Furthermore, I used the multinomial NBC in NLTK to investigate the features with the highest explanatory power for classification, i.e., words that influence the classification decision by NBC the most.
 
-
 \subsection{EpiTator}
   EpiTator is an epidemiological annotation library that is mainly used by \href{https://grits.eha.io}{GRITS}.
   I used the following features of EpiTator in my thesis:
@@ -59,11 +58,10 @@
     \item Finally, I also used Epitator's resolved keyword annotator, that uses an SQLite database of entities to detect disease entities from multiple synonyms of infectious.
   \end{itemize}
 
-
 \subsection{SpaCy}
   SpaCy is an industrial NLP library that contains every basic algorithm as illustrated in \ref{fig:pipeline}, but also newer methods from the field of deep learning such as CNNs and word embeddings.
   Additionally, SpaCy is written in the much fast CPython language.
-  Altogether, speed and a selection of only the best performing algorithms for NLP tasks give SpaCy the industrial strength.
+  Altogether, speed and a selection of only the best-performing algorithms for NLP tasks give SpaCy the industrial strength.
 
   I used SpaCy's text classification module which uses a simple CNN.
   SpaCy is also mainly used by EpiTator for preprocessing.
@@ -74,7 +72,7 @@
   Flair is a small library that only contains state-of-the-art algorithms in NLP.
   It does not directly provide preprocessing such as stop word removal, tokenization, or stemming but does the preprocessing automatically depending on the final task.
 
-  Flair has a powerful word embedding module that offers stacking of different embeddings which I used for the text classification pipeline.
+  Flair has a powerful word embedding module that offers to stack different embeddings which I used for the text classification pipeline.
 
 \subsection{Beautiful Soup}
   Beautiful Soup is a package to parse HTML and XML as a tree structure that can be traversed.
@@ -85,7 +83,7 @@
   Boilerpipe is a Java package that uses shallow text features (word count, hyperlink density, and position of text block) to remove \emph{boilerplate} (advertisement, navigation bars,\dots) from websites \citep{Kohlschutter2010}.
   There exists a Python package that calls the Boilerpipe Java code from a Python environment.
 
-  Although it was possible to have written the web scrapers such that they would have only extracted the main content, I wanted to have a solution that allows to expand the work of my thesis to more websites without the necessity to write an special scraping programs for each website.
+  Although it was possible to have written the web scrapers such that they would have only extracted the main content, I wanted to have a solution that allows expanding the work of my thesis to more websites without the necessity to write a special scraping program for each site.
   Thus, I wrote scrapers that extract the whole HTML content of a site containing some outbreak article and then used Boilerpipe to obtain the main purport.
 
 \subsection{Apache Tika}\label{Tika}
@@ -94,12 +92,12 @@
 \subsection{Luigi}
   Luigi is a pipeline builder made by Spotify.
   It manages different jobs, coordinates dependencies, and visualizes them.
-  It is similar to GNU Make but offers more flexibility for data-heavy tasks or scheduling.
+  It is similar to GNU Make but offers more flexibility for data-heavy tasks or task scheduling.
 
   With Luigi, I modularize my work in case there is a requirement to modify or replace certain parts of my pipeline and automatically serialize the outcome of long and tedious computations such as scraping.
 
-\subsection{Sacred}
-  Sacred helps to track experiments by saving the hyper-parameters, model name, and performance of computational experiments, e.g., a machine learning model which I used to track my experiments.
+% \subsection{Sacred}
+  Sacred helps to track experiments by saving the hyper-parameters, model name, and performance of those experiments, e.g., a machine learning model which I used to track my results.
 
 \subsection{Flask}
   Flask is a web development mini-framework for Python.
@@ -110,7 +108,7 @@
   In the following, I show the necessary data required for the labeling, building, and preprocessing of the dataset.
 
 \subsection{Incident Database - \textit{Ereignisdatenbank}}
-  The \textbf{Ereignisdatenbank} (\GLS{EDB}) is an Excel sheet and the main recording method of the work of INIG.
+  The \textbf{Ereignisdatenbank} (\GLS{EDB}) is an Excel sheet and the primary recording method of the work of INIG.
   They track various parts of their work in this sheet but most importantly they enter every critical outbreak article into the EDB.
   Every entry consists of several columns, of which only some are mandatory such as the reported \textbf{disease}, the \textbf{country} of origin, the number of \textbf{confirmed cases}, and the case number's reporting \textbf{date}.
   All WHO DON or ProMED Mail articles and the corresponding key information placed in the mandatory columns of these articles function as the training examples for the later mentioned classification algorithms.
@@ -149,7 +147,7 @@
   Usually, ProMED publishes around a handful of disease outbreak articles a day.
   ProMED mail content is dynamically loaded via Ajax and therefore not directly accessible.
   Through the analysis of the website, I reverse engineered the article search of the website to write a function with which I can scrape ProMED article given a time range shown in Lis. \ref{lst:promed}.
-  The access to the page number shown in Lis. \ref{lst:promed} is important since after 200 pages the GET request returns an error although there would be more pages.
+  Access to the page number shown in Lis. \ref{lst:promed} is necessary since after 200 pages the GET request returns an error although there would be more pages.
   The full algorithm iterates over 200 pages given a time range, remembers the date of the oldest ProMED article from this search and reruns the search with the initial temporal lower bound and the date of the last retrieved article as the newer upper bound.
 
   \begin{listing}[h!]
@@ -171,7 +169,7 @@
 
 \subsection{Wikipedia - Liste der Staaten der Erde}\label{wikipedia}
   I scraped the \href{https://de.wikipedia.org/wiki/Liste_der_Staaten_der_Erde}{Wikipedia Liste der Staaten der Erde} (\textit{List of Sovereign States}) article and transformed it into a dictionary to translate the German country names of the EDB into English.
-  The translation is an important step to match the countries in the EDB with the output of EpiTator to automatically create a labeled dataset \ref{edb analysis}.
+  The translation is an crucial step to match the countries in the EDB with the output of EpiTator to automatically create a labeled dataset \ref{edb analysis}.
   The List of Sovereign States contains, besides others, the state's common, formal, and English name, and also the ISO-2 and ISO-3 abbreviation.
   The code for scraping the table from the Wikipedia page is shown in Lis. \ref{lst:wikipedia}
 
@@ -216,7 +214,7 @@
 
 \section{Preprocessing}
   The EDB is an unstructured Excel sheet which means that the data types were not restricted, no uniform vocabulary was used, and formatting errors occurred several times.
-  The EDB needed to be machine-parsable and be comparable with the output of EpiTator (\ref{edb analysis}) to assign positive labels to the output of EpiTator if it matches the respective entries from the mandatory columns of the EDB.
+  The EDB needed to be machine-parsable and be comparable with the output of EpiTator (\ref{edb analysis}) to assign positive labels to the output of EpiTator if it matches the corresponding entries from the mandatory columns of the EDB.
   After the description of the EDB, and the scraping of dictionaries to transform EDB entries into English, I show the necessary steps to clean the EDB, make it machine-readable, and transform it into a controlled English vocabulary to be comparable with the output of EpiTator.
 
 \subsection{Variables}
@@ -244,37 +242,37 @@
     Country and disease names needed to be translated to make them comparable to the output of EpiTator.
     Therefore, I used the scraped dictionaries as in \ref{wikidata}, \ref{wikipedia} through which I eradicated spelling mistakes and translated these words to English.
     The procedure is shown in Algo. \ref{lst:translate}.
-%
+    %
     \begin{algorithm}[h]
-      \SetAlgoLined
-        \KwIn{$t_{\neg controlled}$}
-        \KwResult{$t_{controlled}$}
-        \tcc{Initialize}
-        $\operatorname{dictionary}: K_{\neg controlled} \to V_{controlled}$\;
-        \uIf{$t_{\neg controlled} \in K$}{
-          \Return $\operatorname{dictionary}(t_{\neg controlled})$\;
-          }
-          \Else{
-          \[ \operatorname{lev}_{a,b}(i,j) = \begin{cases}
-          \max(i,j) \hfill \text{ if } \min(i,j)=0, \\
-          \min \begin{cases}
-            \operatorname{lev}_{a,b}(i-1,j) + 1 \\
-            \operatorname{lev}_{a,b}(i,j-1) + 1 \\
-            \operatorname{lev}_{a,b}(i-1,j-1) + 1_{(a_i \neq b_j)}
-         \end{cases} \hfill \text{ otherwise.}
-         \end{cases}\]
-         \tcc{Where lev is the Levenshtein distance of word $a$ and $b$ at string $i$ of $a$ and $j$ ob $b$.}
-         $t_{corrected} \leftarrow \argmin_{k \in K} \operatorname{lev}_{\neg controlled, k}$\;
-           \uIf{$t_{corrected} \in K$}{
-              \Return $\operatorname{dictionary}(t_{corrected})$\;
-              }
-          \Else{$t_{corrected} \leftarrow \operatorname{endsOrStartsWith}(t_{\neg controlled}, dictionary)$\;
-          \Return $\operatorname{dictionary}(t_{corrected})$\;}
-          }
-\caption{Translation algorithm to transform input to controlled vocabulary. If initially no translation is available, the most similar written word is chosen using the the Levenshtein distance. The word $k \in K$ with the shortest Levenshtein distance to the input word $t_{\neg controlled}$ is picked to correct the input word. If there is still no match to the controlled vocabulary, the algorithm assumes a shortened form and searches for an overlap in the first or last letters of the strings.}
-\label{lst:translate}
-\end{algorithm}
-%
+    \SetAlgoLined
+      \KwIn{$t_{\neg controlled}$}
+      \KwResult{$t_{controlled}$}
+      \tcc{Initialize}
+      $\operatorname{dictionary}: K_{\neg controlled} \to V_{controlled}$\;
+      \uIf{$t_{\neg controlled} \in K$}{
+        \Return $\operatorname{dictionary}(t_{\neg controlled})$\;
+        }
+        \Else{
+        \[ \operatorname{lev}_{a,b}(i,j) = \begin{cases}
+        \max(i,j) \hfill \text{ if } \min(i,j)=0, \\
+        \min \begin{cases}
+          \operatorname{lev}_{a,b}(i-1,j) + 1 \\
+          \operatorname{lev}_{a,b}(i,j-1) + 1 \\
+          \operatorname{lev}_{a,b}(i-1,j-1) + 1_{(a_i \neq b_j)}
+       \end{cases} \hfill \text{ otherwise.}
+       \end{cases}\]
+       \tcc{Where lev is the Levenshtein distance of word $a$ and $b$ at string $i$ of $a$ and $j$ ob $b$.}
+       $t_{corrected} \leftarrow \argmin_{k \in K} \operatorname{lev}_{\neg controlled, k}$\;
+         \uIf{$t_{corrected} \in K$}{
+            \Return $\operatorname{dictionary}(t_{corrected})$\;
+            }
+        \Else{$t_{corrected} \leftarrow \operatorname{endsOrStartsWith}(t_{\neg controlled}, dictionary)$\;
+        \Return $\operatorname{dictionary}(t_{corrected})$\;}
+        }
+      \caption{Translation algorithm to transform input to controlled vocabulary. If initially no translation is available, the most similar written word is chosen using the the Levenshtein distance. The word $k \in K$ with the shortest Levenshtein distance to the input word $t_{\neg controlled}$ is picked to correct the input word. If there is still no match to the controlled vocabulary, the algorithm assumes a shortened form and searches for an overlap in the first or last letters of the strings.}
+      \label{lst:translate}
+      \end{algorithm}
+
 \subsection{NLP-Pipeline}
   The WHO DONs and the ProMED Mail articles needed to be prepared for the ML algorithms.
   In the following, I describe the steps of the NLP-pipeline each text underwent before being fed into a classification algorithm.
@@ -293,6 +291,16 @@
   The training data were all sentences-tokenized ProMED and WHO DON articles of 2018.
   Sentences containing the keywords found in the corresponding EDB entry are the positive training labels.
   All other sentences containing keyword entities of the same category (e.g., confirmed cases) recognized by EpiTator, but are not found in the respective EDB entry, are counterexamples for the classifier.
+
+  The full pipeline of all steps necessary before the assembly of the labeled training dataset are depicted in Fig. \ref{fig:dataset}
+
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.25]{dataset.pdf}
+    \caption{A depiction of all the dependencies during the assembly of the labeled dataset.}
+    \label{fig:dataset}
+  \end{figure}
+
 
 \subsection{Naive Key Word Extraction}
   During the reading of epidemiological news, I noticed that the key entities of a text are repeatedly mentioned.
@@ -321,10 +329,10 @@
 
 \subsection{Deep Learning}
   For a visualization of the available corpus, I self-trained word embeddings using word2vec with the continuous bag-of-words model approach.
-  During the text classification, I first used the average of all word embeddings as the document embedding and fed it into a multi layer perceptron with 100 neurons in the hidden layer, a rectified linear unit as the activation function, the Adam optimizer using the default values during training, and L2 penalty to avoid overfitting.
+  During the text classification, I first used the average of all word embeddings as the document embedding and fed it into a multilayer perceptron with 100 neurons in the hidden layer, a rectified linear unit as the activation function, the Adam optimizer using the default values during training, and L2 penalty to avoid overfitting.
   Also, I used a CNN to iterate over all word embeddings using an automatically selected feature map size by SpaCy, and average pooling.
   For the classifier trained on embeddings, I used ADASYN to upsample the dataset.
 
 \section{Web App}
   Using Flask and \href{https://www.datatables.net}{DataTables}, I built a web app that allows the entry of an URL where then the text is extracted, summarized, and put into a data table which can be downloaded in various formats.
-  The web app also contains a method to start an automatic scraping of all articles from a specified source up to the last analyzed article from this source. These texts are then annotated, and dumped it into the database.
+  The web app also contains a method to start an automatic scraping of all articles from a specified source up to the last analyzed article from this source. These texts are then annotated and dumped it into the database.

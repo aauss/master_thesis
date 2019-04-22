@@ -159,12 +159,12 @@
 
 \subsection{Imbalanced Class Problem}
   When it is required to detect seldom events, like cancer in patients through imaging, the performance of the classifier suffers from \textbf{imbalanced classes}\index{imbalanced classes}.
-  In the cancer example, this would mean that images of cancer are much more rare than those without cancer.
+  In the cancer example, this would mean that images of cancer are much rarer than those without cancer.
   A classifier then tends to classify most input as the majority class, i.e., the patient not having cancer, which would yield a high accuracy but is fatal for the patient.
   The accuracy (the amount of correctly classified classes in percent) in this case is not a useful measure but there are many ways to tackle the class imbalance problem.
 
-  One way is cost-sensitive learning, which treats different misclassifications differently opposed to cost-insensitive learning that only tries to maximize the accuracy.
-  Thus, in cost-sensitive learning it is possible to explicitly model the, e.g., minimization of false negatives such as in the cancer detection example by introducing a cost function for misclassifications or shift the decision threshold of the classifier towards the imbalanced classes \citep{Ling2008}.
+  One way is cost-sensitive learning, which treats different misclassifications differently as opposed to cost-insensitive learning that only tries to maximize accuracy.
+  Thus, in cost-sensitive learning, it is possible to explicitly model the, e.g., minimization of false negatives such as in the cancer detection example by introducing a cost function for misclassifications or shift the decision threshold of the classifier towards the imbalanced classes \citep{Ling2008}.
 
   Another way is using up- and downsampling methods.
   A naive downsampling approach would be to discard data of the majority class until the classes are balanced. The naive counterpart to downsampling is the duplication of minority class instances and is called upsampling. However, there are more sophisticated methods, that will downsample redundant majority class instanced or synthesize data, in order to create novel examples of the minority class.
@@ -184,7 +184,7 @@
   Thereby, $\boldsymbol{x_{zi}}$ is a random data example from the $K$ nearest neighbors, and $\lambda \in [0,1]$ is a random number.
 
   Finally, a good performance measure is required to evaluate the classifier's learning progress.
-  Accuracy as illustrated before, is not a reliable indicator in a binary imbalanced dataset.
+  Accuracy, as illustrated before, is not a reliable indicator in an imbalanced binary dataset.
   The \textbf{Index of Balanced Accuracy} (\GLS{IBA}), however, tries to take the imbalance into account and is defined as, \[IBA_{\alpha} = (1 + \alpha \cdot (TPrate - TNrate)) \cdot TPrate \cdot TNrate \] where  0 $\leq \alpha \leq 1$ and $\alpha$ being a dominance index, that needs to be fine tuned based on how significant the dominating class is supposed to be.
 
 \subsection{Naive Bayes Classifier}\label{section:nbc}
@@ -250,7 +250,7 @@
 
 \subsubsection{Bernoulli Naive Bayes}
   Especially for shorter texts and binary decision (\textsl{spam}, \textsl{not spam}), there is only a small gain to use token counts.
-  This Bernoulli variant of the NBC explicitly models the absence and presence of words which is done by a different approach to estimate $p(t_{i}|\mathcal{C}_b)$ (comparison to 2.15).
+  This Bernoulli variant of the NBC explicitly models the absence and presence of words which is done by a different approach to estimating $p(t_{i}|\mathcal{C}_b)$ (comparison to 2.15).
   The probability of token $t_i$ given some binary class is calculated like,
   \[p(t_{i}|\mathcal{C}_b) = p(t_{i})(1-p(t_{i}))^{(1-b)}\]
   where $b \in \{0,1\}$ and $\mathcal{C}_b$ is the corresponding class.
@@ -285,7 +285,7 @@
   The idea to model the brain led to the development of the perceptron, which is a formal and simplified replica of a biological neuron.
   With the development of the backpropagation algorithm, it was then possible to stack several perceptrons and develop the multilayer perceptron which was capable of image and vowel classification \citep{Russell2009}, also referred to as neural networks.
   For a long time, training these models was computationally expensive and thus limited to small-sized neural nets.
-  This long believed limit changed only recently with AlexNet \citep{Krizhevsky2012} which used graphics cards to stem the heavy computational demand to train deep neural networks.
+  This long believed limit changed only recently with AlexNet \citep{Krizhevsky2012} which used graphics cards to stem the massive computational demand to train deep neural networks.
 
 \subsubsection{Perceptron}
   A \textbf{perceptron}\index{perceptron} is an algorithm inspired by biological neurons. It is a binary classifier that learns by adjusting its threshold to \emph{fire} an \emph{action potential} when the correct class is detected. Formally it is
@@ -301,7 +301,7 @@
   A \textbf{multi layer perceptron} (\GLS{MLP}\index{multi layer perceptron}) (Fig. \ref{fig:MLP}) consists of three types of layers, an input and output layer, and $1 \dots n$ hidden layers.
   Each layer consists of an arbitrary number of perceptrons.
   The activation function is not a Boolean function but $\sigma(y) = \frac{1}{1+e^{-y}}$ called the sigmoid function.
-  Its output also ranges from $0$ to $1$ but it is derivable.
+  Its output also ranges from $0$ to $1$, but it is derivable.
   Derivability is crucial since the MLP uses backpropagation to be trained which is described by,
   \begin{align}
     E(\mathbf{w})_t &\equiv \frac{1}{2} \sum (\mathbf{d}_t - \mathbf{y}_t)^2 \\
@@ -457,4 +457,4 @@
   A popular abstraction of Ajax is \textbf{jQuery} and mostly used in combination with JavaScript that is required to integrate the retrieved data into the website.
 
   A problem of scraping and crawling programs is that content, which is only visible after Ajax has requested it, is not visible to the program.
-  Therefore, it might be necessary to monitor the website's behavior via the developer mode of an web browser and see which GET requests would retrieve data of interest or trigger the Ajax calls programmatically.
+  Therefore, it might be necessary to monitor the website's behavior via the developer mode of a web browser and see which GET requests would retrieve data of interest or trigger the Ajax calls programmatically.
