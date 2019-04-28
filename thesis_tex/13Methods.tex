@@ -2,7 +2,7 @@
 
 \section{Requirement Analysis}
   At the beginning of my work, I needed to assess the suitability of several possible targets at the RKI for NLP.
-  Therefore, if applicable, I monitored the functioning of the target groups and evaluated their used textual sources.
+  Therefore, if applicable, I monitored the functioning of the target groups and evaluated the text sources they used.
   The direction of the thesis was determined based on the exploitability of the sources and the gain for the work practices through NLP.
 
   Below, I introduce available targets, and why they were or were not suitable for the proceedings of this thesis.
@@ -22,7 +22,7 @@
 
 \subsection{EPIS}
   As the RASFF, the Epidemic Intelligence Information System (\GLS{EPIS}) is also an EU project.
-  It is a web tool that allows several EU members to report alarming disease outbreaks.
+  It is a web tool that allows several EU members to report possible or confirmed disease outbreaks.
   To stay up-to-date, EPIS has an email notification system, and every outbreak report is downloadable as a formatted Excel sheet.
 
   The downside of EPIS is a missing source for reported outbreaks.
@@ -31,7 +31,7 @@
   Though the formatted data output of EPIS would have been ideal for my further work, the regulations on how to process EPIS data were unclear and partially restrictive which excluded to further work with EPIS data.
 
 \subsection{INIG}\label{INIGsources}
-  The INIG has a curated list of sources that they visit every day and check for new alerting events (Tab. \ref{table:INIGsources}).
+  INIG has a curated list of sources that they visit every day and check for new alerting events (Tab. \ref{table:INIGsources}).
   The list consists of a various set of sources where some are frequently reporting and some less but in more extent.
   Also, the data format is different and can be a simple HTML website, PDF, or email.
   The rather easy and public access to the used sources, the clearly defined in- and output, and necessary active acquisition of information as described in EBS makes INIG a good fit for my topic.
@@ -60,7 +60,7 @@
 
 \subsection{SpaCy}
   SpaCy is an industrial NLP library that contains every basic algorithm as illustrated in \ref{fig:pipeline}, but also newer methods from the field of deep learning such as CNNs and word embeddings.
-  Additionally, SpaCy is written in the much fast CPython language.
+  Additionally, SpaCy is written in the much faster CPython language.
   Altogether, speed and a selection of only the best-performing algorithms for NLP tasks give SpaCy the industrial strength.
 
   I used SpaCy's text classification module which uses a simple CNN.
@@ -83,7 +83,7 @@
   Boilerpipe is a Java package that uses shallow text features (word count, hyperlink density, and position of text block) to remove \emph{boilerplate} (advertisement, navigation bars,\dots) from websites \citep{Kohlschutter2010}.
   There exists a Python package that calls the Boilerpipe Java code from a Python environment.
 
-  Although it was possible to have written the web scrapers such that they would have only extracted the main content, I wanted to have a solution that allows expanding the work of my thesis to more websites without the necessity to write a special scraping program for each site.
+  Although it would have been possible to write the web scrapers such that they would only extract the main content, I wanted to have a solution that allows expanding the work of my thesis to more websites without the necessity to write a special scraping program for each site.
   Thus, I wrote scrapers that extract the whole HTML content of a site containing some outbreak article and then used Boilerpipe to obtain the main purport.
 
 \subsection{Apache Tika}\label{Tika}
@@ -97,14 +97,14 @@
   With Luigi, I modularize my work in case there is a requirement to modify or replace certain parts of my pipeline and automatically serialize the outcome of long and tedious computations such as scraping.
 
 % \subsection{Sacred}
-  Sacred helps to track experiments by saving the hyper-parameters, model name, and performance of those experiments, e.g., a machine learning model which I used to track my results.
+%   Sacred helps to track experiments by saving the hyper-parameters, model name, and performance of those experiments, e.g., a machine learning model which I used to track my results.
 
 \subsection{Flask}
   Flask is a web development mini-framework for Python.
   To demonstrate the final product which is capable of extracting the main content from some URL, annotating the key information of this content and then putting this information into a database, I built a web app using Flask.
 
 \section{Data Acquisition}
-  After the decision was made to focus on data associated with INIG, I pinpointed the most important sources (described in \ref{edb analysis}) used by INIG to build a labeled dataset.
+  After the decision was made to focus on data associated with INIG, I pinpointed the most important sources used by INIG, namely \href{https://www.who.int/csr/don/en/}{WHO DONs} and \href{https://www.promedmail.org}{ProMED Mail} and described in \ref{edb analysis}, to build a labeled dataset.
   In the following, I show the necessary data required for the labeling, building, and preprocessing of the dataset.
 
 \subsection{Incident Database - \textit{Ereignisdatenbank}}
@@ -143,7 +143,7 @@
   \end{listing}
 
 \subsection{ProMED Mail}
-  Opposed to WHO DONs, much more authors are contributing to ProMED Mail and therefore generate higher output.
+  In contrast to WHO DONs, much more authors are contributing to ProMED Mail and generate higher output.
   Usually, ProMED publishes around a handful of disease outbreak articles a day.
   ProMED mail content is dynamically loaded via Ajax and therefore not directly accessible.
   Through the analysis of the website, I reverse engineered the article search of the website to write a function with which I can scrape ProMED article given a time range shown in Lis. \ref{lst:promed}.
@@ -169,7 +169,7 @@
 
 \subsection{Wikipedia - Liste der Staaten der Erde}\label{wikipedia}
   I scraped the \href{https://de.wikipedia.org/wiki/Liste_der_Staaten_der_Erde}{Wikipedia Liste der Staaten der Erde} (\textit{List of Sovereign States}) article and transformed it into a dictionary to translate the German country names of the EDB into English.
-  The translation is an crucial step to match the countries in the EDB with the output of EpiTator to automatically create a labeled dataset \ref{edb analysis}.
+  The translation is a crucial step to match the countries in the EDB with the output of EpiTator to automatically create a labeled dataset \ref{edb analysis}.
   The List of Sovereign States contains, besides others, the state's common, formal, and English name, and also the ISO-2 and ISO-3 abbreviation.
   The code for scraping the table from the Wikipedia page is shown in Lis. \ref{lst:wikipedia}
 
@@ -219,10 +219,10 @@
 
 \subsection{Variables}
   The EDB has many entries where only a handful is mandatory.
-  During the preprocessing, I only kept the mandatory entries.
-  The \textbf{URL} of the article, the \textbf{disease}, the \textbf{country} of outbreak as mentioned in the article, and the \textbf{confirmed case count} with the \textbf{date} as of the date count are used for further processing.
+  During the preprocessing, I only kept the entries that were mandatory to fill which are
+  the \textbf{URL} of the article, the \textbf{disease}, the \textbf{country} of outbreak as mentioned in the article, and the \textbf{confirmed case count} with the \textbf{date} (as of the date count) are used for further processing.
 
-  The preprocessing steps were the removal of empty rows, trailing white spaces, and the split-up of several entries in one cell to several rows or the merge of redundant columns to be per the tidy data concept \citep{Wickham2014}.
+  The preprocessing steps were the removal of empty rows, trailing white spaces, and the split-up of several entries in one cell to several rows or the merge of redundant columns to be in accordance with the tidy data concept \citep{Wickham2014}.
   The crucial part of the preprocessing was, however, the transformation of the variables into a controlled vocabulary.
 
 \subsection{Controlled Vocabulary}\label{controlled vocabulary}
@@ -269,7 +269,7 @@
         \Else{$t_{corrected} \leftarrow \operatorname{endsOrStartsWith}(t_{\neg controlled}, dictionary)$\;
         \Return $\operatorname{dictionary}(t_{corrected})$\;}
         }
-      \caption{Translation algorithm to transform input to controlled vocabulary. If initially no translation is available, the most similar written word is chosen using the the Levenshtein distance. The word $k \in K$ with the shortest Levenshtein distance to the input word $t_{\neg controlled}$ is picked to correct the input word. If there is still no match to the controlled vocabulary, the algorithm assumes a shortened form and searches for an overlap in the first or last letters of the strings.}
+      \caption{Translation algorithm to transform input to controlled vocabulary. If initially no translation is available, the most similar written word is chosen using the the Levenshtein distance $\operatorname{lev}_{a,b}(i,j)$. The word $k \in K$ with the shortest Levenshtein distance to the input word $t_{\neg controlled}$ is picked to correct the input word. If there is still no match to the controlled vocabulary, the algorithm assumes a shortened form and searches for an overlap in the first or last letters of the strings.}
       \label{lst:translate}
       \end{algorithm}
 
@@ -279,18 +279,18 @@
 
 \subsubsection{Literal Processing}
   In the case of PDFs, I replaced unrecognized characters, indicated by the Unicode code \texttt{U+FFFD}, by one single white space.
-  In the case of the scraped HTML, I replaced all UTF-8 control characters with a single whitespace characters illustrated by the following Python code: \mintinline[breaklines]{python}{string = "".join(char if unicodedata.category(char)[0] != "C" else ' ' for char in string)}.
+  In the case of the scraped HTML, I replaced all UTF-8 control characters with a single whitespace character illustrated by the following Python code: \mintinline[breaklines]{python}{string = "".join(char if unicodedata.category(char)[0] != "C" else ' ' for char in string)}.
 
 \subsubsection{Embedding}
   I used Flair to apply pretrained GloVe embeddings with 50 dimensions on each token of the dataset.
 
 \section{Classification}
-  I trained a classifier to be able to distinguish between \textsl{relevant} and \textsl{irrelevant} outbreak news based on the whole text, and based on the embeddings of the text.
-
-  Furthermore, I tested two methods for the key information extraction: First, taking the most frequent entity occurring in a text as the key entity (e.g., making the most common disease entity as the primary thematized in the text) and second, train a classifier based on sentences that contain such entities.
+  I tested two methods for the key information extraction: First, taking the most frequent entity occurring in a text as the key entity (e.g., making the most common disease entity as the primary thematized in the text) and second, train a classifier based on sentences that contain such entities.
   The training data were all sentences-tokenized ProMED and WHO DON articles of 2018.
   Sentences containing the keywords found in the corresponding EDB entry are the positive training labels.
   All other sentences containing keyword entities of the same category (e.g., confirmed cases) recognized by EpiTator, but are not found in the respective EDB entry, are counterexamples for the classifier.
+
+  Furthermore, I trained a classifier to be able to distinguish between \textsl{relevant} and \textsl{irrelevant} outbreak news based on the whole text, and based on the embeddings of the text.
 
   The full pipeline of all steps necessary before the assembly of the labeled training dataset are depicted in Fig. \ref{fig:dataset}
 
@@ -304,7 +304,7 @@
 
 \subsection{Naive Key Word Extraction}
   During the reading of epidemiological news, I noticed that the key entities of a text are repeatedly mentioned.
-  Therefore, I decided to naively determine a keyword entity by choosing the most occurring entity, i.e., the key disease entity would be the disease mentioned most frequently as shown in Lis. \ref{lst:mostoccure}.
+  Therefore, I decided to naively determine a keyword entity by choosing the most frequent entity, i.e., the key disease entity would be the disease mentioned most frequently as shown in Lis. \ref{lst:mostoccure}.
   \begin{listing}[h!]
     \begin{minted}[autogobble, breaklines]{python}
       def return_most_occuring_entities(list_of_entities):
@@ -335,4 +335,4 @@
 
 \section{Web App}
   Using Flask and \href{https://www.datatables.net}{DataTables}, I built a web app that allows the entry of an URL where then the text is extracted, summarized, and put into a data table which can be downloaded in various formats.
-  The web app also contains a method to start an automatic scraping of all articles from a specified source up to the last analyzed article from this source. These texts are then annotated and dumped it into the database.
+  The web app also contains a method to start an automatic scraping of all articles from a specified source up to the last analyzed article from this source. These texts are then annotated and dumped into the database.

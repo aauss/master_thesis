@@ -8,8 +8,8 @@
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[scale=0.5]{pipeline.png}
-  \caption{An illustration of a typical pipeline for information extraction in NLP. The pipeline starts with the raw text and undergoes several preprocessing steps (indicated by a square) yielding intermediate output (placed next to the arrows). The output can be a list of tuples of the entity and the corresponding word like \texttt{[(ORG, \textquotesingle Bayer\textquotesingle), (LOC, \textquotesingle Baveria\textquotesingle)]} (adopted from \citep{Bird2009}).}
+  \includegraphics[scale=0.7]{pipeline.png}
+  \caption{An illustration of a typical pipeline for information extraction in NLP. The pipeline starts with the raw text and undergoes several preprocessing steps (indicated by a rectangle) yielding intermediate output (placed next to the arrows). The output can be a list of tuples of the entity and the corresponding word like \texttt{[(ORG, \textquotesingle Bayer\textquotesingle), (LOC, \textquotesingle Baveria\textquotesingle)]} (adopted from \citep{Bird2009}).}
 \label{fig:pipeline}
 \end{figure}
 
@@ -18,7 +18,7 @@
   words that appear more often than others or only appear in certain texts.
   This information can tell us a lot about the topic or sentiment of the text.
   Suppose we find that a text is frequently mentioning \textit{brexit} more than any other text.
-  Then we can deduct that this text might be a (news) article and that it is writing about the exit of Great Britain from the European Union (as of March 2019).
+  Then we can deduct that this text might be a (news) article and that it is writing about the exit of Great Britain from the European Union.
   However, we quickly realize that certain words also appear more frequently than others, without revealing much about the content of the text.
   Words like \textit{the, of, than} appear numerously in every English text independently of the topic or the source.
   Such words first received particular attention when \cite{Luhn1960}  identified their property to obscure target words for further analyzes.
@@ -38,7 +38,7 @@
   While these metacharacters vary between different regex libraries, most of them are identical.
   A literal character combined with a \texttt{*} is a ubiquitous functionality (known as the Kleene star) and means that the literal character may appear $0$ to $n$ time in succession to allow a match.
   To still be able to use those metacharacters as literal characters, they can be escaped (generally with a backslash).
-  Tokenization (\ref{tokenization}) or stemming (\ref{stemming}) are preprocessing steps in NLP that are using or used rules formulated as regexs.
+  Tokenization (\ref{tokenization}) or stemming (\ref{stemming}) are preprocessing steps in NLP that sometimes use rules formulated as regexs.
 
 \subsection{Tokenization}\label{tokenization}
   A token is an abstraction of a piece of information consisting of a byte representation for some symbol.
@@ -87,7 +87,7 @@
 
 \subsection{Lemmatization and Stemming}\label{stemming}
   Having a well-tokenized text, we can do descriptive statistics on the text, e.g., by simply counting the occurrences of tokens or detect tokens that only occur once, so-called \textbf{hapax legomenon}.
-  The simplest way to sensibly reason about a text would be to find the most occurring words given we removed all stop words to infer the subject of a text.
+  The simplest way to sensibly reason about a text would be to find the most frequent words given that we removed stop words to infer the subject of a text.
   If the goal was to infer the type of sport based on the most occurring words in sports news we would hope to find a large term frequency for something like \textit{throw} for baseball or \textit{strike} for soccer.
   Merely counting tokens to display the most occurring ones in a text will not be sufficient.
   The words in the text will be used in many forms due to grammatical conjugation.
@@ -110,7 +110,7 @@
 
 \subsection{(Disease) Named-Entity Recognition}
   Named-entity recognition (\GLS{NER}) is a step placed towards the end of a NLP pipeline (Fig. \ref{fig:pipeline}).
-  After sentences and words have been tokenized, and POS-tagging was applied, it might be important for some learning algorithms to know the entity of the word at hand.
+  After sentences and words have been tokenized, and POS-tagging was applied, it might be important for some learning algorithms to know the named-entity of the word at hand.
   Typical examples are the recognition of names of persons or companies, and numerical entities, like time, dates and money \citep{Nadeau2009}.
   This recognition might be part of some NLP pipeline, but it also can be part of a pipeline for information retrieval (\GLS{IR}).
   The goal of IR is the extraction of specific information and their subsequent storage in a database to structure a large amount of data that is difficult to access \citep{Manning2008, Wei2011}.
@@ -141,12 +141,12 @@
   ``A computer program is said to \textbf{learn} from experience $\mathcal{E}$ with respect to some class of task $\mathcal{T}$ and performance measure $\mathcal{P}$, if its performance at tasks in $\mathcal{T}$, as measured by $\mathcal{P}$, improves with experience $\mathcal{E}$.''
 \end{quote}
 %
-  There are, however, ML algorithms that not necessarily defined $\mathcal{E}$.
+  There are, however, ML algorithms that not necessarily define $\mathcal{E}$.
   Making experience from seeing labeled examples is called \textbf{supervised learning}\index{supervised learning} and learning a model without labels is called \textbf{unsupervised learning}\index{unsupervised learning}.
-  Therefore, one could also consider the following definition  \[f: X \rightarrow \hat{y}\] where $f$ is a machine learning model that takes some data $X$ and tries to predict the most likely label $\hat{y}$ where $\hat{y} \approx y$ and $y$ being the true label.
+  % Therefore, one could also consider the following definition  \[f: X \rightarrow \hat{y}\] where $f$ is a machine learning model that takes some data $X$ and tries to predict the most likely label $\hat{y}$ where $\hat{y} \approx y$ and $y$ being the true label.
 
 \subsection{Bag-Of-Words}\label{section:bow}
-  It is typical in a machine learning task that large amounts of data can compensate for explicit feature engineering.
+  It is typical in a machine learning task that large amounts of data can make explicit feature engineering unnecessary.
   Also, instead of requiring too much domain knowledge, it is preferred to let the algorithm determine important features.
   One apparent example for this in NLP is the \textbf{bag-of-words}\index{bag-of-words} approach.
 
@@ -159,7 +159,7 @@
 
 \subsection{Imbalanced Class Problem}
   When it is required to detect seldom events, like cancer in patients through imaging, the performance of the classifier suffers from \textbf{imbalanced classes}\index{imbalanced classes}.
-  In the cancer example, this would mean that images of cancer are much rarer than those without cancer.
+  In the cancer example, this would mean that images showing a tumor are much rarer than those without cancer.
   A classifier then tends to classify most input as the majority class, i.e., the patient not having cancer, which would yield a high accuracy but is fatal for the patient.
   The accuracy (the amount of correctly classified classes in percent) in this case is not a useful measure but there are many ways to tackle the class imbalance problem.
 
@@ -376,7 +376,7 @@
 
 \subsubsection{Word2Vec}
   In 2013, \citeauthor{Mikolov2013} published two algorithms to compute high quality distributed representations of words and phrases efficiently.
-  The synonym for this approach is called \textbf{word2vec}\index{word2vec}.
+  Both these algorithms are also referred to as \textbf{word2vec}\index{word2vec}.
   The general approach in both algorithms is to maximize the similarity measures of vectorized words that appear in a similar context.
   The \textbf{continuous bag-of-words model}\index{continues bag-of-words model} is trained to predict the vector representation of a word or phrase given $n$ words before and after the target word in its sentence.
   The \textbf{continuous skip-gram-model}\index{continuous skip-gram-model} is a slower implementation with the benefit to model infrequent words better \citep{word2vec}.
@@ -454,7 +454,7 @@
   Should the client (user) request data from a database via a website and a reload of the site is undesired, \textbf{Ajax}\index{Ajax} allows an asynchronous data retrieval.
   This asynchronous GET request starts on an event (e.g., clicking on a button on the website).
   Ajax is frequently used to reduce loading time and traffic to only refresh the necessary part of a website.
-  A popular abstraction of Ajax is \textbf{jQuery} and mostly used in combination with JavaScript that is required to integrate the retrieved data into the website.
+  One framework to use Ajax is \textbf{jQuery} which is mostly used in combination with JavaScript that is required to integrate the retrieved data into the website.
 
   A problem of scraping and crawling programs is that content, which is only visible after Ajax has requested it, is not visible to the program.
   Therefore, it might be necessary to monitor the website's behavior via the developer mode of a web browser and see which GET requests would retrieve data of interest or trigger the Ajax calls programmatically.

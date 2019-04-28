@@ -2,34 +2,32 @@
 
 \section{EDB Analysis}\label{edb analysis}
   A substantial part of my work was the exploitation of the EDB and the scraped epidemiological news.
-  In the following, I introduce how I recovered most of the information in the EDB for my further analyzes and how I managed to scrape a large amount of epidemiological data with a limited time profile.
+  In the following, I introduce how I recovered most of the information in the EDB for my further analyses and how I managed to scrape a large amount of epidemiological data with a limited time profile.
 
 \subsection{Source Determination}
   Before I could train a classifier to detect relevant articles or extract meaningful key information from texts, I needed to create a labeled dataset from the EDB.
-  Therefore, I collected all articles that were read by the epidemiologists but were not put into the EDB.
-  However, writing a script for IR (such as scraping) can be, so I needed to narrow down the, at that moment, 75 sources used in the EDB.
+  Therefore, I needed to collect all articles that were read as part of INIG's surveillance routine.
+  However, writing scripts for IR (such as scraping) can be time-consuming, so I needed to narrow down the, at that moment, 75 sources used in the EDB.
 
-  The decision which source to extract was then made by the relevance and the complexity to retrieve information from this source.
-  First, I extracted all URLs from the EDB and clustered them based on their netloc (a first level domain such as www.rki.de) to rank the URLs used in the EDB (Fig. \ref{fig:netloc}) to then only focus on sources frequently used.
-  Then, I pinpointed those sources that are the most accessible.
-  To do so, I evaluated the INIG reading checklist which includes all sources that are mandatory to observe.
-  In this evaluation, I determined the data type, conducted exemplary information extractions to assess the accessibility, and evaluated the relevance of these sources by their articles (Fig. \ref{table:INIGsources}).
-  Generally, information extraction from the INIG reading checklist was more difficult for PDFs and Emails.
-  PDFs, unlike HTML, do not consist of a markup language where specific information can individually be extracted.
-  Emails, on the other hand, were difficult to get access to due to privacy reasons and the information in them was usually less structured.
-
-  \begin{figure}
+  The decision which source to extract was then made in regard to the relevance and the complexity to retrieve information from this source.
+  First, I extracted all URLs from the EDB and clustered them based on their netloc (a first level domain such as www.rki.de) to rank the URLs according to their frequency (Fig. \ref{fig:netloc}) to then only focus on the most used sources.
+  %
+  \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.8]{netloc.pdf}
-    \caption{The netfloc frequency of the most used sources of the EDB. Shown in grey is the sum of EDB entries referencing the other 67 netlocs not shown in this figure.}
+    \caption{The netloc frequency of the most used sources of the EDB. Shown in grey is the sum of EDB entries referencing the other 67 netlocs not shown in this figure.}
   \label{fig:netloc}
   \end{figure}
-
-  \begin{table}
+  %
+  Then, I pinpointed those sources that are the most accessible.
+  To do so, I evaluated the INIG reading checklist which includes all sources that are mandatory to observe.
+  In this evaluation, I determined the data type, conducted exemplary information extractions to assess the accessibility, and evaluated the relevance of these sources by their articles (Tab. \ref{table:INIGsources}).
+  %
+  \begin{table}[h!]
     \centering
     \begin{tabular}{@{}cccc@{}}
       \toprule
-      \textbf{Source} & \textbf{Data Format} & \textbf{Data Quality} & \textbf{Accesibility}\\
+      \textbf{Source} & \textbf{Data Format} & \textbf{Data Quality} & \textbf{Accessibility}\\
       \midrule
       \href{http://www.cidrap.umn.edu/}{CIDRAP} & HTML & Mixed content & Intermediate \\
       \href{http://www.promedmail.org/}{ProMED Mail} & HTML & Only relevant & Easy\\
@@ -49,15 +47,19 @@
     % \setlength{\tabcolsep}{1.5em}
   \label{table:INIGsources}
   \end{table}
+  %
+  Generally, information extraction from the INIG reading checklist was more difficult for PDFs and Emails.
+  PDFs, unlike HTML, do not consist of a markup language where specific information can be individually extracted.
+  Emails, on the other hand, were difficult to access due to privacy reasons and the information in them was usually less structured.
 
 \subsection{Data Quality}
   Due to the unrestrained column settings, every entry in the EDB was free text with spelling mistakes and different formatting.
   The transferral of the EDB into a controlled vocabulary, as described in \ref{controlled vocabulary}, was a vital step since it made more data points useable.
   Tab. \ref{table:preprocessing performance} shows that the preprocessing made up around 100 EDB entries accessible for the construction of the dataset per keyword.
 
-  \begin{table}
+  \begin{table}[h!]
     \centering
-    \caption{A performance measure of the transmission of the EDB entries to a controlled vocabulary. The Key Word column stands for the mandatory columns of the EDB. The table further shows the number and percentage of valid entries before and after the preprocessing out of 557 entries. Note, although the date validity numbers did not change after preprocessing, the dates underwent an important preprocessing step from a string to a timestamp object to allow computation on them.}
+    \caption{A performance measure of the transmission of the EDB entries to a controlled vocabulary. The Key Word column stands for the keyword columns of the EDB. The table further shows the number and percentage (out of 557 entries) of valid entries before and after the preprocessing. Note, although the date validity numbers did not change after preprocessing, the dates underwent an important preprocessing step from a string to a timestamp object to allow computation on them.}
     \begin{tabular}{@{}cccc@{}}
       \toprule
       \textbf{Key Word} & \textbf{Valid Before} & \textbf{Valid After} & \textbf{Invalid After} \\
@@ -72,27 +74,88 @@
   \label{table:preprocessing performance}
   \end{table}
 
-\subsection{Evaluation}
-  The preprocessing of the EDB and the assembly of a training data set was successful.
-  With only two scrapers, I was able to use half of the entries of the EDB to create a labeled dataset by analyzing the usage frequency (Fig. \ref{fig:netloc}), accessibility, and relevance of the sources (Fig . \ref{table:INIGsources}).
-  This dataset then was even further preprocessed which retrieved around 100 data points per entity \ref{table:preprocessing performance}).
+% \subsection{Evaluation}
+  Therefore, the preprocessing of the EDB and the assembly of a training data set was successful.
+  With only two scrapers, I was able to use half of the entries of the EDB to create a labeled dataset by analyzing the usage frequency (Fig. \ref{fig:netloc}), accessibility, and relevance of the sources (Tab. \ref{table:INIGsources}).
+
 
 \section{Key Information Extraction}
-  Although EpiTator extracted only relevant entity classes, they still needed to be filtered for the key entity of this class, i.e., those that need to be put into the EDB.
-  To do so, I used the most often occurring entity in one entity class, for example, the most frequent disease in one text (Lis. \ref{lst:mostoccure}).
+  Although EpiTator extracted only relevant entity classes, they still needed to be filtered for the key entity of this class, i.e., the one that would need to be put into the EDB.
+  To do so, I used the most frequent entity of an entity class, for example, the most frequent disease in one text (Lis. \ref{lst:mostoccure}).
 
   The key information extraction of disease and country entities worked well.
-  Except for one occurrence of a disease that was not recognized by EpiTator, all countries and disease were detected correctly.
+  Except for one occurrence of a disease that was not recognized by EpiTator, all countries and diseases were detected correctly.
   However, this approach did not detect the correct key information of count and date entities.
-  Thus, I trained multinomial and Bernoulli NBC using all sentences of a text containing a specific entity class.
+  Thus, I trained multinomial and Bernoulli NBCs using all sentences of a text containing a specific entity class.
   The label \textsl{is key} was given to those sentences where the extracted entity matched the entity found in the EDB for this text and \textsl{is not key} to the others.
 
 \subsection{Results}
-  The performance of both classifier for the key information extraction of count entities is shown in Fig. \ref{table:keyword_performance_counts} and for date entities in Fig. \ref{table:keyword_performance_dates}. The corresponding ROC curves and their AUC values are shown in Fig. \ref{fig:roc_key}. Since, there were strong expectations which phrases indicated the mentioning of a key entity such as \dots \textit{``confirmed cases"} \dots or \dots \textit{`` cases \dots as of"}\dots, I retrieved those token that were strong indicator for the \textsl{is key} label (Tab. \ref{table:important_words}).
-
-  \begin{table}
+  The performance of both classifier for the key information extraction of count entities is shown in Tab. \ref{table:keyword_performance_counts} and for date entities in Tab. \ref{table:keyword_performance_dates}.
+  %
+  \begin{table}[h!]
+    \ra{1.1}
+    \caption{The performance evaluation of the count key information extraction. For each classifier and label, the precision (Pre.), recall (Rec.), specificity (Spec.), F1, index balanced accuracy (IBA) with $\alpha = 0.1$, and support (Sup.) is given. The recall of the \textsl{is key} class was the main objective of the classifier and since the dataset was imbalanced, the IBA was a better measure for accuracy. Green values are the best in both category and red values the worst.}
     \centering
-    \caption{The most important words during the classification of the NBC to detect the key entities Counts and Dates.}
+    \begin{tabular}{@{}rcccccccc@{}}
+      \toprule
+       & \textbf{Pre.} & \textbf{Rec.} & \textbf{Spec.}
+      & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
+      \midrule
+      \textbf{Multinomial Naive Bayes}\\
+      \textsl{is not key}& 0.91& 1.00&  0.00& 0.95& 0.00& 446 \\
+      \textsl{is key}& 0.00& \textcolor{red}{0.00}&  1.00& 0.00& 0.00& 43 \\
+      Average/Total& 0.83& 0.91& 0.09& 0.87& \textcolor{red}{0.00}& 489 \vspace{2mm}\\
+      \textbf{Bernoulli Naive Bayes}\\
+      \textsl{is not key}& 0.93& 0.90&  0.24& 0.91& 0.23& 447 \\
+      \textsl{is key}& 0.18& \textcolor{green}{0.24}&  0.90& 0.21& 0.20& 42 \\
+      Average/Total& 0.86& 0.84& 0.29& 0.85& \textcolor{green}{0.23}& 489 \vspace{2mm}\\
+      \bottomrule
+    \end{tabular}
+  \label{table:keyword_performance_counts}
+  \end{table}
+
+  \begin{table}[h!]
+    \ra{1.1}
+    \caption{The performance evaluation of the date key information extraction. For each classifier and label, the precision (Pre.), recall (Rec.), specificity (Spec.), F1, index balanced accuracy (IBA) with $\alpha = 0.1$, and support (Sup.) is given. The recall of the \textsl{is key} class was the main objective of the classifier and since the dataset was imbalanced, the IBA was a better measure for accuracy. Green values are the best in both category and red values the worst.}
+    \centering
+    \begin{tabular}{@{}rcccccccc@{}}
+      \toprule
+       & \textbf{Pre.} & \textbf{Rec.} & \textbf{Spec.}
+      & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
+      \midrule
+      \textbf{Multinomial Naive Bayes}\\
+      \textsl{Irrelevant}& 0.67& 1.00&  0.00& 0.80& 0.00& 26 \\
+      \textsl{Relevant}& 0.00& \textcolor{red}{0.00}&  1.00& 0.00& 0.00& 27 \\
+      Average/Total& 0.44& 0.67& 0.33& 0.53& \textcolor{red}{0.00}& 39 \vspace{2mm}\\
+      \textbf{Bernoulli Naive Bayes}\\
+      \textsl{Irrelevant}& 0.78& 0.93&  0.11& 0.85& 0.11& 30 \\
+      \textsl{Relevant}& 0.33& \textcolor{green}{0.11}&  0.93& 0.17& 0.10& 9 \\
+      Average/Total& 0.68& 0.74& 0.30& 0.69& \textcolor{green}{0.11}& 39 \vspace{2mm}\\
+      \bottomrule
+    \end{tabular}
+  \label{table:keyword_performance_dates}
+  \end{table}
+  %
+  Regarding the recall of the \textsl{is key} class and the IBA score, the Bernoulli NBC was performing better with a recall of 0.24 and a IBA of 0.23 while for the count key information extraction. The multinomial NBC had a value of 0.00 for both these measures.
+  The Bernoulli NBC was also better performing than the multinomial NBC for the date key information extraction with a recall of 0.11 and a IBA 0.10 while the multinomial NBC had a value of 0.00 for both these measures.
+
+  The corresponding ROC curves and their AUC values are shown in Fig. \ref{fig:roc_key}.
+  %
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.8]{roc_curves_key.pdf}
+    \caption{A ROC-curve comparison of the different key information extraction classifier trained using a Multinomial naive Bayes (MNB) and Bernoulli naive Bayes (BNB) classifier with the respective value for the AUC.}
+  \label{fig:roc_key}
+  \end{figure}
+  %
+  The AUC for the count extraction was higher (0.72) for the Bernoulli NBC than the multinomial NBC (0.50).
+  The AUC for the date extraction was 0.83 for the multinomial NBC and 0.48 for the Bernoulli NBC.
+
+  Since there were strong expectations which phrases indicated the mentioning of a key entity such as \textit{``\dots confirmed cases\dots"} or \textit{``\dots cases \dots as of\dots"}, I retrieved those token that were strong indicator for the \textsl{is key} label (Tab. \ref{table:important_words}).
+
+  \begin{table}[h!]
+    \centering
+    \caption{The most important words during the classification of the multinomial NBC to detect the key entities Counts and Dates.}
     \begin{tabular}{@{}lcc@{}}
       \toprule
       \textbf{Entity Class}& \textbf{Word} & \textbf{Positive (\%)}\\
@@ -117,97 +180,53 @@
   \label{table:important_words}
   \end{table}
 
-  \begin{table}
-    \ra{1.1}
-    \caption{The performance evaluation of the count key information extraction. For each classifier and label, the precision (Pre.), recall (Rec.), specificity (Spec.), F1, index balanced accuracy (IBA), and support (Sup.) is given. Green values are the best in their category and red values the worst.}
-    \centering
-    \begin{tabular}{@{}rcccccccc@{}}
-      \toprule
-       & \textbf{Pre.} & \textbf{Rec.} & \textbf{Spec.}
-      & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
-      \midrule
-      \textbf{Multinomial Naive Bayes}\\
-      \textsl{is not key}& 0.91& 1.00&  0.00& 0.95& 0.00& 446 \\
-      \textsl{is key}& 0.00& \textcolor{red}{0.00}&  1.00& 0.00& 0.00& 43 \\
-      Average/Total& 0.83& 0.91& 0.09& 0.87& \textcolor{red}{0.00}& 489 \vspace{2mm}\\
-      \textbf{Bernoulli Naive Bayes}\\
-      \textsl{is not key}& 0.93& 0.90&  0.24& 0.91& 0.23& 447 \\
-      \textsl{is key}& 0.18& \textcolor{green}{0.24}&  0.90& 0.21& 0.20& 42 \\
-      Average/Total& 0.86& 0.84& 0.29& 0.85& \textcolor{green}{0.23}& 489 \vspace{2mm}\\
-      \bottomrule
-    \end{tabular}
-  \label{table:keyword_performance_counts}
-  \end{table}
-
-  \begin{table}
-    \ra{1.1}
-    \caption{The performance evaluation of the date key information extraction. For each classifier and label, the precision (Pre.), recall (Rec.), specificity (Spec.), F1, index balanced accuracy (IBA), and support (Sup.) is given. Green values are the best in their category and red values the worst.}
-    \centering
-    \begin{tabular}{@{}rcccccccc@{}}
-      \toprule
-       & \textbf{Pre.} & \textbf{Rec.} & \textbf{Spec.}
-      & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
-      \midrule
-      \textbf{Multinomial Naive Bayes}\\
-      \textsl{Irrelevant}& 0.67& 1.00&  0.00& 0.80& 0.00& 26 \\
-      \textsl{Relevant}& 0.00& \textcolor{red}{0.00}&  1.00& 0.00& 0.00& 27 \\
-      Average/Total& 0.44& 0.67& 0.33& 0.53& \textcolor{red}{0.00}& 39 \vspace{2mm}\\
-      \textbf{Bernoulli Naive Bayes}\\
-      \textsl{Irrelevant}& 0.78& 0.93&  0.11& 0.85& 0.11& 30 \\
-      \textsl{Relevant}& 0.33& \textcolor{green}{0.11}&  0.93& 0.17& 0.10& 9 \\
-      Average/Total& 0.68& 0.74& 0.30& 0.69& \textcolor{green}{0.11}& 39 \vspace{2mm}\\
-      \bottomrule
-    \end{tabular}
-  \label{table:keyword_performance_dates}
-  \end{table}
-
-  \begin{figure}
-    \centering
-    \includegraphics[scale=0.8]{roc_curves_key.pdf}
-    \caption{A ROC-curve comparison of the different key information extraction classifier trained using a Multinomial naive Bayes (MNB) and Bernoulli naive Bayes (BNB) classifier with the respective value for the AUC.}
-  \label{fig:roc_key}
-  \end{figure}
-
-\subsection{Evaluation}
+\subsection{Evaluation}\label{eval_key}
   It is interesting that the multinomial NBC was by a large margin better performing in the date entity selection from sentences than the Bernoulli NBC according to the AUC (Fig. \ref{fig:roc_key}).
   This finding contradicts the former expectation that Bernoulli NBC is typically preferred in short text classifications.
   However, the contrary applies to the count entity recognition where the Bernoulli NBC indeed is better, yet with a smaller difference.
-  When re regard the recall for the \textsl{relevant} class and the average IBA score, then for the date and count entity key information extraction, the Bernoulli NBC was indeed the better performing algorithm (Tab. \ref{table:keyword_performance_dates} and \ref{table:keyword_performance_counts}).
-  Nevertheless, both classifiers were able to learn from the data, despite their size (2445 data points in the count entity data set and 195 for the date entity data set).
-  Surely, with more and better quality data that also originates from a controlled database, better results can be expected.
+  When we regard the recall for the \textsl{is key} class and the average IBA score, then for the date and count entity key information extraction, the Bernoulli NBC was the better performing algorithm (\ref{table:keyword_performance_counts} and Tab. \ref{table:keyword_performance_dates}).
+  In my opinion, the recall for the \textsl{relevant} class is very important since only correct classifications will decrease the burden for epidemiologists to enter key information into a database.
+  The AUC does not seem to resemble this desired property because the multinomial NBC with the poor recall appears to be superior to the Bernoulli NBC for the date key information extraction according to the AUC.
+  Thus, to maximize the usability of the key information extraction I would prefer using the Bernoulli NBC for date and count extraction.
+  It is noteworthy that both classifiers were able to learn from the data, despite their size (2445 data points in the count entity data set and 195 for the date entity data set).
+  Surely, with more and better quality data that would result from a structured database, better results can be expected.
+
   Also, the words most responsible for a positive classification for an important count entity (Tab. \ref{table:important_words}) did not match the expectation for words like \textit{confirmed} or phrases like \textit{as of}.
   Especially the count classification is based on poor tokenization (\textit{13For}, \textit{province.Aug}, and \textit{strains}).
-  The detection of such unique (wrong) tokens in positive examples then led to a strong weighting of them.
+  The detection of such unique (wrong) tokens in positive examples led to a severe overfit of the classifier.
   The extracted words look more reasonable for the date classification and the word \textit{patients} or \textit{death} appear to make sense.
   Both words could be used in a sentence where the author would also mention the date of the confirmed case numbers.
+  This result suggests that the data needs to undergo better preprocessing to avoid false tokenization (like \textit{13For}) to achieve better results with less overfit.
 
 \section{Article Recommendation}
   For the detection of relevant disease outbreak articles, I used the scraped WHO DONs and ProMED Mail articles together with the EDB entries, both of the year 2018, to built a labeled dataset.
-  Since I intended to also use word embeddings besides the bag-of-words approach to train a classifier, I visualized the word embeddings of the training data pretrained on the Wikipedia and Gigaword Corpus and self-trained embeddings using WHO DON and ProMED articles (Fig. \ref{fig:t-sne}).
-  Finally, I compared different classifier trained with the tf-idf transformed bag-of-word approach and document embeddings balanced with ADASYN shown in Tab. \ref{table:recommender_performance}.
+  Since I intended to also use word embeddings besides the bag-of-words approach to train a classifier, I visualized the word embeddings of the training data pretrained on the Wikipedia and Gigaword Corpus and self-trained embeddings using WHO DON and ProMED articles.
+  Finally, I compared different classifier trained with the tf-idf transformed bag-of-word approach and document embeddings balanced with ADASYN.
 
 \subsection{Results}
-  The pretrained embeddings showed the typical clusters of similar tokens such as digits at the coordinates(-40, -90), names (-75,25), adjectives (50,-75), and medical terms at (0,25) (Fig. \ref{fig:t-sne}).
+  The pretrained embeddings showed the typical clusters of similar tokens such as digits at the coordinates (-40, -90), names (-75,25), adjectives (50,-75), and medical terms at (0,25) (Fig. \ref{fig:t-sne}).
   But, the self-trained embeddings appear to cover more medical terms from the center up to the upper right corner that also seem to be clustering.
   Additionally, it also contains typical clusters such as digits (-20,30) (Fig. \ref{fig:t-sne}).
-  However, the sizeable medical term cluster is not well concentrated.
-
-  Since the primary goal of the trained classifier is the recognition of relevant articles, the recall for the \textsl{relevant} label is essential.
-  Tab. \ref{table:recommender_performance} shows that the SVM has the highest score for recall of relevant articles.
-  Also, the IBA is the highest in average for the support vector classifier which takes the class imbalance into account opposed to the F1 score.
-  The CNN is the worst performing classifier in both these measures.
-  The complement naive Bayes and multinomial naive Bayes classifier performed equally good.
-
-  \begin{figure}
+  However, the sizable medical term cluster is not well concentrated.
+  %
+  \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.6]{t-sne-combined-v.pdf}
+    \includegraphics[scale=0.6]{t-sne_combined_large.pdf}
     \caption{A comparison of word embeddings applied to the training data using embeddings pretrained on the Wikipedia and Gigaword corpus (blue) and on WHO DON and ProMED articles (red) using t-SNE for dimensionality reduction.}
   \label{fig:t-sne}
   \end{figure}
+  %
+  Since the primary goal of the trained classifier is the recognition of relevant articles, the recall for the \textsl{relevant} label is essential.
+  Tab. \ref{table:recommender_performance} shows that the SVM has the highest score for recall of relevant articles (0.79).
+  Also, the IBA, which takes the class imbalance into account opposed to the F1 score, is the highest on average for the support vector classifier (0.47).
+  The CNN is the worst performing classifier for both these measures (0.00 for both).
+  The complement naive Bayes and multinomial naive Bayes classifier performed equally good (recall of 0.10 and IBA of 0.11).
 
-  \begin{table}
+  For comparison, I also plotted the ROC-curves and AUC values of all classifier (Fig. \ref{fig:roc}). The AUC value for the CNN is the highest and for both NBC the worst.
+
+  \begin{table}[h!]
     \ra{1.1}
-    \caption{The performance evaluation of the relevance classification. For each classifier and label, the precision (Pre.), recall (Rec.), specificity (Spec.), F1, index balanced accuracy (IBA), and support (Sup.) is given. The support vector classifier uses the radial basis function (RBF) as a kernel. Green values are the best in their category and red values the worst.}
+    \caption{The performance evaluation of the relevance classification. For each classifier and label, the precision (Pre.), recall (Rec.), specificity (Spec.), F1, index balanced accuracy (IBA) with $\alpha = 0.1$, and support (Sup.) is given. The support vector classifier uses the radial basis function (RBF) as a kernel. Green values are the best in their category and red values the worst.}
     \centering
     \begin{tabular}{@{}rcccccccc@{}}
       \toprule
@@ -251,48 +270,50 @@
   \label{table:recommender_performance}
   \end{table}
 
-  \begin{figure}
+  \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.8]{roc_curves.pdf}
     \caption{A ROC-curve comparison of the different relevance classifier trained using a Multinomial naive Bayes (MNB), complement naive Bayes (CNB) classifier, logistic regression (LR), k-nearest neighbor classifier(kNN), support vector machine (SVM), multi layer perceptron (MLP) and convolutional neural network (CNN) with the respective value for the AUC. Note, the curves of the MNB and CNB overlay.}
   \label{fig:roc}
   \end{figure}
 
-\subsection{Evaluation}
-  It appears that the pretrained word embeddings lacks the same amount of technical vocabulary compared to the self-trained embeddings but has other semantically meaningful clusters.
-  It is likely that a more extensive corpus containing the same specific language used in epidemiological news could display more typical word clusters which then would yield a better foundation for training classifier.
+\subsection{Evaluation}\label{eval_recommend}
+  The pretrained word embeddings do not cover the same amount of technical vocabulary compared to the self-trained embeddings. But on the other hand, the pretrained embeddings have other semantically meaningful clusters like adjectives or names which are missing in the self-trained embeddings.
+  It is likely that a more extensive corpus of epidemiological articles would show prominent technical vocabulary cluster and common word clusters at the same time which then would yield a better foundation for training classifier.
 
-  Against expectations, the multinomial and complement NBC had an identical performance, although the complement NBC tackles problems occurring in imbalances datasets specifically.
-  Also, the deep learning methods worked worse concerning the imbalanced class measures and were only excelling regarding common criteria like the F1 score.
-  A reason, especially for the CNN, might be, that it overfitted.
-  Overfitting can be avoided with dropout (removal of nodes in the network during training time), regularization (e.g., L2), and early stopping.
-  However, building a well-adjusted model was not in the scope of this thesis and requires a lot of time.
-  Despite the results, I believe that with enough adjustments, the CNN could perform better.
+  Against expectations, the multinomial and complement NBC had an identical performance, although the complement NBC tackles problems occurring in imbalances datasets specifically seen in Tab. \ref{table:recommender_performance} and Fig \ref{fig:roc}.
+  Also, the deep learning methods worked worse concerning the imbalanced class measures and were only excelling regarding common criteria like the F1 score or the AUC value.
+  It appears that the AUC value, although commonly used to measure the performance of classifier trained with imbalanced classes, does not give a good measure for objective of this thesis as the IBA or recall does since the CNN is performing best but has a recall for \textsl{relevant} article of 0.00 (Tab. \ref{table:recommender_performance}).
+  A reason for the poor performance of the CNN is that it overfitted.
+  Overfitting can be avoided with dropout (random removal of nodes in the network during training time to minimize highly specified nodes), regularization (e.g., L2 to punish strong weighting of nodes), and early stopping (to minimize the difference of losses between the test and validation set).
+  I believe that with the aforementioned adjustments, the CNN could perform better.
+  However, building a well-adjusted model was not in the scope of this thesis.
+
+  But for now, the support vector machine is preferred due to its good IBA and recall value for the \textsl{relevant} class.
 
 \section{Web App}
-  Finally, I built a web application using Flask and Datatables to visualize a possible workflow of the keyword extraction and relevance scoring (Fig. \ref{fig:t-aussinator}).
+  Finally, I built a web application named ``Aussinator" using Flask and Datatables to visualize a possible workflow of the keyword extraction and relevance scoring.
 
 \subsection{Results}
   The web app allows the user to paste an URL for evaluation.
-  The output of this processing is the extraction of keyword information of this article and a relevance score.
+  The output of this evaluation is the extraction of keyword information of this article and a relevance score  (Fig. \ref{fig:t-aussinator}).
   The app also allows a more automated workflow. The buttons \texttt{Get ProMED articles} or \texttt{Get WHO DONs} will trigger the automatic evaluation of all articles of the respective domain since the last review.
   Instead of building an automated evaluation update, this function allows the user to observe the functionality of the application better.
-  Furthermore, the application allows the extraction of the database with all evaluation in different data formats.
+  Furthermore, the application has its own database that can be downloaded in different formats.
   That was an essential step at this time point since INIG was not sure how to proceed to store data.
-  Therefore, the app offers different possibilities to extract the database.
-
-  \begin{figure}
+  %
+  \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.5]{aussinator.pdf}
-    \caption{A Flask web application using the keyword extraction and relevance scoring trained as part of this thesis.}
+    \caption{Aussinator, a Flask web application using the keyword extraction and relevance scoring trained as part of this thesis.}
   \label{fig:t-aussinator}
   \end{figure}
-
+  %
 \subsection{Evaluation}
-  Aussinator offers easy access to the information extraction and relevance scoring developed during this thesis. Furthermore, it provides enough freedom to the user during operation by providing a possibility also to validate the output of the app.
-  However, the live extraction is rather slow. The processing of one URL takes one second and is noticeably too slow for spontaneous evaluations. This delay is particularly notable when extracting several articles as in intended by \texttt{Get ProMED articles}.
+  Aussinator offers easy access to the information extraction and relevance scoring developed during this thesis. Furthermore, it provides enough freedom to the user during operation by providing a possibility to validate the output of the app.
+  However, the live extraction is rather slow. The processing of one URL takes one second and is noticeably too slow for spontaneous evaluations. This delay is particularly noticeable when extracting several articles as intended by \texttt{Get ProMED articles}.
   The preprocessing by EpiTator is the bottleneck.
-  NER often is a slow process, and EpiTator looks up for several entities which cause the delay.
-  A solution would be a faster processor, which is, however, costly.
+  NER often is a slow process, and EpiTator looks up for several entities which causes the delay.
+  A solution would be a faster CPU.
   Another solution to this would be a daemon process that regularly checks whether the sources of interest published new articles.
-  If so, it would then start scraping, evaluation, and store these articles in the background to increase the retrieval speed for the update functions \texttt{Get ProMED articles} and \texttt{Get WHO DONs}.
+  If so, it would then start scraping, evaluating, and then store the key information and relevance score in the background to increase the retrieval speed for the update functions \texttt{Get ProMED articles} and \texttt{Get WHO DONs}.

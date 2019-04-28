@@ -1,19 +1,21 @@
 \chapter{Conclusion}
-  The main objective was to show, that it is possible to utilize already available resources, the Incident Database, apparent at the RKI using novel NLP methodology to improve epidemiological surveillance.
-  Thereby, the outcome of this thesis also proves that EBS, even with smaller resources, is possible and can compete with larger projects like EIOS.
-  Finally, I was able to show that my developed tool for summarization and relevance scoring can be made available in a scalable way which is of high interest since the RKI also shares expertise with other countries.
+  The main objective was to show that it is feasible to utilize already available resources at the RKI, in this case the Incident Database, using novel NLP methodology to improve epidemiological surveillance.
+  Thereby, the outcome of this thesis also proves that EBS, even with smaller resources, is possible.
+  Finally, I was able to show that the tool I developed for summarization and relevance scoring is scalable since it is a web service. This is of interest for the RKI which shares expertise with other countries and institutes.
 
   Of course, more work is necessary to bring the Aussinator into production.
-  The relevance score needs to be made explainable by revealing \emph{why} these decisions were made, and the performance of the keyword extraction of the date and the count needs to be improved for better user experience.
-  However, these points can be tackled and also other goals not met during this thesis such as the availability of the Aussinator in several languages and the avoidance and the uncovering of biases.
+  The performance of the keyword extraction of the date and the count needs to be improved for better user experience.
+  However, this point can be tackled as mentioned in the evaluation of the classifier (\ref{eval_key}.
+  This is true for also other goals not met during this thesis such as the availability of the Aussinator in several languages and the avoidance and the uncovering of possible human biases in the evaluation of text relevance.
   It is possible to provide better classifications that work for different languages using multilingual word embeddings \citep{Chen2018}, or a better keyword extraction using contextual embeddings \citep{Devlin2018, Peters2018} which adjust the embedding based on the textual context.
-  Primarily the poor performing keyword extraction strongly depends on the local properties of the keyword to be extracted.
+  Primarily the poor performing keyword extraction strongly depends on the local properties of the keywords to be extracted. The decision which entity is important most often depends on the words in close proximity and thus contextually adopted embeddings might increase the performance of the keyword extraction.
 
   Also, tackling biases and personal preferences is essential to continue this project and make it save to use.
- It will be important to show how the decisions of Aussinator are made,  to win the approval of epidemiologists in the proceeding digitization of EBS.
+  It will be important to show how the decisions of Aussinator are made, to win the approval of epidemiologists in the proceeding digitization of EBS.
+  Thus, the relevance score needs to be made explainable by revealing \emph{why} these decisions were made.
   Therefore, it would be desirable to visualize the text fragments on which the relevance classifier based its decision on, and which would also allow detecting biases in the classifier \citep{Arras2017}.
 
-  Since the app is a web service, the next step would be to give several people access to this tool, and leverage the increased usage to train a base neural network for the classification and then use transfer learning, to adopt the network to individual preferences.
+  Since Aussinator is a web service, the next step would be to give several people access to this tool, and leverage the increased usage to train a base neural network for the classification and then use transfer learning, to adopt the network to individual preferences.
 
   Finally, I only showed that it is possible to automate the keyword extraction and relevance scoring using the incident database.
   To, however, achieve production-ready results, it would be necessary to apply a separate study to select and finetune classification algorithms to reach better performances.
