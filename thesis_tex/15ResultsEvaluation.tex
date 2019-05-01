@@ -25,6 +25,7 @@
   %
   \begin{table}[h!]
     \centering
+    \caption{An evaluation of INIG's reading checklist by source, data quality, and accessibility. The data format refers to the final data format of the epidemiological text. The data quality describes whether a source only contains information relevant for epidemiological surveillance or also research findings and ongoing projects (mixed content). The difficulty evaluation is based on exemplary IR from these sources where \textsl{easy} posed no difficulty, \textsl{intermediate} would have required additional work but was promising to function and \textsl{hard} was unsure whether it could work satisfactorily.}
     \begin{tabular}{@{}cccc@{}}
       \toprule
       \textbf{Source} & \textbf{Data Format} & \textbf{Data Quality} & \textbf{Accessibility}\\
@@ -43,7 +44,6 @@
       \href{https://www.paho.org/hq/index.php?option=com_content&view=article&id=14044:epidemiological-alerts-archive-by-year-2018&Itemid=72203&lang=en}{WHP PAHO} & PDF & Only relevant & Intermediate\\
       \bottomrule
     \end{tabular}
-    \caption{An evaluation of INIG's reading checklist by source, data quality, and accessibility. The data format refers to the final data format of the epidemiological text. The data quality describes whether a source only contains information relevant for epidemiological surveillance or also research findings and ongoing projects (mixed content). The difficulty evaluation is based on exemplary IR from these sources where \textsl{easy} posed no difficulty, \textsl{intermediate} would have required additional work but was promising to function and \textsl{hard} was unsure whether it could work satisfactorily.}
     % \setlength{\tabcolsep}{1.5em}
   \label{table:INIGsources}
   \end{table}
@@ -51,41 +51,60 @@
   Generally, information extraction from INIG's reading checklist was more difficult for PDFs and Emails.
   PDFs, unlike HTML, do not consist of a markup language where specific information can be individually extracted.
   Emails, on the other hand, were difficult to access due to privacy reasons and the information in them was usually less structured.
+  The final decision was to then to scrape ProMED Mail article (163 entires in the EDB) indicated by \texttt{www.promedmail.org}, and WHO DONs (22 entries in the EDB) indicated by \texttt{www.who.int} in Fig. \ref{fig:netloc}.
+  Both are the most used HTML sources of the EDB that are also easy to scrape and only contain relevant information.
+  Cidrap and OutbreakNewsToday, although being quoted more often than WHO DONS, publish also non-epidemiological information and are harder to scrape wherefore I did not choose them.
+  In sum, articles for 185 EDB entries of 557 were scraped for the assembly of a labeled dataset using only two scrapers.
+  Note, \texttt{apps.who.int} in Fig. \ref{fig:netloc}, also part of WHO, is not a WHO DON but several epidemiological bulletin that are published as PDFs.
 
 \subsection{Data Quality}
-  Due to the unrestrained column settings, every entry in the EDB was free text with spelling mistakes and different formatting.
+  Due to the unrestrained column settings, every entry in the EDB was free text with spelling mistakes, different formatting, or was left unfilled.
   The transferral of the EDB into a controlled vocabulary, as described in \ref{controlled vocabulary}, was a vital step since it made more data points useable.
-  Tab. \ref{table:preprocessing performance} shows that the preprocessing made up around 100 EDB entries additionally available for the construction of the dataset per keyword.
+  Tab. \ref{table:preprocessing performance} shows the performance of the preprocessing.
+   % for the construction of the dataset per keyword.
 
   \begin{table}[h!]
     \centering
-    \caption{A performance measure of the transmission of the EDB entries to a controlled vocabulary. The Key Word column stands for the keyword columns of the EDB. The table further shows the number and of valid entries of in total 557 entries before and after the preprocessing.}
-    \begin{tabular}{@{}cccc@{}}
+    \caption{A performance measure of the transmission of the EDB to a controlled vocabulary. The table shows the number of valid entries entries before and after the preprocessing and the number of empty columns per keyword. The numbers refer to the whole EDB with 557 entries. The numbers in parentheses refer to the training dataset with 185 entries quoting ProMED or WHO DON articles.}
+    \begin{tabular}{@{}ccccc@{}}
       \toprule
-      \textbf{Key Word} & \textbf{Valid Before} & \textbf{Valid After} & \textbf{Invalid Or Empty} \\
-      & \textbf{Preprocessing} & \textbf{Preprocessing} & \textbf{After Preprocessing} \\
+      \textbf{Keyword} & \textbf{Valid Before} & \textbf{Valid After} & \textbf{Invalid After} & \textbf{Empty Before} \\
+      & \textbf{Preproc.} & \textbf{Preproc.} & \textbf{Preproc.}  &\textbf{and After Preproc.} \\
       \midrule
-      Date& 168 & 229 &  19 \\
-      Case count& 299 & 394 &  18 \\
-      Country& 355 & 494 &  17 \\
-      Disease& 231 & 332 & 16 \\
+      Date& 168(37)& 229 (141)&  19 (7)& 309 (7) \\
+      Case count& 299(87)& 394 (105)& 18 (0)& 145 (50) \\
+      Country& 355 (15) & 494 (148) &  17 (4)& 46 (3) \\
+      Disease& 231 (0) & 332 (111)& 16 (16)& 209 (28) \\
       \bottomrule
     \end{tabular}
   \label{table:preprocessing performance}
   \end{table}
 
 % \subsection{Evaluation}
-  Therefore, the preprocessing of the EDB and the assembly of a training data set was successful.
-  With only two scrapers, I was able to use half (557) of the entries of the EDB to create a labeled dataset by analyzing the usage frequency (Fig. \ref{fig:netloc}), accessibility, and relevance of the sources (Tab. \ref{table:INIGsources}).
+  The transferral to the controlled vocabulary retrieved around 100 keywords per keyword column for the full EDB.
+  Typical invalid entries for dates were dates formulated as free text like \textit{the first two weeks in May}.
+  It also often happened that symptoms were entered instead of diseases.
+  A typical invalid country entry was the use of a city or region name instead of the countries like \textit{North Europe}.
+  Of 185 EDB entries referencing ProMED and WHO DON articles, 155 used valid URLs. Of the 30 invalid URLs, 8 were ProMED URLs without an article id (\texttt{www.promedmail.org}).
+  The reason there are 8 such URLs is the dynamical loading of articles in ProMED Mail.
+  When a user reads different articles on ProMED's webpage, the URL does not change.
+  The person who wants to enter a ProMED article into the EDB needs to open the printable version of the article to then see the unique URL of this article.
+  The other URLs were correctly written, but referred to articles that were not available anymore which happens in a high output platform like ProMED.
+
+  % With only two scrapers and the preprocessing of the EDB entries, I was able to use 155 of the entries of the EDB to create a labeled dataset for relevance detection by analyzing the usage frequency (Fig. \ref{fig:netloc}), accessibility, and relevance of the sources (Tab. \ref{table:INIGsources}).
+  Nevertheless, the preprocessing was able to increase the number of usable data points.
+  For the building of the key information extraction dataset, 141 entries with a valid date could be retrieved and 105 entries with a valid count.
+  For the testing of the naive keyword selection (Lis. \ref{lst:mostoccure}) I additionally retrieved 148 entries with valid country names and 111 entries with a valid disease name.
 
 
 \section{Key Information Extraction}
   Although EpiTator extracted only relevant entity classes, they still needed to be filtered for the key entity of this class, i.e., the one that would need to be put into the EDB.
-  To do so, I used the most frequent entity of an entity class. For example, when Epitator finds relevant disease names the most frequent one is chosen (Lis. \ref{lst:mostoccure}).
+  To do so, I used the most frequent entity of an entity class.
+  For example, when Epitator finds relevant disease names the most frequent one is chosen (Lis. \ref{lst:mostoccure}).
 
   The key information extraction of disease and country entities worked well.
-  Except for one occurrence of a disease that was not recognized by EpiTator, all countries and diseases were detected correctly.
-  However, this approach did not detect the correct key information of count and date entities.
+  Except for one occurrence of a disease that was not recognized by EpiTator, all countries and diseases were detected correctly out of 111 EDB entries with a valid disease name.
+  However, this approach performed poorly for the key information extraction of count and date entities. Only 12 count entities of 105 were correctly retrieved following the naive approach and no date entity out of 141 (Tab. \label{table:preprocessing performance} for numbers).
   Thus, I trained a multinomial and Bernoulli NBC  using all sentences of a text containing a specific entity class.
   The label \textsl{is key} was given to those sentences where the extracted entity matched the entity class found in the EDB for this text and \textsl{is not key} to the others.
 
@@ -188,7 +207,7 @@
   In my opinion, the recall for the \textsl{relevant} class together with the IBA is critical since only correct classifications will decrease the burden for epidemiologists to enter key information into a database while the IBA gives a good measure about the overall performance of the model.
   The AUC does not seem to resemble this desired property because the multinomial NBC with the poor recall appears to be superior to the Bernoulli NBC for the date key information extraction according to the AUC.
   Thus, to maximize the usability of the key information extraction, I would prefer using the Bernoulli NBC for date and count extraction.
-  It is noteworthy that both classifiers were able to learn from the data, despite their size (2445 data points in the count entity data set and 195 for the date entity data set).
+  It is noteworthy that both classifiers were better than the naive approach despite their small training data. Out of 105 texts with valid counts 2445 labeled sentence with count entities could be extracted. Out of 141 texts with valid dates 195 labeled sentence with date entities could be extracted.
   Surely, with more and better quality data that would result from a structured database, better results can be expected.
 
   Also, the words most responsible for a positive classification for an important count or date entity (Tab. \ref{table:important_words}) did not match the expectation for words like \textit{confirmed} or phrases like \textit{as of}.
@@ -196,10 +215,11 @@
   The detection of such unique (wrong) tokens in positive examples led to a severe overfit of the classifier.
   The extracted words look more reasonable for the date classification, and the word \textit{patients} or \textit{death} appear to make sense.
   Both words could be used in a sentence where the author would also mention the date of the confirmed case numbers.
-  This result suggests that the data needs to undergo better preprocessing to avoid false tokenization (like \textit{13For}) to achieve better results with less overfit.
+  This result suggests that the data needs to undergo better preprocessing to avoid false tokenization (like \textit{13For}) to achieve better results with less overfit. Note, while the Tab. \ref{table:important_words} displays important features from the multinomial NBC, there is no large difference to be expected to the features of the Bernoulli NBC.
+  Especially, because the Bernoulli NBC is strongly prone to overfit.
 
 \section{Article Recommendation}
-  For the detection of relevant disease outbreak articles, I used the scraped WHO DONs and ProMED Mail articles together with the EDB entries, all of the year 2018, to build a labeled dataset.
+  For the detection of relevant disease outbreak articles, I used the scraped WHO DONs and ProMED Mail articles together with the EDB entries, all of the year 2018, to build a labeled dataset which consists of 155 \textsl{relevant} and 3077 \textsl{irrelevant} texts.
   Since I intended to also use word embeddings besides the bag-of-words approach to training a classifier, I visualized the word embeddings of the training data pretrained on the Wikipedia and Gigaword Corpus and self-trained embeddings using WHO DON and ProMED articles.
   Finally, I compared different classifier trained with the tf-idf transformed bag-of-word approach and document embeddings balanced with ADASYN.
 
@@ -246,7 +266,7 @@
       \textsl{Irrelevant}& 0.97& 0.67&  0.63& 0.79& 0.42& 762 \\
       \textsl{Relevant}& 0.09& 0.63&  0.67& 0.15& 0.42& 38 \\
       Average/Total& 0.93& 0.66& 0.63& 0.76& 0.42& 800 \vspace{2mm}\\
-      \textbf{K-Nearest Neighbor Classifier}\\
+      \textbf{k-Nearest Neighbor Classifier}\\
       \textsl{Irrelevant}& 0.97& 0.77&  0.53& 0.86& 0.41& 762 \\
       \textsl{Relevant}& 0.10& 0.53&  0.77& 0.17& 0.39& 38 \\
       Average/Total& 0.93& 0.75& 0.54& 0.82& 0.41& 800 \vspace{2mm}\\
