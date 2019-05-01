@@ -284,13 +284,13 @@
   In the following, I describe the steps of the NLP-pipeline each text underwent before being fed into a classification algorithm.
 
 \subsubsection{Literal Processing}
-  In scraped HTML, I replaced all UTF-8 control characters with a single whitespace character illustrated by the following Python code: \mintinline[breaklines]{python}{string = "".join(char if unicodedata.category(char)[0] != "C" else ' ' for char in string)}.
+  For all scraped websites, I replaced UTF-8 control characters with a single whitespace character illustrated by the following Python code: \mintinline[breaklines]{python}{string = "".join(char if unicodedata.category(char)[0] != "C" else ' ' for char in string)}.
 
 \subsubsection{Embedding}
   I used Flair to apply pretrained GloVe embeddings with 50 dimensions on each token of the dataset. GloVe has the advantage to cover global textual information better (\ref{c:glove}). The small size of the word embeddings was important to keep computational time low to increase the number of test iterations.
 
   For an embedding comparison, I trained my own word embeddings using scraped ProMED and WHO DON articles.
-  Since GloVe requires too much memory during training and its global property was not necessary for the small corpus, I trained 50-dimensional embeddings using word2vec with the continuous skip-gram approach.
+  Since GloVe's global property was not necessary for the small corpus and due it high memory demand, I trained 50-dimensional embeddings using word2vec with the continuous skip-gram approach.
   This approach better captures rare words (\ref{c:word2vec}) which are typical for expert literature like epidemiological articles.
 
 \section{Classification}
