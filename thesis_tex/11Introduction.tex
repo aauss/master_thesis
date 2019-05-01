@@ -18,18 +18,18 @@
   Therefore, surveillance is an indispensable tool for a functional early warning mechanism.
   % The detection of such threats is then answered by a rapid investigation and containment of further damage.
   % But, the monitoring of an outbreak is also essential to allocate resources of the public health systems effectively \citep{EarlyDetection}.
-  Since 2001, the \textbf{Infektionsschutzgesetz} (the Protection against Infection Act) (\gls{IfSG})
+  Since 2001, the \textbf{Infektionsschutzgesetz} (\textit{the Protection against Infection Act}) (\gls{IfSG})
   is the foundation of the German surveillance system which demands a report to the authorities after the determination of a notifiable disease \citep{IfSG}.
   The IfSG earmarked an electronic reporting system which led to the development of \textbf{SurvNet@RKI}, a web service and software tool for reporting communicable diseases that is used by the local and state health departments of Germany \citep{Faensen2006}.
   % Finally, epidemiological surveillance is conducted by using this data through SurvStat@RKI \citep{Faensen2004}, the query web interface of the SurvNet@RKI data, and apply analyzes to detect conspicuities and disease outbreaks.
   Finally, epidemiological surveillance is conducted by using the data accumulated by SurvNet@RKI to apply analyzes to detect conspicuities and disease outbreaks.
 
   % \subparagraph{Epidemic Intelligence}
-  The provision an infrastructure for epidemiologists to systematically detect, verify, and share data to acquire an informative picture of the epidemic threat to public health is called \textbf{epidemic intelligence}\index{epidemic intelligence} \citep{EarlyDetection}.
+  The provision of an infrastructure for epidemiologists to systematically detect, verify, and share data to acquire an informative picture of the epidemic threat to public health is called \textbf{epidemic intelligence}\index{epidemic intelligence} \citep{EarlyDetection}.
   It facilitates epidemiological surveillance through information processing and supply of formal, informal, actively and passively acquired information.
 
 % \paragraph{Indicator-Based Surveillance}
-\subsection{Indicator and Event Based Surveillance}
+\subsection{Indicator- and Event-Based Surveillance}
   The IfSG describes a traditional reporting system that facilitates the acquisition of trustworthy, human and non-human related health-based formal sources for the subsequent interpretation of such structured data \citep{EarlyDetection}.
   This process is called \textbf{indicator-based surveillance}\index{indicator-based surveillance}.
   The acquisition of this data is mostly a passive process and follows routines established by the legislator and the public health institute which in the case of Germany is SurvNet@RKI.
@@ -60,7 +60,7 @@
   The \textbf{Informationsstelle für Internationalen Gesundheitsschutz} (\textit{The Information Centre for International Health Protection}) (\GLS{INIG}) is a young project that is staffed by epidemiologists with different backgrounds in medicine and public health to provide international epidemiological surveillance for the RKI.
   For this, they tasked epidemiologists with reading trusted sources (Tab. \ref{table:INIGsources}) for epidemiological articles to find international events that are particularly important for the public health of Germany.
   When INIG members are unsure whether an article describes a noteworthy outbreak, they have the opportunity to consult each other.
-  This procedure often leads to a more educated decision whether an outbreak article is interesting.
+  This procedure often leads to a more educated decision about whether an outbreak article is interesting.
   INIG also supports the work of the EpiLag by providing intelligence about countries that exceed Germany's neighboring states, countries with which the RKI has no official information exchange agreement.
   According to former Minister of Health Hermann \citeauthor{Grohe2017}, the importance of global health was most evident during the uprise of the Ebola disease and Zika epidemics starting in 2015 which showed that the protection of German citizens and the aid for affected people requires international cooperation.
 % \subsection{The Robert Koch Institute}
@@ -81,8 +81,8 @@
   % Hence, the preferred approach in the methodology of epidemiologists is to formulate statistical models explicitly which includes the selection of features/variables and their interaction (top-down).
   The general data-driven approach (bottom-up) in machine learning is perceived precarious in the health sector because it usually does not answer \emph{how} a decision was made.
   Indeed, while a machine learning model could perform better than a designed formal model, the machine learning model's decisions used to be hard to disentangle.
-  But, with the recent improvements in making those decision accessible \citep{Arras2017}, and endeavors to tackle biases in machine learning models, those usual reservations can be better approached.
-  Furthermore, with advancing digitalization of public health, more and better quality data becomes available \citep{DEMIS}.
+  But, with the recent improvements in making those decisions accessible \citep{Arras2017}, and endeavors to tackle biases in machine learning models, those usual reservations can be better approached.
+  Furthermore, with advancing digitalization of public health, more and better quality data become available \citep{DEMIS}.
   Due to that, a bottom-up approach is now more often a valid alternative.
 
   This paradigm shift is particularly apparent in the field of NLP.
@@ -100,14 +100,14 @@
 
 \section{Motivation}
   The broad idea at the beginning of this project was to integrate NLP into a dashboard for epidemiologists who perform epidemiological surveillance to assist them in their intensive news survey.
-  EBS was an interesting and well-suited topic for this project due to its dependency on large unstructured data.
+  EBS was an exciting and well-suited topic for this project due to its dependency on large unstructured data.
   The RKI has two groups that perform EBS that would profit the most from NLP aided tools. The two groups, EpiLag and INIG, analyze numerous, also informal textual sources for their work and thus, I decided to look into their work to pinpoint whether and how NLP might prove useful for them.
 
   While the EpiLag focuses on disease outbreaks within Germany, INIG is mainly interested in international disease outbreaks. Since the EpiLag is a phone conference and the information provided to them is from the 16 state health departments of Germany, it is hard to retrace the origin of all their reported information.
   Due to the difficult access to their sources, they did not pose an ideal candidate for the development of an NLP-driven aid.
   INIG, however, is a project that depends much more on self-acquired intelligence.
   Unlike EpiLag, INIG collects information from well-defined, publicly accessible sources.
-  Each week, one person of the INIG team reads articles from a fixed set of sources and filters out outbreak news that are considered important for the RKI, the ministry of health, or the German army.
+  Each week, one person of the INIG team reads articles from a fixed set of sources and filters out outbreak news that is considered important for the RKI, the ministry of health, or the German army.
   Then the INIG staff member fills an Excel sheet with the information from the found article.
   The overall process takes around 30 minutes every day which led to the idea to automate this process.
 

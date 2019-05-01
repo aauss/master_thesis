@@ -8,7 +8,7 @@
 \begin{figure}[h!]
   \centering
   \includegraphics[scale=0.55]{pipeline.pdf}
-  \caption{An illustration of a typical pipeline for information extraction in NLP. The pipeline starts with the raw text and undergoes several preprocessing steps (indicated by a rectangle) yielding intermediate output (placed next to the arrows). The final output can be a list of tuples of the entity and the corresponding word like \texttt{[(ORG, \textquotesingle Bayer\textquotesingle), (LOC, \textquotesingle Baveria\textquotesingle)]} (adopted from \citep{Bird2009}).}
+  \caption{An illustration of a typical pipeline for information extraction in NLP. The pipeline starts with the raw text and undergoes several preprocessing steps (indicated by a rectangle) yielding intermediate output (placed next to the arrows). The final output can be a list of tuples of the entity and the corresponding word like \texttt{[(ORG, \textquotesingle Bayer\textquotesingle), (LOC, \textquotesingle Baveria\textquotesingle)]} (adapted from \citep{Bird2009}).}
 \label{fig:pipeline}
 \end{figure}
 
@@ -16,16 +16,16 @@
   Assuming we want to analyze texts on word level, we might be looking for
   words that appear more often than others or only appear in certain texts.
   This information can tell us a lot about the topic or sentiment of a text.
-  Suppose we find that a text is frequently mentioning \textit{brexit} more than any other text.
+  Suppose we find that a text is frequently mentioning \textit{Brexit} more than any other text.
   Then we can deduct that this text might be a (news) article and that it is about the exit of Great Britain from the European Union.
   However, we quickly realize that certain words also appear more frequently than others, without revealing much about the content of the text.
   Words like \textit{the, of, than} appear numerously in every English text independently of the topic or the source.
   Such words first received particular attention when \cite{Luhn1960} identified their property to obscure target words for further analyzes.
-  These words are called \textbf{stop words}\index{stop words} and there are by now many curated lists of stop words for different languages and tasks \citep{RANKS2019}.
+  These words are called \textbf{stop words}\index{stop words}, and there are by now many curated lists of stop words for different languages and tasks \citep{RANKS2019}.
 
   % In case we want to find, as an example, adjectives and adverbs in a text for a sentiment  them since stop words contain information about the grammatical structure of the text.
   For any NLP algorithm that requires information about the grammatical structure of a text, we want to keep stop words since they convey a substantial part of grammatical information.
-  But, if we should be interested in the topic or source of the text, then it might be sufficient to search for this information within only a handful of words.
+  However, should we be interested in the topic or source of the text, then it might be sufficient to search for this information within only a handful of words.
   % Stop words would only distract the machine learning algorithm from words that do convey information about the topic of the text.
   Therefore, it is common practice to remove stop words to improve the performance of classification algorithms \citep{McCallum1998, Lodhi2002, Tong2001}.
   In state-of-the-art neural classifier like described by \cite{Howard2018}, it is not always necessary.
@@ -53,13 +53,13 @@
   Words delimited by periods would then be a sentence.
   These regexs, however, do not always work as expected.
   The \textit{United States of America} is such an example where our rules would fail.
-  They lead to splitting this string into four tokens \mbox{\{\textquotesingle \textit{United}\textquotesingle, \textquotesingle \textit{States}\textquotesingle, \textquotesingle \textit{of}\textquotesingle, \textquotesingle \textit{America}\textquotesingle\}} although these token are not independent of each other and thus should be one token.
-  Longer names like this one often have acronyms such as \textit{U.S.A}.
+  They lead to splitting this string into four tokens \mbox{\{\textquotesingle \textit{United}\textquotesingle, \textquotesingle \textit{States}\textquotesingle, \textquotesingle \textit{of}\textquotesingle, \textquotesingle \textit{America}\textquotesingle\}} although these tokens are not independent of each other and thus should be one token.
+  Longer names like this one often have acronyms such as the \textit{U.S.A}.
   Following our simple rules, the word \textit{U.S.A} would be split into six tokens \mbox{\{\textquotesingle \textit{U}\textquotesingle, \textquotesingle \textbf{.}\textquotesingle, \textquotesingle \textit{S}\textquotesingle, \textquotesingle \textbf{.}\textquotesingle, \textquotesingle \textit{A}\textquotesingle, \textquotesingle \textbf{.}\textquotesingle\}} since it is mistaken by a sentence.
 
   On the other hand, using an established tokenizer is also wondering e.g, \textit{don't} is split into \{\textquotesingle \textit{do}\textquotesingle, \textquotesingle \textit{n't}\textquotesingle\} but we know it should be \{\textquotesingle \textit{do}\textquotesingle, \textquotesingle \textit{not}\textquotesingle\} assuming tokens are a representation of words.
-  But since tokens are not meant to be a precise image of natural language words but rather a method to yield word level understanding then \textit{not} represented as \textit{n't} will not worsen any text analysis, if the usage of \textit{n't} is consistent.
-  And without a doubt, the \textit{United States of America} or the acronym \textit{U.S.A.} needs to be treated as a single unit for sufficient word-level understanding.
+  However, since tokens are not meant to be a precise image of natural language words but rather a method to yield word level understanding then \textit{not} represented as \textit{n't} will not worsen any text analysis, if the usage of \textit{n't} is consistent.
+  So without a doubt, the \textit{United States of America} or the acronym \textit{U.S.A.} needs to be treated as a single unit for sufficient word-level understanding.
   It is common to use a curated list of expected abbreviations, names, and phrases to avoid bad tokenization.
   To improve sentence tokenization further, one could train an unsupervised sentence boundary detector as described in \cite{Kiss2006}.
   This method extracts the most occurring sentence breaks and learns to discard those that do not to seem to be a valid new sentence.
@@ -79,20 +79,20 @@
   % But \textit{that} is followed by a plural auxiliary verb (in this case \textit{were}) which makes this sentence wrong.
   % A hypothetical grammar dictionary lookup is not able to detect \textit{that} should be followed by \textit{was} since \textit{that} is written the same when referring to single and plural nouns.
   % To solve this programmatically, we need to find the grammatical number of the noun before the first mentioning of \textit{that} to determine if the grammatical count of the auxiliary verb after \textit{that} is correct.
-  We could, for example, want to identify all nouns from a text. This will be an easy task for many words like \textit{car} or \textit{mother}. They can be simply looked up in an English dictionary which will confirm that these words are nouns. But, words like \textit{meeting} can take different parts of speech (verb or noun).
+  We could, for example, want to identify all nouns from a text. This will be an easy task for many words like \textit{car} or \textit{mother}. They can be looked up in an English dictionary which will confirm that these words are nouns. However, words like \textit{meeting} can take different parts of speech (verb or noun).
 
   To find the noun, we apply \textbf{position-of-speech tagging} (\gls{POS-tagging}).
   A POS-tagger is typically a machine learning model like a decision tree \citep{Marquez98} trained on an annotated corpus like Penn Treebank \citep{PennTreebank}, that already has the right grammatical entities assigned to each word in unstructured texts.
   When the correct grammatical function of all tokens is determined, it is simple to detect the grammatical number of the noun occurring before \textit{that} and hence correct the sentence grammatically.
 
 \subsection{Lemmatization and Stemming}\label{stemming}
-  Having a well-tokenized text, we can do descriptive statistics on the text, e.g., by simply counting the occurrences of tokens or detect tokens that only occur once, so-called \textbf{hapax legomenon}.
+  Having a well-tokenized text, we can do descriptive statistics on the text, e.g., by counting the occurrences of tokens or detect tokens that only occur once, so-called \textbf{hapax legomenon}.
   The simplest way to sensibly reason about a text would be to find the most frequent words, given that we removed stop words to infer the subject of a text.
-  If the goal was to infer the type of sport based on the most occurring words in sports news we would hope to find a large term frequency for something like \textit{throw} for baseball or \textit{strike} for soccer.
+  If the goal were to infer the type of sport based on the most occurring words in sports news we would hope to find a high term frequency for something like \textit{throw} for baseball or \textit{strike} for soccer.
   Merely counting tokens to display the most occurring ones in a text will not be sufficient.
   The words in the text will be used in many forms due to grammatical conjugation.
   For example, \textit{thrown} and \textit{throw} will be treated as unequal tokens by the computer although they mean the same.
-  Therefore, we need iss to transform all words to their infinitive form.
+  Therefore, we need to transform all words to their infinitive form.
 
   There are two options: \textbf{stemming}\index{stemming} and \textbf{lemmatization}\index{lemmatization}.
   Stemming only prunes the end of words following rules.
@@ -109,7 +109,7 @@
 
 
 \subsection{(Disease) Named-Entity Recognition}
-  Named-entity recognition (\GLS{NER}) is a step placed towards the end of a NLP pipeline (Fig. \ref{fig:pipeline}).
+  Named-entity recognition (\GLS{NER}) is a step placed towards the end of an NLP pipeline (Fig. \ref{fig:pipeline}).
   After sentences and words have been tokenized, and POS-tagging was applied, it might be important for some learning algorithms to know the named-entity of words.
   Typical examples are the recognition of names of persons or companies, and numerical entities, like time, dates, and money \citep{Nadeau2009}.
   This recognition might be part of some NLP pipeline, but it also can be part of a pipeline for information retrieval (\GLS{IR}).
@@ -127,14 +127,14 @@
   Therefore, the exact procedure to perform disease NER depends on the source of interest.
 
 \subsection{Corpus}
-  A \textbf{corpus}\index{corpus} is an organized collection of (related) text documents that are simple to access. They can be annotated (as required for training POS-tagger) or simply preprocessed (e.g. tokenized) \citep{Bengfort2018}.
+  A \textbf{corpus}\index{corpus} is an organized collection of (related) text documents that are simple to access. They can be annotated (as required for training POS-tagger) or preprocessed (e.g., tokenized) \citep{Bengfort2018}.
   Preprocessing, however, can be time-intensive especially for large amounts of data and this process irreversibly changes the raw text.
   Thus, each intermediate step should be stored in the corpus as well.
-  This way, quality control is assured, replacement of preprocessing steps is streamlined, and repeated computations or even human labour is avoided.
+  This way, quality control is assured, replacement of preprocessing steps is streamlined, and repeated computations or even human labor is avoided.
   Optimally, a corpus is easily accessible and safely stored since it contains laboriously created data.
   NoSQL databases are advantageous for corpus saving due to their minimal overhead and allow access to data that would be too large for a normal machine.
   This way corpora can easily be shared by providing access to the database.
-  Or, they can be stored as as a folder system containing \texttt{.txt}, \texttt{.XML}, or \texttt{.JSON} files.
+  Alternatively, they can be stored as a folder system containing \texttt{.txt}, \texttt{.XML}, or \texttt{.JSON} files.
 
 \section{Machine Learning}
   Machine learning (\GLS{ML}) is an attempt to make the computer learn. \citeauthor{Mitchell1997} described learning broadly as,
@@ -150,7 +150,7 @@
 \subsection{Bag-Of-Words}\label{section:bow}
   It is typical in a machine learning task that large amounts of data can make explicit feature engineering unnecessary.
   Also, instead of requiring too much domain knowledge, it is preferred to let the algorithm determine important features.
-  One apparent example for this in NLP is the \textbf{bag-of-words}\index{bag-of-words} approach.
+  One typical example of this in NLP is the \textbf{bag-of-words}\index{bag-of-words} approach.
 
   It is particularly challenging to model language because of its entangled grammar, all its special cases, idioms, and ambiguity.
   Therefore, we can try to analyze a text based only on the occurrences of the words in the text without their grammatical context.
@@ -182,14 +182,14 @@
     g_i &= \hat{r} \cdot G \\
     \forall \boldsymbol{x_i} \text{ repeat } g_i \text{ times: } \boldsymbol{s_i} &= \boldsymbol{x_i} + (\boldsymbol{x_{zi}} - \boldsymbol{x_i}) \cdot \lambda
   \end{align}
-  where $d$ is the degree of imbalance of the small and large class ($m_s$ and $m_l$ respectively), $G$ is the amount of synthetic data examples required to achieve a class balance of $\beta \in [0,1]$.
-  $\Delta_i$ is the number of examples having $K$ nearest neighbors of $\boldsymbol{x_i}$ from the majority class, (2.4) is a normalization step, and $g_i$ is the amount of synthetic data instances that need to be generated for each minority example $\boldsymbol{x_i}$.
+  where $d$ is the degree of imbalance of the small and large class ($m_s$ and $m_l$ respectively), $G$ is the number of synthetic data examples required to achieve a class balance of $\beta \in [0,1]$.
+  $\Delta_i$ is the number of examples having $K$ nearest neighbors of $\boldsymbol{x_i}$ from the majority class, (2.4) is a normalization step, and $g_i$ is the number of synthetic data instances that need to be generated for each minority example $\boldsymbol{x_i}$.
   (2.6) is the main algorithm where for each data point $\boldsymbol{x_i}$, $g_i$ synthesizations are conducted.
   Thereby, $\boldsymbol{x_{zi}}$ is a random data example from the $K$ nearest neighbors, and $\lambda \in [0,1]$ is a random number.
 
   Finally, a good performance measure is required to evaluate the classifier's learning progress.
   Accuracy, as illustrated before, is not a reliable indicator in an imbalanced two class dataset.
-  The \textbf{Index of Balanced Accuracy} (\GLS{IBA}), however, tries to take the imbalance into account and is defined as, \[IBA_{\alpha} = (1 + \alpha \cdot (TPrate - TNrate)) \cdot TPrate \cdot TNrate \] where  0 $\leq \alpha \leq 1$ and $\alpha$ being a dominance index, that needs to be fine tuned based on how significant the dominating class is supposed to be.
+  The \textbf{Index of Balanced Accuracy} (\GLS{IBA}), however, tries to take the imbalance into account and is defined as, \[IBA_{\alpha} = (1 + \alpha \cdot (TPrate - TNrate)) \cdot TPrate \cdot TNrate \] where 0 $\leq \alpha \leq 1$ and $\alpha$ being a dominance index, that needs to be fine-tuned based on how significant the dominating class is supposed to be.
 
 \subsection{Naive Bayes Classifier}\label{section:nbc}
   The \textbf{naive Bayes classifier}\index{naive Bayes classifier} (\GLS{NBC}) is a probabilistic classifier.
@@ -205,8 +205,8 @@
                                          p(\mathcal{C}_k)}{p(\boldsymbol{x})}
   \end{align}
   where $\boldsymbol{x}$ is a data point which consists of $n$ features.
-  $\mathcal{C}$ is the set of all classes and $p(\mathcal{C}_k|\boldsymbol{x})$ is the probability $\boldsymbol{x}$ belonging to class $\mathcal{C}_k$.
-  We are allowed to write (2.9) as (2.10) due the independency assumption of the features of $\boldsymbol{x}$,
+  $\mathcal{C}$ is the set of all classes, and $p(\mathcal{C}_k|\boldsymbol{x})$ is the probability $\boldsymbol{x}$ belonging to class $\mathcal{C}_k$.
+  We are allowed to write (2.9) as (2.10) due the independene assumption of the features of $\boldsymbol{x}$,
    \[p(x_i| \{\forall x_j \in \boldsymbol{x} : j \neq i \}, \mathcal{C}_k) \overset{\, \,\,\,x_i\perp\!\!\!\perp \forall x_j}{=} p(x_i|\mathcal{C}_k)\]
   A standard procedure to predict the most likely class that $\boldsymbol{x}$ belongs to, is to find the maximum a posteriori probability
   \begin{gather}
@@ -229,9 +229,9 @@
   \end{align}
   Where $\mathcal{C}$ is the set of text classes, and $\boldsymbol{t}$ contains the token counts of the whole vocabulary, $c_i$ being the occurrence count of term $i$.
   $\boldsymbol{T}_k$ is a matrix where the token counts $c$ are the columns, and the documents $d$ the rows consisting of all documents $\mathcal{D}$ from class $\mathcal{C}_k$.
-  To calculate the likelihood of $p({t_{k,i}}|\mathcal{C}_k)$ we simply divide the occurrence of token $t_{k,i}$ by the sum of all token occurrences in the same class $\mathcal{C}_k$.
+  To calculate the likelihood of $p({t_{k,i}}|\mathcal{C}_k)$ we divide the occurrence of token $t_{k,i}$ by the sum of all token occurrences in the same class $\mathcal{C}_k$.
   Following the independency assumption as in (2.10) we now can calculate $P(\mathcal{C}_k | \boldsymbol{t}_d)$ as the product of the prior $P(\mathcal{C}_k)$ -- the probability of class $\mathcal{C}_k$
-  as learned form the training set -- and the probabilities of all the terms $t_{1 \dots n}$ given the prior class.
+  as learned from the training set -- and the probabilities of all the terms $t_{1 \dots n}$ given the prior class.
   For classification, the $\argmax$ as in (2.11) is taken.
 
   Three problems can occur in text classification that need to be handled.
@@ -249,8 +249,8 @@
     \operatorname{tf-idf}(t,d, \mathcal{D}) &= \operatorname{tf}(t,d) \cdot \operatorname{idf}(t, d, \mathcal{D})
   \end{align}
   where $f_{t,d}$ is the term frequency of term $t$ in document $d$ and $t'$ is any term in $d$.
-  $|\mathcal{D}|$ is the amount of documents in the corpus and $|d \in \mathcal{D}: t \in d|$ is the amount of documents containing term $t$.
-  (2.19) is the final formula that balances discrepancies between term frequencies along several documents.
+  $|\mathcal{D}|$ is the number of documents in the corpus and $|d \in \mathcal{D}: t \in d|$ is the number of documents containing term $t$.
+  (2.19) is the final formula that balances discrepancies between term frequencies over several documents.
 
 \subsubsection{Bernoulli Naive Bayes}
   Especially for shorter texts and binary decision (\textsl{spam}, \textsl{not spam}), there is only a small gain to use token counts.
@@ -264,7 +264,7 @@
 
   \begin{table}[h!]
     \centering
-    \caption{A statistical evaluation of a coin flip experiment with an imbalanced class. $\theta$ is the probability of a class to yield head (H). We flip one coin in Class 1 and two coins in Class 2 per row. $\operatorname{p}(data)$ is the probability for the seen coin flip. The column Label for H contains the class assignment after the coin flip (adopted from \cite{Rennie2003}).}
+    \caption{A statistical evaluation of a coin flip experiment with an imbalanced class. $\theta$ is the probability of a class to yield head (H). We flip one coin in Class 1 and two coins in Class 2 per row. $\operatorname{p}(data)$ is the probability for the seen coin flip. The column Label for H contains the class assignment after the coin flip (adapted from \cite{Rennie2003}).}
     \setlength{\tabcolsep}{1.5em}
     \begin{tabular}{@{}cccc@{}}
       \toprule
@@ -287,7 +287,7 @@
 
 \subsection{Support Vector Machine}
   A prominent application of vector space based machine learning is the \textbf{support vector machine} (\GLS{SVM})\index{support vector machine}.
-  It is a classification algorithm that is trained in a supervised fashion. It is often used for document classification and performs good even on small data \citep{Manning2008}.
+  It is a classification algorithm that is trained in a supervised fashion. It is often used for document classification and performs well even on small data \citep{Manning2008}.
   During training time, the SVM tries to find a decision boundary in the vector space of the training data to separate two classes with a maximal margin.
   This is accomplished by choosing a hyperplane that has a maximum distance to the closest data points of both classes respectively. The margin is defined by those points which are called support vectors (Fig. \ref{fig:svm}).
   %
@@ -302,11 +302,11 @@
   % Since we try to maximize the margin of the decision hyperplane we are minimizing
   % \frac{1}{2} \mathbf{w^T} \mathbf{w}. Furthermore, we define that the margin has a size of at least 1
   % \[ \forall (\mathbf{x}_i, y_i): y_i(\mathbf{w}^T \mathbf{x} + b) \geq 1 \]
-  Training a SVM is an optimization problem which can be solved with e.g. the Lagrange multiplier, denoted as $\alpha_i$.
+  Training an SVM is an optimization problem which can be solved with, e.g., the Lagrange multiplier, denoted as $\alpha_i$.
   Then,
     \[\mathbf{w} = \sum \alpha_i y_i \mathbf{x}_i \]
     \[b = y_k (1-\zeta_k) - \mathbf{w}^T \mathbf{x}_k \text{ where }k = \argmax_k \alpha_k \]
-  where $y_k$ is the label of datapoint $\mathbf{x}_k$ and all $\alpha_i \neq 0$ are the support vectors. For all $\alpha$ holds, $0 \leq \alpha \leq C$, where C is a regularization term to control overfit. $\zeta$ is a slack variable that allows the classification with a soft margin, i.e., drawing a margin that classifies some training data points incorrectly for a penalty equals to $\zeta$.
+  where $y_k$ is the label of data point $\mathbf{x}_k$ and all $\alpha_i \neq 0$ are the support vectors. For all $\alpha$ holds, $0 \leq \alpha \leq C$, where C is a regularization term to control overfit. $\zeta$ is a slack variable that allows the classification with a soft margin, i.e., drawing a margin that classifies some training data points incorrectly for a penalty equals to $\zeta$.
   The classification function then is $\operatorname{f}(\mathbf{x}) = \operatorname{sign}(\sum \alpha_i y_i \mathbf{x}^{T}_i\mathbf{x} + b)$.
   % we try to minimize $\frac{1}{2} |\mathbf{w}|$ and try to satisfiy $\forall {(\mathbf{x}_i,y_i)}: y_i(\mathbf{w}^{T}_{i} \mathbf{x}_i + b ) \geq 1$. This is an optimization problem that can be solved with the Lagrange multiplier.
   There, however, exists much faster, more scalable solutions for training the SVM that I will not thematize.
@@ -334,17 +334,17 @@
   \[\operatorname{\ell}(y, \hat{y}) = - \sum_{i=1}^{n} y_i \log \hat{y}_i + (1-y_i) \log(1-\hat{y}_i)\]
   with $y$ being the true label, $\mathbf{x}$ the n-dimensional input, and $b$ a bias value.
 
-  The loss can be minimized using gradient decent (as used in backpropagation in \ref{backpropa}). Usually more optimized methods are used.
+  The loss can be minimized using gradient descent (as used in backpropagation in \ref{backpropa}). Usually, more optimized methods are used.
 
-  To avoid overfitting, we can apply a penalty, for example L2, which adds the weights $\mathbf{w}$ to the loss $\ell$ to force the model to choose small weight.
+  To avoid overfitting, we can apply a penalty, for example, L2 which adds the weights $\mathbf{w}$ to the loss $\ell$ to force the model to choose smaller weight.
   L2 is defined as $C \sum_{i=1}^n w_i^2$ with $C$ being the regularization strength where larger values of $C$ increase the penalty.
 
   The logistic regression classifier in NLP is used to classify based on embeddings, e.g., document classification where the document embedding is used as the input to train the logistic regression.
-  Note, the output $\hat{y}$ is not strictly binary thus, we need to apply a threshold where by default a value above $0.5$ is classified as $1$ and $0$ otherwise.
+  Note, the output $\hat{y}$ is not strictly binary; thus, we need to apply a threshold where by default value above $0.5$ is classified as $1$ and $0$ otherwise.
 
 \subsection{K-Nearest Neighbor Classifier}
   The k-nearest neighbor classifier performs instance-based learning which means it has no training time.
-  It remembers all training data points and then classifies a new input based on its k-nearest neighbors, where each datapoint $\mathbf{x}_i$ is a vector with a label $y_i$ and $k \in \mathbb{N}$.
+  It remembers all training data points and then classifies a new input based on its k-nearest neighbors, where each data point $\mathbf{x}_i$ is a vector with a label $y_i$ and $k \in \mathbb{N}$.
   The closest points can be calculated using several metrics.
   Most often, Euclidian distance ($\| \mathbf{x}_i - \mathbf{x}_j\|_2$) is taken to find the $k$ nearest neighbors for classification.
   Closer points can be weighted stronger for the classification.
@@ -367,8 +367,8 @@
   \[\mathbf{w}(t+1) = \mathbf{w}(t) + \eta (d(t) - y(t))\mathbf{x}(t)\]
   with $d$ being the desired output and $y$ the output of the perceptron at training step $t$ with a learning rate $\eta \in (0,1]$.
 
-\subsubsection{Multi Layer Perceptron}\label{backpropa}
-  A \textbf{multi layer perceptron} (\GLS{MLP}\index{multi layer perceptron}) (Fig. \ref{fig:MLP}) consists of three types of layers, an input and output layer, and $1 \dots n$ hidden layers.
+\subsubsection{Multilayer Perceptron}\label{backpropa}
+  A \textbf{multilayer perceptron} (\GLS{MLP}\index{multilayer perceptron}) (Fig. \ref{fig:MLP}) consists of three types of layers, an input and output layer, and $1 \dots n$ hidden layers.
   Each layer consists of an arbitrary number of perceptrons.
   The activation function is not a Boolean function but $\sigma(y) = \frac{1}{1+e^{-y}}$ called the sigmoid function.
   Its output also ranges from $0$ to $1$, but it is derivable.
@@ -419,7 +419,7 @@
         \node[annot,left of=hl] {Input layer};
         \node[annot,right of=hl] {Output layer};
     \end{tikzpicture}
-    \caption{A illustration of a multi layer perceptron. The input (green), hidden (purple), and output (red) layer consist of four, five, and one perceptron respectively. The arrows indicate the direction of the computation of the input which is a scalar.}
+    \caption{A illustration of a multilayer perceptron. The input (green), hidden (purple), and output (red) layer consists of four, five, and one perceptron respectively. The arrows indicate the direction of the computation of the input which is a scalar.}
     \label{fig:MLP}
   \end{figure}
 
@@ -440,8 +440,8 @@
   \end{figure}
 
 \subsection{Embeddings}\label{section:embeddings}
-  In \ref{section:bow}, I introduced the bag-of-words approach to cope with the difficulty to explicitly model language and in \ref{section:nbc} I showed that this approach even facilitates a good performing classifier.
-  However, the bag-of-words approach models language incorrectly and having better representation of language is more desirable for the improvement of ML algorithms.
+  In \ref{section:bow}, I introduced the bag-of-words approach to cope with the difficulty to explicitly model language, and in \ref{section:nbc} I showed that this approach even facilitates a good performing classifier.
+  However, the bag-of-words approach models language incorrectly and having a better representation of language is more desirable for the improvement of ML algorithms.
   \textbf{Word embeddings}\index{word embeddings} are such methods that model language more accurately by representing words as n-dimensional vectors that much better capture syntactic and semantic characteristics of language.
 
 \subsubsection{Word2Vec}\label{c:word2vec}
@@ -449,10 +449,10 @@
   Both these algorithms are also referred to as \textbf{word2vec}\index{word2vec}.
   The general approach in both algorithms is to maximize the similarity measures of vectorized words that appear in a similar context.
   The \textbf{continuous bag-of-words model}\index{continues bag-of-words model} is trained to predict the vector representation of a word or phrase given $n$ words before and after the target word in its sentence.
-  The \textbf{continuous skip-gram-model}\index{continuous skip-gram-model} is a slower implementation with the benefit to model infrequent words better \citep{word2vec}.
+  The \textbf{continuous skip-gram-model}\index{continuous skip-gram-model} is a slower implementation with the benefit to model uncommon words better \citep{word2vec}.
   The skip-gram-model tries to predict the context given a target word and is thus the opposite approach of the continuous bag-of-words model.
 
-  In practice, we generate labeled data in the form of tuples $(\mathbf{w}_t, \mathbf{w}_{c_{1}}, \dots, \mathbf{w}_{c_{n}})$, where one entry is the target word $\mathbf{w}_t$ and the other entries are context words $\mathbf{w}_c$.
+  In practice, we generate labeled data in the form of tuples $(\mathbf{w}_t, \mathbf{w}_{c_{1}}, \dots, \mathbf{w}_{c_{n}})$, where one entry is the target word $\mathbf{w}_t$, and the other entries are context words $\mathbf{w}_c$.
   The tuple can either contain actual context words found in the text, or random words from the vocabulary (\textbf{negative sampling}\index{negative sampling}).
   The embedding layer learns the weights of the input and context words, by yielding an n-dimensional vector for all these words, calculates the dot-product of the target and context vectors in the merge-layer, and then passes it to a sigmoid layer that predicts whether the words are actual context words or were negatively sampled.
   The objective of the algorithm is to maximize
@@ -465,11 +465,11 @@
 
   As the first step, a word co-occurrence matrix over all documents is calculated.
   The underlying assumption of GloVe is that the co-occurrence ratio is connected to meaning.
-  Let $X_{ij}$ be the co-occurrence count of token $j$ in context of $i$. Let $X_i = \sum_{t \in T} X_{it}$ be the occurrence of token i given any other token then $p(j|i) = \frac{X_{ij}}{X_i}$ is the probability of token $j$ appearing in the context of token $i$.
+  Let $X_{ij}$ be the co-occurrence count of token $j$ in the context of $i$. Let $X_i = \sum_{t \in T} X_{it}$ be the occurrence of token i given any other token then $p(j|i) = \frac{X_{ij}}{X_i}$ is the probability of token $j$ appearing in the context of token $i$.
   To be able to model the semantic information of words, their relationship needs to be modeled.
   GloVe defines a function $F((\mathbf{w_i} - \mathbf{w_j})^T \widetilde{w_t}) = \frac{p(i|k)}{p(j|k)}$ where $\mathbf{w}$ is a real-valued word vector.
   Hereby, the context words are subtracted from the input words, and the dot product with the weights of the output vocabulary is taken (see \cite{Pennington2014} for details).
-  This step facilitates embedding arithmetic, i.e., meaning of word embeddings can be deducted from arithmetic calculations such as $w_{man} + w_{royalty} = w_{king}$.
+  This step facilitates embedding arithmetic, i.e., the meaning of word embeddings can be deducted from arithmetic calculations such as $w_{man} + w_{royalty} = w_{king}$.
   Further steps are required for computability, such as weighting of the word vectors or handling zero entries which are described by \cite{Pennington2014}.
 
 %\subsubsection{BERT}
@@ -485,7 +485,7 @@
   However, both techniques can be combined to systematically search for some specific content within a network of websites, e.g., crawling flight provider sites and monitor their prices.
 
 \subsubsection{HTML and CSS}
-  \textbf{Hyptertext Markup Language} (\GLS{HTML})\index{HTML} is a markup language which means that it consists of a set of \textsl{tags} that define how content of a document needs to be interpreted.
+  \textbf{Hypertext Markup Language} (\GLS{HTML})\index{HTML} is a markup language which means that it consists of a set of \textsl{tags} that define how the content of a document needs to be interpreted.
   In HTML, for example, \mintinline{HTML}{<h1> I am a Header </h1>} defines the opening of a header tag followed by some content and the closing of this tag.
   When this HTML code is interpreted, the text is then displayed bold and larger than non-header text if not specified otherwise.
 

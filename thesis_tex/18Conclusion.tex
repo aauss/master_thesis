@@ -1,15 +1,15 @@
 \chapter{Conclusion}
   The main objective was to show that it is feasible to utilize already available resources at the RKI, in this case, the Incident Database, using novel NLP methodology to improve epidemiological surveillance.
   Thereby, the outcome of this thesis also proves that EBS, even with smaller resources, is possible.
-  By providing a web service and using open source libraries, I developed a tool that is scalable. This is of interest for the RKI which shares expertise with other countries and institutes.
+  By providing a web service and using open source libraries, I developed an scalable tool. This is of interest for the RKI which shares expertise with other countries and institutes.
 
 
   Of course, more work is necessary to bring the Aussinator into production.
   The performance of the keyword extraction of the date and the count needs to be improved for better user experience.
-  However, this point can be tackled as mentioned in the evaluation of the classifier (\ref{eval_key}.
+  However, this point can be tackled as mentioned in the evaluation of the classifier (\ref{eval_key}).
   This is true for also other goals not met during this thesis such as the availability of the Aussinator in several languages and the avoidance and the uncovering of possible human biases in the evaluation of text relevance.
   It is possible to provide better classifications that work for different languages using multilingual word embeddings \citep{Chen2018}, or a better keyword extraction using contextual embeddings \citep{Devlin2018, Peters2018} which adjust the embedding based on the textual context.
-  Primarily, the poor performing keyword extraction strongly depends on the local properties of the keywords to be extracted. Which entity is relevant most often depends on the words nearby and thus contextually adopted embeddings might increase the performance of the keyword extraction.
+  Primarily, the poor performing keyword extraction strongly depends on the local properties of the keywords to be extracted. Which entity is relevant most often depends on the words nearby and thus contextually adapted embeddings might increase the performance of the keyword extraction.
 
   Also, tackling biases and personal preferences is essential to continue this project and make it save to use.
   It will be essential to show how the decisions of Aussinator are made, to win the approval of epidemiologists in the proceeding digitization of EBS.
