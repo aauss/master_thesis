@@ -310,7 +310,7 @@
     \label{fig:dataset}
   \end{figure}
 
-\subsection{Naive Key Word Extraction}
+\subsection{Naive Keyword Extraction}
   During the reading of epidemiological news, I noticed that the key entities of a text are repeatedly mentioned.
   Therefore, I decided to naively determine a keyword entity by choosing the most frequent entity, i.e., the key disease entity would be the disease mentioned most frequently as shown in Lis. \ref{lst:mostoccure}.
   \begin{listing}[h!]
@@ -346,7 +346,7 @@
   For the text classification, I used the average of all word embeddings as the document embedding with which I trained the logistic regression classifier.
   I applied L2 regularization with a regularization strength $C=1$ to avoid overfitting to the imbalanced classes.
 
-\subsection{K-Nearest Neighbor}
+\subsection{k-Nearest Neighbor}
   For the text classification, I used the average of all word embeddings as the document embedding with which I trained a k-nearest neighbor classifier with $k=5$ to balance sensitivity to noise, as for small $k$. Furthermore, I used the Euclidian distance to measure distances and did not weight the distances.
 
 \subsection{Deep Learning}
