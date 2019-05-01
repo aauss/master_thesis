@@ -8,7 +8,7 @@
 \begin{figure}[h!]
   \centering
   \includegraphics[scale=0.55]{pipeline.pdf}
-  \caption{An illustration of a typical pipeline for information extraction in NLP. The pipeline starts with the raw text and undergoes several preprocessing steps (indicated by a rectangle) yielding intermediate output (placed next to the arrows). The final output can be a list of tuples of the entity and the corresponding word like \texttt{[(ORG, \textquotesingle Bayer\textquotesingle), (LOC, \textquotesingle Baveria\textquotesingle)]} (adapted from \citep{Bird2009}).}
+  \caption{An illustration of a typical pipeline for information extraction in NLP. The pipeline starts with the raw text and undergoes several preprocessing steps (indicated by a rectangle) yielding intermediate output (placed next to the arrows). The final output can be a list of tuples of the entity and the corresponding word like \texttt{[(ORG, \textquotesingle Bayer\textquotesingle), (LOC, \textquotesingle Baveria\textquotesingle)]} (adapted from \cite{Bird2009}).}
 \label{fig:pipeline}
 \end{figure}
 
@@ -294,11 +294,11 @@
   \begin{figure}[h!]
       \centering
       \includegraphics[scale=0.6]{svm.pdf}
-      \caption{An illustration of how support vector machines realize classifications. Black dots and white triangles represent two classes of data points.}
+      \caption{An illustration of how support vector machines realize classifications. Black dots and white triangles represent two classes of data points (adapted from \cite{Manning2008}).}
       \label{fig:svm}
   \end{figure}
   %
-  For classification, we calculate $\operatorname{f}(\mathbf{x}) = \operatorname{sign}(\mathbf{w}^{T}\mathbf{x} + b)$ where $\mathbf{w}$ is a weight vector orthogonal to the decision hyperplane, $\mathbf{x}$ is the input data point, $b$ an intercept, and $\operatorname{sign}$ the signum function.
+  For classification, we calculate $\operatorname{f}(\mathbf{x}) = \operatorname{sign}(\mathbf{w}^{T}\mathbf{x} + b)$ where $\mathbf{w}$ is a weight vector orthogonal to the decision hyperplane, $\mathbf{x}$ is the input data point, and $b$ an intercept.
   % Since we try to maximize the margin of the decision hyperplane we are minimizing
   % \frac{1}{2} \mathbf{w^T} \mathbf{w}. Furthermore, we define that the margin has a size of at least 1
   % \[ \forall (\mathbf{x}_i, y_i): y_i(\mathbf{w}^T \mathbf{x} + b) \geq 1 \]
@@ -306,10 +306,10 @@
   Then,
     \[\mathbf{w} = \sum \alpha_i y_i \mathbf{x}_i \]
     \[b = y_k (1-\zeta_k) - \mathbf{w}^T \mathbf{x}_k \text{ where }k = \argmax_k \alpha_k \]
-  where $y_k$ is the label of data point $\mathbf{x}_k$ and all $\alpha_i \neq 0$ are the support vectors. For all $\alpha$ holds, $0 \leq \alpha \leq C$, where C is a regularization term to control overfit. $\zeta$ is a slack variable that allows the classification with a soft margin, i.e., drawing a margin that classifies some training data points incorrectly for a penalty equals to $\zeta$.
+  where $y_k$ is the label of data point $\mathbf{x}_k$ and all $\alpha_i \neq 0$ are the support vectors. For all $\alpha$ it hols that $0 \leq \alpha \leq C$, where C is a regularization term to control overfit. $\zeta$ is a slack variable that allows the classification with a soft margin, i.e., drawing a margin that classifies some training data points incorrectly for a penalty equals to $\zeta$.
   The classification function then is $\operatorname{f}(\mathbf{x}) = \operatorname{sign}(\sum \alpha_i y_i \mathbf{x}^{T}_i\mathbf{x} + b)$.
   % we try to minimize $\frac{1}{2} |\mathbf{w}|$ and try to satisfiy $\forall {(\mathbf{x}_i,y_i)}: y_i(\mathbf{w}^{T}_{i} \mathbf{x}_i + b ) \geq 1$. This is an optimization problem that can be solved with the Lagrange multiplier.
-  There, however, exists much faster, more scalable solutions for training the SVM that I will not thematize.
+  There, however, exists much faster, more scalable solutions for training SVMs that I will not thematize.
 
   % Two classes might be linearly separable, but often noisy data will increase the difficulty to find the correct decision boundary.
   % A solution to this is to define a \emph{slack variable} $\zeta$ which allows some data point $\mathbf{x}_i$ to not meet the margin requirement at a cost equal to the value of $\zeta_i$.
@@ -319,37 +319,36 @@
   Until now we were only able solving linearly separable problems.
   Unfortunately, classes are mostly not linearly separable in document classification.
   A solution to this is to apply the \emph{kernel trick} to find a higher dimensional space in which the data points are linearly separable.
-  To do so, we use a function $\Phi:\mathbf{x} \mapsto \operatorname{\phi}(\mathbf{x})$ to transform the data into this higher dimension space.
-  Then the dot product from our original classification formula is $\operatorname{\phi}(\mathbf{x}^{T}_{i}) \operatorname{\phi}(\mathbf{x})$.
+  To do so, we use a function $\Phi:\mathbf{x} \mapsto \operatorname{\phi}(\mathbf{x})$. It suffices to only calculate the result of the dotproduct $\operatorname{\phi}(\mathbf{x}^{T}_{i}) \operatorname{\phi}(\mathbf{x})$ in this higher dimension space.
   $\Phi$ is called the kernel function of which several exist.
   One popular kernel function is the \textbf{radial basis function} which is defined as \[\Phi_{\operatorname{RFB}}(\mathbf{x_i},\mathbf{x})= \operatorname{exp}(-\gamma (\mathbf{x_i} - \mathbf{x})^2), \gamma > 0 \]
   with $\gamma$ being the kernel function coefficient.
 
 \subsection{Logistic Regression for Classifications}
-  The logistic regression, originating from statistics, is commonly used for regression and classification in ML.
+  The logistic regression, sharing the concept with the linear regression, is commonly used for classification in ML.
   It uses the logistic function, also called sigmoid function and is defined as, \[\operatorname{\sigma(x)} = \frac{1}{1+e^x}\]
-  that is used to map the output of the linear model to $\hat{y} \in [0,1]$,
-  \[\hat{y} = \operatorname{\sigma(x)}(\mathbf{w}^T\mathbf{x} +b)\]
+  that is used to map the output of a linear model to $\hat{y} \in [0,1]$,
+  \[\hat{y} = \operatorname{\sigma}(\mathbf{w}^T\mathbf{x} +b)\]
   where the weights $\mathbf{w}$ are adjusted to minimize
   \[\operatorname{\ell}(y, \hat{y}) = - \sum_{i=1}^{n} y_i \log \hat{y}_i + (1-y_i) \log(1-\hat{y}_i)\]
   with $y$ being the true label, $\mathbf{x}$ the n-dimensional input, and $b$ a bias value.
 
   The loss can be minimized using gradient descent (as used in backpropagation in \ref{backpropa}). Usually, more optimized methods are used.
 
-  To avoid overfitting, we can apply a penalty, for example, L2 which adds the weights $\mathbf{w}$ to the loss $\ell$ to force the model to choose smaller weight.
+  To avoid overfitting, we can apply a penalty, for example, L2 which adds the weights $\mathbf{w}$ to the loss $\ell$ to force the model to choose smaller weights.
   L2 is defined as $C \sum_{i=1}^n w_i^2$ with $C$ being the regularization strength where larger values of $C$ increase the penalty.
 
   The logistic regression classifier in NLP is used to classify based on embeddings, e.g., document classification where the document embedding is used as the input to train the logistic regression.
   Note, the output $\hat{y}$ is not strictly binary; thus, we need to apply a threshold where by default value above $0.5$ is classified as $1$ and $0$ otherwise.
 
-\subsection{K-Nearest Neighbor Classifier}
+\subsection{k-Nearest Neighbor Classifier}
   The k-nearest neighbor classifier performs instance-based learning which means it has no training time.
   It remembers all training data points and then classifies a new input based on its k-nearest neighbors, where each data point $\mathbf{x}_i$ is a vector with a label $y_i$ and $k \in \mathbb{N}$.
   The closest points can be calculated using several metrics.
   Most often, Euclidian distance ($\| \mathbf{x}_i - \mathbf{x}_j\|_2$) is taken to find the $k$ nearest neighbors for classification.
   Closer points can be weighted stronger for the classification.
-  The predominant label of the k-nearest neighbors (with or without weighting) is taken for the classification.
-  Typically, a small $k$ is less robust against noise while a large $k$ might not be specific enough for classification.
+  The predominant label of the k-nearest neighbors (with or without weighting) is taken to be the classification of the new input.
+  Typically, a small $k$ is less robust against noise while a large $k$ might not be specific enough.
 
 \subsection{Deep Learning}
   The idea to model the brain led to the development of the perceptron, which is a formal and simplified replica of a biological neuron.
