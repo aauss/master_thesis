@@ -68,11 +68,11 @@
     \begin{tabular}{@{}ccccc@{}}
       \toprule
       \textbf{Keyword} & \textbf{Valid Before} & \textbf{Valid After} & \textbf{Invalid After} & \textbf{Empty Before} \\
-      & \textbf{Preproc.} & \textbf{Preproc.} & \textbf{Preproc.}  &\textbf{and After Preproc.} \\
+      & \textbf{Preproc.} & \textbf{Preproc.} & \textbf{Preproc.} &\textbf{and After Preproc.} \\
       \midrule
-      Date& 168 (37)& 229 (141)&  19 (7)& 309 (7) \\
+      Date& 168 (37)& 229 (141)& 19 (7)& 309 (7) \\
       Case count& 299 (87)& 394 (105)& 18 (0)& 145 (50) \\
-      Country& 355 (15) & 494 (148) &  17 (4)& 46 (3) \\
+      Country& 355 (15) & 494 (148) & 17 (4)& 46 (3) \\
       Disease& 231 (0) & 332 (111)& 16 (16)& 209 (28) \\
       \bottomrule
     \end{tabular}
@@ -119,15 +119,15 @@
     \begin{tabular}{@{}rcccccccc@{}}
       \toprule
        & \textbf{Pre.} & \textbf{Rec.} & \textbf{Spec.}
-      & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
+      & \textbf{F1} & \textbf{IBA}& \textbf{Sup} \\
       \midrule
       \textbf{Multinomial Naive Bayes}\\
-      \textsl{is not key}& 0.91& 1.00&  0.00& 0.95& 0.00& 446 \\
-      \textsl{is key}& 0.00& \textcolor{orange}{0.00}&  1.00& 0.00& 0.00& 43 \\
+      \textsl{is not key}& 0.91& 1.00& 0.00& 0.95& 0.00& 446 \\
+      \textsl{is key}& 0.00& \textcolor{orange}{0.00}& 1.00& 0.00& 0.00& 43 \\
       Average/Total& 0.83& 0.91& 0.09& 0.87& \textcolor{orange}{0.00}& 489 \vspace{2mm}\\
       \textbf{Bernoulli Naive Bayes}\\
-      \textsl{is not key}& 0.93& 0.90&  0.24& 0.91& 0.23& 447 \\
-      \textsl{is key}& 0.18& \textcolor{cyan}{0.24}&  0.90& 0.21& 0.20& 42 \\
+      \textsl{is not key}& 0.93& 0.90& 0.24& 0.91& 0.23& 447 \\
+      \textsl{is key}& 0.18& \textcolor{cyan}{0.24}& 0.90& 0.21& 0.20& 42 \\
       Average/Total& 0.86& 0.84& 0.29& 0.85& \textcolor{cyan}{0.23}& 489 \vspace{2mm}\\
       \bottomrule
     \end{tabular}
@@ -141,15 +141,15 @@
     \begin{tabular}{@{}rcccccccc@{}}
       \toprule
        & \textbf{Pre.} & \textbf{Rec.} & \textbf{Spec.}
-      & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
+      & \textbf{F1} & \textbf{IBA}& \textbf{Sup} \\
       \midrule
       \textbf{Multinomial Naive Bayes}\\
-      \textsl{is not key}& 0.67& 1.00&  0.00& 0.80& 0.00& 26 \\
-      \textsl{is key}& 0.00& \textcolor{orange}{0.00}&  1.00& 0.00& 0.00& 27 \\
+      \textsl{is not key}& 0.67& 1.00& 0.00& 0.80& 0.00& 26 \\
+      \textsl{is key}& 0.00& \textcolor{orange}{0.00}& 1.00& 0.00& 0.00& 27 \\
       Average/Total& 0.44& 0.67& 0.33& 0.53& \textcolor{orange}{0.00}& 39 \vspace{2mm}\\
       \textbf{Bernoulli Naive Bayes}\\
-      \textsl{is not key}& 0.78& 0.93&  0.11& 0.85& 0.11& 30 \\
-      \textsl{is key}& 0.33& \textcolor{cyan}{0.11}&  0.93& 0.17& 0.10& 9 \\
+      \textsl{is not key}& 0.78& 0.93& 0.11& 0.85& 0.11& 30 \\
+      \textsl{is key}& 0.33& \textcolor{cyan}{0.11}& 0.93& 0.17& 0.10& 9 \\
       Average/Total& 0.68& 0.74& 0.30& 0.69& \textcolor{cyan}{0.11}& 39 \vspace{2mm}\\
       \bottomrule
     \end{tabular}
@@ -254,39 +254,39 @@
     \begin{tabular}{@{}rcccccccc@{}}
       \toprule
        & \textbf{Pre.} & \textbf{Rec.} & \textbf{Spec.}
-      & \textbf{F1} &  \textbf{IBA}& \textbf{Sup} \\
+      & \textbf{F1} & \textbf{IBA}& \textbf{Sup} \\
       \midrule
       \textbf{Multinomial Naive Bayes}\\
-      \textsl{Irrelevant}& 0.96& 0.98&  0.10& 0.97& 0.11& 617 \\
-      \textsl{Relevant}& 0.21& 0.10&  0.98& 0.14& 0.09& 30 \\
+      \textsl{Irrelevant}& 0.96& 0.98& 0.10& 0.97& 0.11& 617 \\
+      \textsl{Relevant}& 0.21& 0.10& 0.98& 0.14& 0.09& 30 \\
       Average/Total& 0.92& 0.94& 0.14& 0.93& 0.11& 647 \vspace{2mm}\\
       \textbf{Complement Naive Bayes}\\
-      \textsl{Irrelevant}& 0.96& 0.98&  0,10& 0.97& 0.11& 617 \\
-      \textsl{Relevant}& 0.21& 0.10&  0.98& 0.14& 0.09& 30 \\
+      \textsl{Irrelevant}& 0.96& 0.98& 0,10& 0.97& 0.11& 617 \\
+      \textsl{Relevant}& 0.21& 0.10& 0.98& 0.14& 0.09& 30 \\
       Average/Total& 0.92& 0.94& 0.14& 0.93& 0.11& 647 \vspace{2mm}\\
       \textbf{Logistic Regression}\\
-      \textsl{Irrelevant}& 0.97& 0.67&  0.63& 0.79& 0.42& 762 \\
-      \textsl{Relevant}& 0.09& 0.63&  0.67& 0.15& 0.42& 38 \\
+      \textsl{Irrelevant}& 0.97& 0.67& 0.63& 0.79& 0.42& 762 \\
+      \textsl{Relevant}& 0.09& 0.63& 0.67& 0.15& 0.42& 38 \\
       Average/Total& 0.93& 0.66& 0.63& 0.76& 0.42& 800 \vspace{2mm}\\
       \textbf{k-Nearest Neighbor Classifier}\\
-      \textsl{Irrelevant}& 0.97& 0.77&  0.53& 0.86& 0.41& 762 \\
-      \textsl{Relevant}& 0.10& 0.53&  0.77& 0.17& 0.39& 38 \\
+      \textsl{Irrelevant}& 0.97& 0.77& 0.53& 0.86& 0.41& 762 \\
+      \textsl{Relevant}& 0.10& 0.53& 0.77& 0.17& 0.39& 38 \\
       Average/Total& 0.93& 0.75& 0.54& 0.82& 0.41& 800 \vspace{2mm}\\
       \textbf{Support Vector Machine (RBF)}\\
-      \textsl{Irrelevant}& 0.98& 0.60&  0.79& 0.74& 0.46& 762 \\
-      \textsl{Relevant}& 0.09& \textcolor{cyan}{0.79}&  0.60& 0.16& 0.48& 38 \\
+      \textsl{Irrelevant}& 0.98& 0.60& 0.79& 0.74& 0.46& 762 \\
+      \textsl{Relevant}& 0.09& \textcolor{cyan}{0.79}& 0.60& 0.16& 0.48& 38 \\
       Average/Total& 0.94& 0.61& 0.78& 0.72& \textcolor{cyan}{0.47}& 800 \vspace{2mm}\\
       % \textbf{Support Vector Classifier (linear)}\\
       % \textsl{Irrelevant}& 0.98& 0.65&  0.68& 0.78& 0.44& 762 \\
       % \textsl{Relevant}& 0.09& 0.68&  0.65& 0.16& 0.45& 38 \\
       % Average/Total& 0.93& 0.65& 0.68& 0.75& 0.44& 800 \vspace{2mm}\\
       \textbf{Multilayer Perceptron}\\
-      \textsl{Irrelevant}& 0.97& 0.78&  0.58& 0.87& 0.46& 762 \\
-      \textsl{Relevant}& 0.12& 0.58&  0.78& 0.19& 0.44& 38 \\
+      \textsl{Irrelevant}& 0.97& 0.78& 0.58& 0.87& 0.46& 762 \\
+      \textsl{Relevant}& 0.12& 0.58& 0.78& 0.19& 0.44& 38 \\
       Average/Total& 0.93& 0.77& 0.59& 0.83& 0.46& 800 \\
       \textbf{Convolutional Neural Network}\\
-      \textsl{Irrelevant}& 0.95& 1.00&  0.00& 0.98& 0.00& 762 \\
-      \textsl{Relevant}& 0.00& \textcolor{orange}{0.00}&  1.00& 0.00& 0.00& 38 \\
+      \textsl{Irrelevant}& 0.95& 1.00& 0.00& 0.98& 0.00& 762 \\
+      \textsl{Relevant}& 0.00& \textcolor{orange}{0.00}& 1.00& 0.00& 0.00& 38 \\
       Average/Total& 0.91& 0.95& 0.05& 0.93& \textcolor{orange}{0.00}& 800 \\
       \bottomrule
     \end{tabular}
