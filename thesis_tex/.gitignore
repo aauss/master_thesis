@@ -1,0 +1,16 @@
+*.toc
+*.out
+*.log
+*.ist
+*.ind
+*.ilg
+*.idx
+*.gls
+*.glo
+*.glg
+*.fls
+*.fdb_latexmk
+*.blg
+*.bbl
+*.aux
+_minted-thesis
