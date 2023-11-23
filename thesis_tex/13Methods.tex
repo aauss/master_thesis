@@ -184,23 +184,24 @@
   The List of Sovereign States contains, besides others, the state's common, formal, and English name, and also the ISO-2 and ISO-3 abbreviation.
   The code for scraping the table from the Wikipedia page is shown in Lis. \ref{lst:wikipedia}
 
-  \begin{listing}[h]
-    \begin{minted}[autogobble]{python}
-      # Request the HTML content from Wikipedia and parse it with BeautifulSoup
-      page = requests.get("https://de.wikipedia.org/wiki/Liste_der_Staaten_der_Erde")
-      soup = BeautifulSoup(page.content, "html.parser")
+  \[\dots\]
+  % \begin{listing}[h]
+  %   \begin{minted}[autogobble]{python}
+  %     # Request the HTML content from Wikipedia and parse it with BeautifulSoup
+  %     page = requests.get("https://de.wikipedia.org/wiki/Liste_der_Staaten_der_Erde")
+  %     soup = BeautifulSoup(page.content, "html.parser")
 
-      # Find table with all countries with HTML tag "table",
-      # the CSS class "wikitable sortable zebra", and the "tbody" tag
-      table_soup = soup.find("table", class_="wikitable sortable zebra")
-      body_soup = table_soup.find("tbody")
+  %     # Find table with all countries with HTML tag "table",
+  %     # the CSS class "wikitable sortable zebra", and the "tbody" tag
+  %     table_soup = soup.find("table", class_="wikitable sortable zebra")
+  %     body_soup = table_soup.find("tbody")
 
-      # Get entries of all countries form table
-      country_soup = body_soup.find_all("tr")
-    \end{minted}
-    \caption{The Python code extract to scrape the Liste der Staaten der Erde table from Wikipedia using BeautifulSoup. The table is extracted using the \texttt{table, tbody} and \texttt{tr} tag and the \texttt{wikitable sortable zebra} class.}
-    \label{lst:wikipedia}
-  \end{listing}
+  %     # Get entries of all countries form table
+  %     country_soup = body_soup.find_all("tr")
+  %   \end{minted}
+  %   \caption{The Python code extract to scrape the Liste der Staaten der Erde table from Wikipedia using BeautifulSoup. The table is extracted using the \texttt{table, tbody} and \texttt{tr} tag and the \texttt{wikitable sortable zebra} class.}
+  %   \label{lst:wikipedia}
+  % \end{listing}
 
 \subsection{Wikidata and RKI-Internal Data}\label{wikidata}
   I queried all disease names in German and English from \href{https://www.wikidata.org/wiki/Wikidata:Main_Page}{Wikidata} (Lis. \ref{lst:wikidata}) and used them as a dictionary to transform all German disease names of the EDB to English to be able to match them with EpiTator's output to create a labeled dataset (\ref{preprocessing}).

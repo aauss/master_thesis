@@ -353,10 +353,10 @@
 %   Typically, a small $k$ is less robust against noise while a large $k$ might not be specific enough.
 
 \subsection{Deep Learning}
-  The idea to model the brain led to the development of the perceptron, which is a formal and simplified replica of a biological neuron.
-  With the development of the backpropagation algorithm, it was then possible to stack several perceptrons and develop the multilayer perceptron which was capable of image and vowel classification \citep{Russell2009}, also referred to as neural networks.
-  For a long time, training these models was computationally expensive and thus limited to small-sized neural nets.
-  This long believed limit changed only recently with AlexNet \citep{Krizhevsky2012} which used graphics cards to stem the massive computational demand to train deep neural networks.
+  % The idea to model the brain led to the development of the perceptron, which is a formal and simplified replica of a biological neuron.
+  % With the development of the backpropagation algorithm, it was then possible to stack several perceptrons and develop the multilayer perceptron which was capable of image and vowel classification \citep{Russell2009}, also referred to as neural networks.
+  % For a long time, training these models was computationally expensive and thus limited to small-sized neural nets.
+  % This long believed limit changed only recently with AlexNet \citep{Krizhevsky2012} which used graphics cards to stem the massive computational demand to train deep neural networks.
 
 % \subsubsection{Perceptron}
 %   A \textbf{perceptron}\index{perceptron} is an algorithm inspired by biological neurons. It is a binary classifier that learns by adjusting its threshold to \emph{fire} an \emph{action potential} when the correct class is detected. Formally it is
@@ -480,39 +480,39 @@
   There are also more elaborated methods \citep{Wu2018, Liu2018, Andrew2015} that have a learning objective, similar to word embeddings.
   However, their downside is the demand for a large corpus to learn a meaningful \textbf{document embedding}\index{document embedding} which is not available in the scope of this thesis.
 
-\subsection{Web Scraping}
-  The process of automatically extracting content available on the world wide web is called \textbf{web scraping}\index{web scraping}.
-  It is different from web crawling, where the primary purpose is the following of hyperlinks on websites to index the linkage between pages.
-  However, both techniques can be combined to systematically search for some specific content within a network of websites, e.g., crawling flight provider sites and monitor their prices.
+% \subsection{Web Scraping}
+%   The process of automatically extracting content available on the world wide web is called \textbf{web scraping}\index{web scraping}.
+%   It is different from web crawling, where the primary purpose is the following of hyperlinks on websites to index the linkage between pages.
+%   However, both techniques can be combined to systematically search for some specific content within a network of websites, e.g., crawling flight provider sites and monitor their prices.
 
-\subsubsection{HTML and CSS}
-  \textbf{Hypertext Markup Language} (\GLS{HTML})\index{HTML} is a markup language which means that it consists of a set of \textsl{tags} that define how the content of a document needs to be interpreted.
-  In HTML, for example, \mintinline{HTML}{<h1> I am a Header </h1>} defines the opening of a header tag followed by some content and the closing of this tag.
-  When this HTML code is interpreted, the text is then displayed bold and larger than non-header text if not specified otherwise.
+% \subsubsection{HTML and CSS}
+%   \textbf{Hypertext Markup Language} (\GLS{HTML})\index{HTML} is a markup language which means that it consists of a set of \textsl{tags} that define how the content of a document needs to be interpreted.
+%   In HTML, for example, \mintinline{HTML}{<h1> I am a Header </h1>} defines the opening of a header tag followed by some content and the closing of this tag.
+%   When this HTML code is interpreted, the text is then displayed bold and larger than non-header text if not specified otherwise.
 
-  \textbf{Cascading Style Sheets} (\GLS{CSS})\index{CSS} is a style sheet language that is used for styling HTML code.
-  Given the example above, we could modify the header to have another color, \mintinline{HTML}{<h1 style="color:red">  I am a Header </h1>}.
-  It is also possible to define a \textbf{CSS class} and use this class to automatically apply several styles such as in Lis. \ref{lst:css},
-  %
-  \begin{listing}[h!]
-    \centering
-    \begin{cminted}{CSS}
-      .header {
-        color: red;
-        font-family: verdana;
-      }
-    \end{cminted}
-    \caption{CSS class named \emph{header} that sets the font to verdana and color to red when used.}
-    \label{lst:css}
-  \end{listing}
-  %
-  This way, we can apply the style like so \mintinline{HTML}{<h1 class="header"> I am a Header </h1>}.
-  While a class can be accessed from several HTML tags, there is also a \textbf{CSS id} that can only be accessed once in one HTML file but otherwise has the same functionality as a CSS class.
-  Both languages thereby reveal a way of filtering the content of a website.
-  Web scraping is exploiting HTML tags and CSS selectors like classes or ids to filter the content of a site.
+%   \textbf{Cascading Style Sheets} (\GLS{CSS})\index{CSS} is a style sheet language that is used for styling HTML code.
+%   Given the example above, we could modify the header to have another color, \mintinline{HTML}{<h1 style="color:red">  I am a Header </h1>}.
+%   It is also possible to define a \textbf{CSS class} and use this class to automatically apply several styles such as in Lis. \ref{lst:css},
+%   %
+%   \begin{listing}[h!]
+%     \centering
+%     \begin{cminted}{CSS}
+%       .header {
+%         color: red;
+%         font-family: verdana;
+%       }
+%     \end{cminted}
+%     \caption{CSS class named \emph{header} that sets the font to verdana and color to red when used.}
+%     \label{lst:css}
+%   \end{listing}
+%   %
+%   This way, we can apply the style like so \mintinline{HTML}{<h1 class="header"> I am a Header </h1>}.
+%   While a class can be accessed from several HTML tags, there is also a \textbf{CSS id} that can only be accessed once in one HTML file but otherwise has the same functionality as a CSS class.
+%   Both languages thereby reveal a way of filtering the content of a website.
+%   Web scraping is exploiting HTML tags and CSS selectors like classes or ids to filter the content of a site.
 
-  Important tags for scraping are the paragraph tag \mintinline{HTML}{<p>} that normally contains text intended for the reader of a website and the \mintinline{HTML}{<a>} tag that contains hyperlinks.
-  By investigating websites thoroughly, one might also find a schema in the assignment of CSS selectors that can be exploited during web scraping.
+%   Important tags for scraping are the paragraph tag \mintinline{HTML}{<p>} that normally contains text intended for the reader of a website and the \mintinline{HTML}{<a>} tag that contains hyperlinks.
+%   By investigating websites thoroughly, one might also find a schema in the assignment of CSS selectors that can be exploited during web scraping.
 
   \[\dots\]
 % \subsubsection{REST}
