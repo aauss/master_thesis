@@ -30,15 +30,16 @@
   Therefore, it is common practice to remove stop words to improve the performance of classification algorithms \citep{McCallum1998, Lodhi2002, Tong2001}.
   In state-of-the-art neural classifier like described by \cite{Howard2018}, it is not always necessary.
 
-\subsection{Regular Expressions}
-  Regular expressions (\gls{regex}) is an expression using ASCII characters to define a set of strings that this expression matches.
-  Regex consists of meta and literal characters.
-  For a literal character holds that it matches this exact character in some target text.
-  A metacharacter is interpreted and facilitates regexs \citep{Kleene1951}.
-  While these metacharacters vary between different regex libraries, most of them are identical.
-  A literal character combined with a \texttt{*} is a ubiquitous functionality (known as the Kleene star) and means that the literal character may appear $0$ to $n$ times in succession to allow a match.
-  To still be able to use those metacharacters as literal characters, they can be escaped (generally with a backslash).
-  Tokenization (\ref{tokenization}) or stemming (\ref{stemming}) are preprocessing steps in NLP that sometimes use rules formulated as regexs.
+\[\dots\]
+% \subsection{Regular Expressions}
+%   Regular expressions (\gls{regex}) is an expression using ASCII characters to define a set of strings that this expression matches.
+%   Regex consists of meta and literal characters.
+%   For a literal character holds that it matches this exact character in some target text.
+%   A metacharacter is interpreted and facilitates regexs \citep{Kleene1951}.
+%   While these metacharacters vary between different regex libraries, most of them are identical.
+%   A literal character combined with a \texttt{*} is a ubiquitous functionality (known as the Kleene star) and means that the literal character may appear $0$ to $n$ times in succession to allow a match.
+%   To still be able to use those metacharacters as literal characters, they can be escaped (generally with a backslash).
+%   Tokenization (\ref{tokenization}) or stemming (\ref{stemming}) are preprocessing steps in NLP that sometimes use rules formulated as regexs.
 
 \subsection{Tokenization}\label{tokenization}
   A token is an abstraction of a piece of information.
@@ -341,14 +342,15 @@
   The logistic regression classifier in NLP is used to classify based on embeddings, e.g., document classification where the document embedding is used as the input to train the logistic regression.
   Note, the output $\hat{y}$ is not strictly binary; thus, we need to apply a threshold where typically values above $0.5$ are classified as $1$ and $0$ otherwise.
 
-\subsection{k-Nearest Neighbor Classifier}
-  The k-nearest neighbor classifier performs instance-based learning which means it has no training time.
-  It remembers all training data points and then classifies a new input based on its k-nearest neighbors, where each data point $\mathbf{x}_i$ is a vector with a label $y_i$ and $k \in \mathbb{N}$.
-  The closest points can be calculated using several metrics.
-  Most often, Euclidian distance ($\| \mathbf{x}_i - \mathbf{x}_j\|_2$) is taken to find the $k$ nearest neighbors for classification.
-  Closer points can be weighted stronger for the classification.
-  The predominant label of the k-nearest neighbors (with or without weighting) is taken to be the classification of the new input.
-  Typically, a small $k$ is less robust against noise while a large $k$ might not be specific enough.
+  \[\dots\]
+% \subsection{k-Nearest Neighbor Classifier}
+%   The k-nearest neighbor classifier performs instance-based learning which means it has no training time.
+%   It remembers all training data points and then classifies a new input based on its k-nearest neighbors, where each data point $\mathbf{x}_i$ is a vector with a label $y_i$ and $k \in \mathbb{N}$.
+%   The closest points can be calculated using several metrics.
+%   Most often, Euclidian distance ($\| \mathbf{x}_i - \mathbf{x}_j\|_2$) is taken to find the $k$ nearest neighbors for classification.
+%   Closer points can be weighted stronger for the classification.
+%   The predominant label of the k-nearest neighbors (with or without weighting) is taken to be the classification of the new input.
+%   Typically, a small $k$ is less robust against noise while a large $k$ might not be specific enough.
 
 \subsection{Deep Learning}
   The idea to model the brain led to the development of the perceptron, which is a formal and simplified replica of a biological neuron.
@@ -356,16 +358,16 @@
   For a long time, training these models was computationally expensive and thus limited to small-sized neural nets.
   This long believed limit changed only recently with AlexNet \citep{Krizhevsky2012} which used graphics cards to stem the massive computational demand to train deep neural networks.
 
-\subsubsection{Perceptron}
-  A \textbf{perceptron}\index{perceptron} is an algorithm inspired by biological neurons. It is a binary classifier that learns by adjusting its threshold to \emph{fire} an \emph{action potential} when the correct class is detected. Formally it is
-  \begin{gather}
-    \operatorname{Perceptron}(\mathbf{x}) = \begin{cases}1 & \text{if }\ \mathbf{w} \cdot \mathbf{x} + b > 0,\\
-    0 & \text{otherwise}\end{cases}
-  \end{gather}
-  where $\mathbf{x}$ is a data vector, $\mathbf{w}$ the weight vector and $b$ the bias. It is trained in a supervised fashion. The learning step with which $w$ is adjusted is defined as,
-  \[\mathbf{w}(t+1) = \mathbf{w}(t) + \eta (d(t) - y(t))\mathbf{x}(t)\]
-  with $d$ being the desired output and $y$ the output of the perceptron at training step $t$ with a learning rate $\eta \in (0,1]$.
-
+% \subsubsection{Perceptron}
+%   A \textbf{perceptron}\index{perceptron} is an algorithm inspired by biological neurons. It is a binary classifier that learns by adjusting its threshold to \emph{fire} an \emph{action potential} when the correct class is detected. Formally it is
+%   \begin{gather}
+%     \operatorname{Perceptron}(\mathbf{x}) = \begin{cases}1 & \text{if }\ \mathbf{w} \cdot \mathbf{x} + b > 0,\\
+%     0 & \text{otherwise}\end{cases}
+%   \end{gather}
+%   where $\mathbf{x}$ is a data vector, $\mathbf{w}$ the weight vector and $b$ the bias. It is trained in a supervised fashion. The learning step with which $w$ is adjusted is defined as,
+%   \[\mathbf{w}(t+1) = \mathbf{w}(t) + \eta (d(t) - y(t))\mathbf{x}(t)\]
+%   with $d$ being the desired output and $y$ the output of the perceptron at training step $t$ with a learning rate $\eta \in (0,1]$.
+\[\dots\]
 \subsubsection{Multilayer Perceptron}\label{backpropa}
   A \textbf{multilayer perceptron} (\GLS{MLP}\index{multilayer perceptron}) (Fig. \ref{fig:MLP}) consists of three types of layers, an input and output layer, and $1 \dots n$ hidden layers.
   Each layer consists of an arbitrary number of perceptrons.
@@ -512,17 +514,18 @@
   Important tags for scraping are the paragraph tag \mintinline{HTML}{<p>} that normally contains text intended for the reader of a website and the \mintinline{HTML}{<a>} tag that contains hyperlinks.
   By investigating websites thoroughly, one might also find a schema in the assignment of CSS selectors that can be exploited during web scraping.
 
-\subsubsection{REST}
-  Most websites offer a web service which is a broad term for some user interface that allows the communication to a database and optionally performs some operation on this data.
-  The usual implementation of an application program interface is the \textbf{Representational State Transfer} (\GLS{REST}), and its methods are GET, POST, PUT, PATCH, and DELETE which are often executed via HTTP.
-  The most important method in web scraping is the GET method since it retrieves data.
-  It is sometimes necessary to understand how GET requests are made on a website to use them for automated content extraction.
+  \[\dots\]
+% \subsubsection{REST}
+%   Most websites offer a web service which is a broad term for some user interface that allows the communication to a database and optionally performs some operation on this data.
+%   The usual implementation of an application program interface is the \textbf{Representational State Transfer} (\GLS{REST}), and its methods are GET, POST, PUT, PATCH, and DELETE which are often executed via HTTP.
+%   The most important method in web scraping is the GET method since it retrieves data.
+%   It is sometimes necessary to understand how GET requests are made on a website to use them for automated content extraction.
 
-\subsubsection{Ajax}
-  Should the client (user) request data from a database via a website and a reload of the site is undesired, \textbf{Ajax}\index{Ajax} allows an asynchronous data retrieval.
-  This asynchronous GET request starts on an event (e.g., clicking on a button on the website).
-  Ajax is frequently used to reduce loading time and traffic to only refresh the necessary part of a website.
-  One framework to use Ajax is \textbf{jQuery} which is mostly used in combination with JavaScript that is required to integrate the retrieved data into the website.
+% \subsubsection{Ajax}
+%   Should the client (user) request data from a database via a website and a reload of the site is undesired, \textbf{Ajax}\index{Ajax} allows an asynchronous data retrieval.
+%   This asynchronous GET request starts on an event (e.g., clicking on a button on the website).
+%   Ajax is frequently used to reduce loading time and traffic to only refresh the necessary part of a website.
+%   One framework to use Ajax is \textbf{jQuery} which is mostly used in combination with JavaScript that is required to integrate the retrieved data into the website.
 
-  A problem of scraping and crawling programs is that content, which is only visible after Ajax has requested it, is not visible to the program.
-  Therefore, it might be necessary to monitor the website's behavior via the developer mode of a web browser and see which GET requests would retrieve the data of interest or trigger the Ajax calls programmatically.
+%   A problem of scraping and crawling programs is that content, which is only visible after Ajax has requested it, is not visible to the program.
+%   Therefore, it might be necessary to monitor the website's behavior via the developer mode of a web browser and see which GET requests would retrieve the data of interest or trigger the Ajax calls programmatically.
