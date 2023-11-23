@@ -304,7 +304,7 @@
   The pretrained word embeddings do not cover the same amount of technical vocabulary compared to the self-trained embeddings. On the other hand, the pretrained embeddings have other semantically meaningful clusters like adjectives or names which are missing in the self-trained embeddings.
   It is likely that a more extensive corpus of epidemiological articles would show prominent technical vocabulary cluster and common word clusters at the same time which then would yield a better foundation for training classifiers.
 
-  Against expectations (Tab. \ref{table:coinflip}), the multinomial and complement NBC had an identical performance (Tab. \ref{table:recommender_performance} and Fig. \ref{fig:roc}) although the complement NBC tackles problems occurring in imbalanced datasets specifically.
+  Against expectations, the multinomial and complement NBC had an identical performance (Tab. \ref{table:recommender_performance} and Fig. \ref{fig:roc}) although the complement NBC tackles problems occurring in imbalanced datasets specifically.
   Also, the deep learning methods worked worse concerning the imbalanced class measures and were only excelling regarding common criteria like the F1 score or the AUC value.
   It appears that the AUC value, although commonly used to measure the performance of classifier trained with imbalanced classes, does not give a good measure for the classification of \textsl{relevant} articles as the IBA or recall does since the CNN has the highest AUC score but has a recall of 0.00 for \textsl{relevant} article (Tab. \ref{table:recommender_performance}).
   A reason for the poor performance of the CNN is that it overfitted.

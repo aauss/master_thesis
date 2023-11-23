@@ -15,12 +15,12 @@
 %   However, the documents are strongly formatted, and my attempts to extract the text from the PDFs without altering the structure of the report failed.
 %   I used Tika (\ref{Tika}) for the text extraction, but the return contained misplaced line breaks and other formatting errors.
 %   Due to these complications and difficulties to extract text from these PDFs without optical character recognition, I decided not to work with RASFF reports for my thesis.
-\[\dots\]
+
 
 % \subsection{EpiLag}
 %   Due to the majority of communication in the EpiLag happening orally and the sources mainly being reports from medical practices, hospitals, and emails, EpiLag poses an ambitious target for NLP methodology.
 %   Without a clear in- and output, there is no clear approach to process the data of EpiLag.
-\[\dots\]
+
 
 % \subsection{EPIS}
 %   As the RASFF, the Epidemic Intelligence Information System (\GLS{EPIS}) is also an EU project.
@@ -31,7 +31,7 @@
 %   Mostly, local health departments detect these events which are then shared through EPIS leaving out how they were discovered.
 %   This procedure makes the comparison of events difficult especially when different countries do not share the same definition for a disease outbreak.
 %   Though the formatted data output of EPIS would have been ideal for my further work, the regulations on how to process EPIS data were unclear and partially restrictive which excluded to further work with EPIS data.
-\[\dots\]
+  [\dots]
 
 \subsection{INIG}\label{INIGsources}
   INIG has a curated list of sources that they visit every day and check for new alerting events (Tab. \ref{table:INIGsources}).
@@ -104,7 +104,7 @@
 %   Flask is a web development mini-framework for Python.
 %   To demonstrate the final product which is capable of extracting the main content from some URL, annotating and evaluating this content, and then putting this information into a database, I built a web app using Flask.
 
-\[\dots\]
+  [\dots]
 
 \section{Data Acquisition}
   After the decision was made to focus on data associated with INIG, I pinpointed the most important sources used by INIG, namely \href{https://www.who.int/csr/don/en/}{WHO DONs} and \href{https://www.promedmail.org}{ProMED Mail} (\ref{source determination}), to build a labeled dataset.
@@ -182,9 +182,9 @@
   I scraped the \href{https://de.wikipedia.org/wiki/Liste_der_Staaten_der_Erde}{Wikipedia Liste der Staaten der Erde} (\textit{List of Sovereign States}) article and transformed it into a dictionary to translate the German country names of the EDB into English.
   The translation is a crucial step to match the countries in the EDB with the output of EpiTator to automatically create a labeled dataset (\ref{preprocessing}).
   The List of Sovereign States contains, besides others, the state's common, formal, and English name, and also the ISO-2 and ISO-3 abbreviation.
-  The code for scraping the table from the Wikipedia page is shown in Lis. \ref{lst:wikipedia}
+  % The code for scraping the table from the Wikipedia page is shown in Lis. \ref{lst:wikipedia}
 
-  \[\dots\]
+  [\dots]
   % \begin{listing}[h]
   %   \begin{minted}[autogobble]{python}
   %     # Request the HTML content from Wikipedia and parse it with BeautifulSoup
@@ -293,11 +293,11 @@
   For all scraped websites, I replaced UTF-8 control characters with a single whitespace character illustrated by the following Python code: \mintinline[breaklines]{python}{string = "".join(char if unicodedata.category(char)[0] != "C" else ' ' for char in string)}.
 
 \subsubsection{Embedding}
-  I used Flair to apply pretrained GloVe embeddings with 50 dimensions on each token of the dataset. GloVe has the advantage to cover global textual information better (\ref{c:glove}). The small size of the word embeddings was important to keep computational time low to increase the number of test iterations.
+  I used Flair to apply pretrained GloVe embeddings with 50 dimensions on each token of the dataset. GloVe has the advantage to cover global textual information better. The small size of the word embeddings was important to keep computational time low to increase the number of test iterations.
 
   For an embedding comparison, I trained my own word embeddings using scraped ProMED and WHO DON articles.
   Since GloVe's global property was not necessary for the small corpus and due it high memory demand, I trained 50-dimensional embeddings using word2vec with the continuous skip-gram approach.
-  This approach better captures rare words (\ref{c:word2vec}) which are typical for expert literature like epidemiological articles.
+  This approach better captures rare words which are typical for expert literature like epidemiological articles.
 
 \section{Classification}
   I tested two methods for the key information extraction: First, taking the most frequent entity occurring in a text as the key entity (e.g., making the most common disease entity the primary thematized disease in the text) and second, train a classifier based on sentences that contain such entities.
